@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Throughline maps a play's characters across every scene." />
+    <title>Throughline | Playtext Scene Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#visualizer" aria-label="Throughline home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>throughline</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="nav-link active" href="#visualizer">Visualizer</a>
+        <a class="nav-link" href="#about">About</a>
+      </nav>
+      <div class="header-note"><span class="status-dot"></span> Open studio · 2026</div>
+    </header>
+
+    <main id="visualizer" class="page-shell">
+      <section class="hero-section">
+        <div class="eyebrow"><span class="eyebrow-line"></span> Playtext scene visualizer</div>
+        <div class="hero-grid">
+          <div>
+            <h1>See the <em>shape</em><br />of a play.</h1>
+            <p class="hero-copy">Trace who appears, when they enter, and how the story gathers its people across every scene.</p>
+          </div>
+          <div class="hero-aside">
+            <span class="aside-number">01</span>
+            <p>Drop in a playtext.<br />Leave with its throughline.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="source-panel" aria-labelledby="source-heading">
+        <div class="section-label"><span>01</span> Source text</div>
+        <div class="source-content">
+          <div class="source-heading-row">
+            <div>
+              <h2 id="source-heading">What are we reading?</h2>
+              <p>Paste a public URL or bring your own PDF.</p>
+            </div>
+            <span class="input-type-pill">URL <span>↗</span></span>
+          </div>
+          <form id="source-form" class="source-form">
+            <label class="sr-only" for="play-url">Play URL</label>
+            <div class="url-field">
+              <span class="url-icon">↗</span>
+              <input id="play-url" type="url" value="https://www.gutenberg.org/cache/epub/1513/pg1513-images.html" />
+              <button class="clear-button" type="button" aria-label="Clear URL">×</button>
+            </div>
+            <button class="analyze-button" type="submit"><span>Analyze play</span><span class="button-arrow">→</span></button>
+          </form>
+          <div class="source-divider"><span>or</span></div>
+          <label class="upload-zone" for="pdf-upload">
+            <span class="upload-icon">↑</span>
+            <span><strong>Upload a PDF</strong><small>Drop file here or browse · Max 20 MB</small></span>
+            <input id="pdf-upload" type="file" accept="application/pdf,.pdf" />
+          </label>
+          <p id="source-feedback" class="source-feedback" role="status"></p>
+        </div>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-heading">
+        <div class="results-topline">
+          <div class="section-label"><span>02</span> Your analysis</div>
+          <div class="result-actions">
+            <button class="text-button" id="copy-data" type="button"><span class="button-icon">□</span> Copy data</button>
+            <button class="download-button" id="download-data" type="button"><span>↓</span> Download</button>
+          </div>
+        </div>
+        <div class="result-heading-row">
+          <div>
+            <div class="result-kicker"><span class="live-dot"></span> Analysis complete · 24 scenes found</div>
+            <h2 id="results-heading">Romeo and Juliet</h2>
+            <p class="result-meta">William Shakespeare <span>·</span> Project Gutenberg <span>·</span> 19 characters</p>
+          </div>
+          <div class="view-toggle" role="group" aria-label="Analysis view">
+            <button class="view-option active" type="button" data-view="plot">Plot</button>
+            <button class="view-option" type="button" data-view="table">Table</button>
+          </div>
+        </div>
+
+        <div id="plot-view" class="plot-card">
+          <div class="plot-header">
+            <div><span class="plot-title">Character movement</span><span class="plot-subtitle">Important characters across the play</span></div>
+            <button class="icon-button" type="button" aria-label="Expand visualization" title="Expand visualization">⤢</button>
+          </div>
+          <div class="plot-body">
+            <div class="plot-y-axis">
+              <span>ACT I</span><span>ACT II</span><span>ACT III</span><span>ACT IV</span><span>ACT V</span>
+            </div>
+            <div class="plot-canvas" aria-label="Flow plot showing character appearances across five acts">
+              <div class="plot-grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="act-labels"><span>I</span><span>II</span><span>III</span><span>IV</span><span>V</span></div>
+              <svg viewBox="0 0 900 280" preserveAspectRatio="none" role="img" aria-label="Colored character flows">
+                <path class="flow flow-romeo" d="M25 55 C85 55 90 38 145 44 S210 63 255 70 S315 45 360 49 S415 42 455 62 S510 78 550 72 S615 63 650 88 S720 103 755 112 S820 88 875 94" />
+                <path class="flow flow-juliet" d="M25 86 C80 81 98 93 145 90 S210 75 255 82 S320 78 360 91 S405 105 455 101 S520 91 550 104 S610 118 650 119 S710 105 755 124 S820 127 875 136" />
+                <path class="flow flow-mercutio" d="M25 145 C70 145 98 137 145 143 S210 152 255 149 S315 140 360 151 S405 153 455 162" />
+                <path class="flow flow-nurse" d="M25 181 C72 175 101 182 145 177 S210 172 255 184 S315 180 360 190 S410 185 455 188 S520 199 550 195 S610 182 650 191 S715 200 755 197 S820 180 875 185" />
+                <path class="flow flow-tybalt" d="M25 215 C80 218 100 204 145 212 S210 218 255 210 S315 220 360 218" />
+                <g class="plot-nodes romeo-nodes"><circle cx="25" cy="55" r="5"/><circle cx="145" cy="44" r="5"/><circle cx="255" cy="70" r="5"/><circle cx="360" cy="49" r="5"/><circle cx="455" cy="62" r="5"/><circle cx="550" cy="72" r="5"/><circle cx="650" cy="88" r="5"/><circle cx="755" cy="112" r="5"/><circle cx="875" cy="94" r="5"/></g>
+                <g class="plot-nodes juliet-nodes"><circle cx="25" cy="86" r="5"/><circle cx="145" cy="90" r="5"/><circle cx="255" cy="82" r="5"/><circle cx="360" cy="91" r="5"/><circle cx="455" cy="101" r="5"/><circle cx="550" cy="104" r="5"/><circle cx="650" cy="119" r="5"/><circle cx="755" cy="124" r="5"/><circle cx="875" cy="136" r="5"/></g>
+                <g class="plot-nodes mercutio-nodes"><circle cx="25" cy="145" r="5"/><circle cx="145" cy="143" r="5"/><circle cx="255" cy="149" r="5"/><circle cx="360" cy="151" r="5"/><circle cx="455" cy="162" r="5"/></g>
+                <g class="plot-nodes nurse-nodes"><circle cx="25" cy="181" r="5"/><circle cx="145" cy="177" r="5"/><circle cx="255" cy="184" r="5"/><circle cx="360" cy="190" r="5"/><circle cx="455" cy="188" r="5"/><circle cx="550" cy="195" r="5"/><circle cx="650" cy="191" r="5"/><circle cx="755" cy="197" r="5"/><circle cx="875" cy="185" r="5"/></g>
+                <g class="plot-nodes tybalt-nodes"><circle cx="25" cy="215" r="5"/><circle cx="145" cy="212" r="5"/><circle cx="255" cy="210" r="5"/><circle cx="360" cy="218" r="5"/></g>
+              </svg>
+              <div class="scene-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span></div>
+            </div>
+          </div>
+          <div class="legend"><span><i class="legend-swatch romeo"></i> Romeo</span><span><i class="legend-swatch juliet"></i> Juliet</span><span><i class="legend-swatch mercutio"></i> Mercutio</span><span><i class="legend-swatch nurse"></i> Nurse</span><span><i class="legend-swatch tybalt"></i> Tybalt</span></div>
+        </div>
+
+        <div id="table-view" class="table-card hidden">
+          <div class="table-toolbar"><div><span class="plot-title">Scene presence</span><span class="plot-subtitle">Green cells indicate an appearance</span></div><span class="table-count">5 of 19 characters shown</span></div>
+          <div class="table-scroll"><table><thead><tr><th>Character</th><th>S01</th><th>S02</th><th>S03</th><th>S04</th><th>S05</th><th>S06</th><th>S07</th><th>S08</th><th>S09</th><th>S10</th><th>S11</th><th>S12</th></tr></thead><tbody id="presence-table"><tr><th><i class="row-swatch romeo"></i> Romeo</th><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td></tr><tr><th><i class="row-swatch juliet"></i> Juliet</th><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td></tr><tr><th><i class="row-swatch mercutio"></i> Mercutio</th><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th><i class="row-swatch nurse"></i> Nurse</th><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td></tr><tr><th><i class="row-swatch tybalt"></i> Tybalt</th><td class="present"></td><td class="present"></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+          <div class="table-footnote"><span class="presence-key"></span> Present in scene <span class="absence-key"></span> Not present</div>
+        </div>
+      </section>
+
+      <section id="about" class="about-section">
+        <div class="section-label"><span>03</span> About Throughline</div>
+        <div class="about-grid"><div><h2>Turn a play<br />into a <em>pattern.</em></h2></div><div class="about-copy"><p>Throughline reads the scene structure of a play and maps character presence over time. The result is a quick visual index of entrances, exits, ensembles, and absences.</p><div class="about-details"><div><span>Built for</span><strong>Readers · Directors<br />Researchers · Students</strong></div><div><span>Works with</span><strong>Public URLs<br />PDF playtexts</strong></div></div></div></div>
+        <div class="limitations"><span class="limitation-icon">!</span><p><strong>A note on interpretation</strong> Scene and character detection is automated. Formatting, unnamed characters, and unusual playtext structures can affect the result. Always treat the visualization as a reading aid, not a definitive edition.</p></div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>THROUGHLINE / PLAYTEXT SCENE VISUALIZER</span><span>Made for closer reading <span class="footer-star">✳</span></span></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
