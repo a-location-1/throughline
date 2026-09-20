@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Throughline maps characters across the scenes of a play." />
+    <title>THROUGHLINE / Scene Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="#instrument"><span class="wordmark-rule"></span>THROUGHLINE</a>
+      <div class="masthead-center">PLAYTEXT / SCENES / CHARACTERS</div>
+      <div class="masthead-right"><span class="pulse"></span> READY <span class="clock">09:41:26</span></div>
+    </header>
+
+    <main id="instrument">
+      <section class="intro-grid">
+        <div class="rail-index">00<br /><span>START</span></div>
+        <div class="intro-copy"><p class="micro-label">Playtext scene visualizer</p><h1>Characters<br /><i>across scenes.</i></h1><p class="lede">A map of who appears, scene by scene.</p></div>
+        <div class="intro-note"><span class="bracket">[</span><p>24 SCENES<br /><strong>19 CHARACTERS</strong></p><span class="bracket">]</span></div>
+      </section>
+
+      <section class="input-module module" aria-labelledby="input-heading">
+        <div class="module-rail"><span>01</span><span>INPUT</span><span class="rail-line"></span><span class="vertical-word">PLAYTEXT</span></div>
+        <div class="module-main"><div class="module-heading"><div><p class="micro-label">URL or PDF</p><h2 id="input-heading">Choose a play</h2></div><span class="module-status">● WAITING</span></div>
+          <form id="source-form" class="load-form"><div class="control-label">URL</div><div class="input-line"><span class="input-prefix">↳</span><label class="sr-only" for="play-url">Play URL</label><input id="play-url" type="url" value="https://www.gutenberg.org/cache/epub/1513/pg1513-images.html" /><button class="clear-button" type="button" aria-label="Clear URL">CLEAR</button></div><button class="execute-button" type="submit"><span>ANALYZE</span><b>↗</b></button></form>
+          <div class="or-rule"><span>OR</span></div><label class="drop-line" for="pdf-upload"><span class="drop-icon">＋</span><span><strong>UPLOAD PDF</strong><small>DROP FILE / BROWSE FILES / 20 MB</small></span><span class="drop-arrow">→</span><input id="pdf-upload" type="file" accept=".pdf,application/pdf" /></label><p id="source-feedback" class="feedback" role="status"></p>
+        </div>
+        <div class="module-aside"><span>SOURCE</span><p>PUBLIC URL<br />OR PDF</p><p>STATUS<br /><b>WAITING</b></p></div>
+      </section>
+
+      <section class="analysis-module module" aria-labelledby="analysis-heading">
+        <div class="module-rail"><span>02</span><span>RESULT</span><span class="rail-line"></span><span class="vertical-word">SCENES</span></div>
+        <div class="module-main"><div class="analysis-heading"><div><div class="analysis-state"><span class="pulse"></span> ANALYSIS COMPLETE / 24 SCENES / 19 CHARACTERS</div><h2 id="analysis-heading">Romeo and Juliet</h2><p>W. Shakespeare <span>/</span> Project Gutenberg <span>/</span> FIRST APPEARANCE</p></div><div class="output-controls"><button class="small-button" id="copy-data" type="button">▣ COPY</button><button class="small-button" id="download-data" type="button">↓ DOWNLOAD</button></div></div>
+          <div class="view-tabs"><button class="view-tab active" type="button" data-view="plot">PLOT <span>01</span></button><button class="view-tab" type="button" data-view="table">TABLE <span>02</span></button><span class="tab-note">GREEN = PRESENT</span></div>
+          <div id="plot-view" class="plot-frame"><div class="plot-meta"><span>CHARACTER</span><span>SCENES →</span></div><div class="plot-wrap"><div class="plot-labels"><span>ROMEO</span><span>JULIET</span><span>MERCUTIO</span><span>NURSE</span><span>TYBALT</span></div><div class="plot-area"><div class="crosshair"></div><div class="scene-head"><span>I</span><span>II</span><span>III</span><span>IV</span><span>V</span></div><svg viewBox="0 0 960 310" preserveAspectRatio="none" aria-label="Character continuity plot"><g class="plot-rules"><path d="M0 48H960M0 108H960M0 168H960M0 228H960M0 288H960" /></g><path class="line romeo-line" d="M18 48C93 48 92 35 153 40S232 62 284 56S363 33 408 43S485 30 535 58S616 74 662 67S752 45 796 80S877 85 942 69"/><path class="line juliet-line" d="M18 108C90 100 99 120 153 113S232 92 284 104S358 88 408 111S488 119 535 121S617 101 662 132S733 108 796 140S881 126 942 151"/><path class="line mercutio-line" d="M18 168C86 160 105 174 153 164S230 182 284 168S359 158 408 174"/><path class="line nurse-line" d="M18 228C90 236 105 211 153 222S232 217 284 236S359 225 408 231S487 212 535 241S611 253 662 237S737 230 796 247S880 224 942 236"/><path class="line tybalt-line" d="M18 288C87 282 104 298 153 290S230 278 284 286S360 300 408 294"/><g class="dots romeo-dots"><circle cx="18" cy="48"/><circle cx="153" cy="40"/><circle cx="284" cy="56"/><circle cx="408" cy="43"/><circle cx="535" cy="58"/><circle cx="662" cy="67"/><circle cx="796" cy="80"/><circle cx="942" cy="69"/></g><g class="dots juliet-dots"><circle cx="18" cy="108"/><circle cx="153" cy="113"/><circle cx="284" cy="104"/><circle cx="408" cy="111"/><circle cx="535" cy="121"/><circle cx="662" cy="132"/><circle cx="796" cy="140"/><circle cx="942" cy="151"/></g><g class="dots mercutio-dots"><circle cx="18" cy="168"/><circle cx="153" cy="164"/><circle cx="284" cy="168"/><circle cx="408" cy="174"/></g><g class="dots nurse-dots"><circle cx="18" cy="228"/><circle cx="153" cy="222"/><circle cx="284" cy="236"/><circle cx="408" cy="231"/><circle cx="535" cy="241"/><circle cx="662" cy="237"/><circle cx="796" cy="247"/><circle cx="942" cy="236"/></g><g class="dots tybalt-dots"><circle cx="18" cy="288"/><circle cx="153" cy="290"/><circle cx="284" cy="286"/><circle cx="408" cy="294"/></g></svg><div class="scene-numbers"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span></div></div></div><div class="plot-footer"><span><i class="key romeo"></i>ROMEO</span><span><i class="key juliet"></i>JULIET</span><span><i class="key mercutio"></i>MERCUTIO</span><span><i class="key nurse"></i>NURSE</span><span><i class="key tybalt"></i>TYBALT</span><span class="plot-footer-note">CHARACTERS / SCENES</span></div></div>
+          <div id="table-view" class="table-frame hidden"><div class="table-head"><span>CHARACTER / FIRST APPEARANCE</span><span>SCENE PRESENCE MATRIX</span><span>05 OF 19 FIGURES</span></div><div class="table-scroll"><table><thead><tr><th>Figure</th><th>S01</th><th>S02</th><th>S03</th><th>S04</th><th>S05</th><th>S06</th><th>S07</th><th>S08</th><th>S09</th><th>S10</th><th>S11</th><th>S12</th></tr></thead><tbody><tr><th><i class="key romeo"></i>Romeo</th><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td></tr><tr><th><i class="key juliet"></i>Juliet</th><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td></tr><tr><th><i class="key mercutio"></i>Mercutio</th><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th><i class="key nurse"></i>Nurse</th><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td class="present"></td><td class="present"></td></tr><tr><th><i class="key tybalt"></i>Tybalt</th><td class="present"></td><td class="present"></td><td class="present"></td><td class="present"></td><td class="present"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div><p class="matrix-note"><span class="present-chip"></span> PRESENT IN SCENE <span class="empty-chip"></span> NOT PRESENT</p></div>
+        </div>
+      </section>
+
+      <section id="about" class="about-module module"><div class="module-rail"><span>03</span><span>ABOUT</span><span class="rail-line"></span><span class="vertical-word">NOTES</span></div><div class="about-main"><div class="about-title"><p class="micro-label">About</p><h2>Read the<br /><i>pattern.</i></h2></div><div class="about-copy"><p>Throughline maps character presence across a play's scenes.</p><p>Characters are listed by first appearance. Green cells mark presence. Lines show continuity from scene to scene.</p></div><div class="limitation-box"><span>!</span><p><strong>LIMITATION</strong><br />Detection is automated. Check the result against the playtext.</p></div></div></section>
+    </main>
+    <footer class="footer"><span>THROUGHLINE / PLAYTEXT SCENE VISUALIZER</span><span>ABOUT <b>03</b></span></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
