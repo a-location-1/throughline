@@ -8,6 +8,13 @@
 
 **Input**: User description: "Build a standalone web application that accepts a theater playtext by URL or PDF upload and generates a character-by-scene table plus a visualization of character reappearances across scenes."
 
+## Clarifications
+
+### Session 2026-09-20
+
+- Q: What maximum playtext size should the first release support for both PDF uploads and URL-based sources? → A: 200 pages or 10 MB.
+- Q: What format should the download action produce for the completed table and visualization? → A: CSV for the completed table.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Generate a character-by-scene overview (Priority: P1)
@@ -54,7 +61,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 1. **Given** a valid playtext is being processed, **When** analysis is underway, **Then** the application reports progress through meaningful stages and indicates when the result is ready.
 2. **Given** a submission from which no characters or scenes can be identified, **When** processing completes, **Then** the application rejects it with a clear explanation and a useful next action.
 3. **Given** a completed result, **When** the user selects copy, **Then** a usable representation of the table and visualization summary is placed on the clipboard and the action outcome is communicated.
-4. **Given** a completed result, **When** the user selects download, **Then** the application downloads the result in a format that preserves the table and visualization information for later use.
+4. **Given** a completed result, **When** the user selects download, **Then** the application downloads the completed character-by-scene table as a CSV file for later use.
 5. **Given** the source cannot be retrieved or read, **When** processing fails, **Then** the application explains that the input could not be processed and allows the user to submit another source.
 
 ### Edge Cases
@@ -88,7 +95,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **FR-013**: The application MUST generate a visualization showing scenes in order and character appearances/reappearances across those scenes.
 - **FR-014**: The application MUST keep the table and visualization consistent with the same underlying scene, character, and appearance data.
 - **FR-015**: The application MUST produce identical table data, ordering, and visualization for the same input, parsing rules, and application version.
-- **FR-016**: The application MUST provide copy and download actions for completed results, and MUST communicate whether each action succeeded or failed.
+- **FR-016**: The application MUST provide copy and CSV download actions for completed results, and MUST communicate whether each action succeeded or failed.
 - **FR-017**: The application MUST not retain submitted playtexts or generated results after the user leaves or resets the standalone page, unless the user explicitly downloads or copies them.
 - **FR-018**: The application MUST provide a useful next action for user-visible failures, such as correcting the source or submitting another playtext.
 
@@ -110,7 +117,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **SC-003**: At least 90% of first-time users can submit a supported playtext and locate the completed table and visualization without assistance.
 - **SC-004**: At least 95% of invalid or unreadable submissions receive a user-visible explanation and a next action instead of an apparently successful but empty result.
 - **SC-005**: Users can copy or download a completed result within 30 seconds of the result becoming available.
-- **SC-006**: For supported playtexts within the product's documented size limits, progress feedback begins within 2 seconds of submission and the interface remains responsive while analysis is in progress.
+- **SC-006**: For supported playtexts up to 200 pages or 10 MB, progress feedback begins within 2 seconds of submission and the interface remains responsive while analysis is in progress.
 - **SC-007**: In reviewer evaluation, the visualization clearly distinguishes speaking participation, non-speaking presence, and absence for representative scenes and remains usable on current desktop and mobile browsers.
 
 ## Assumptions
@@ -118,6 +125,8 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - Users have permission to submit the playtexts they analyze and are responsible for any copyright restrictions on source material.
 - URL submissions point to publicly retrievable content that can be read as a playtext; authentication-protected or inaccessible sources may be rejected.
 - PDF uploads contain selectable or extractable text in the first release; image-only PDFs may be rejected as unreadable.
+- The first release supports playtexts up to 200 pages or 10 MB for both PDF uploads and URL-based sources; larger inputs may be rejected with a size-specific explanation.
+- The first release's download action exports the completed character-by-scene table as CSV; the visualization remains available in the web page.
 - The source text is authoritative. When formatting is ambiguous, the application reports uncertainty or rejection rather than inventing characters, scenes, or relationships.
 - Line counts mean identifiable spoken lines, using a consistent definition documented with the result; stage directions do not count as spoken lines.
 - The default character ordering is first appearance, while scene-level line-count sorting is available as a user action.
