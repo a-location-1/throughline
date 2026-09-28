@@ -36,6 +36,17 @@ Build a standalone web application that accepts a public playtext URL or selecta
 - Never log full submitted URLs, query strings, filenames, source text, or extracted text. Return opaque analysis IDs and generic retrieval/parsing errors that do not disclose network details or local paths.
 - Render parsed names and source metadata as escaped text in the frontend; never inject submitted HTML or SVG into the document. CSV export must escape formula-leading cell values and quote fields according to the CSV format.
 
+## Accessibility Requirements
+
+- Target WCAG 2.2 AA for the supported desktop and mobile browser workflow. Use semantic landmarks, one logical heading hierarchy, visible keyboard focus, and a skip link to move directly to the analysis content.
+- Every URL field, file input, button, tab, toggle, table control, and visualization control MUST have an accessible name and a predictable keyboard operation. The plot/table switch MUST expose its selected state, and interactive controls MUST not depend on hover, drag, or color alone.
+- Publish processing progress and copy/download/error outcomes through an `aria-live` status region without stealing focus. When an error requires correction, move focus to the error summary or the first invalid control and provide a direct retry/replace-source action.
+- Keep the character-by-scene table as a real HTML table with captions or an accessible name, header associations, and a text alternative for speaking versus non-speaking presence. Preserve usable horizontal scrolling on narrow screens without hiding required data.
+- Give the SVG visualization a meaningful accessible name and a concise text summary of scene order and character appearances. The visualization MUST remain understandable from the table and summary when SVG is unavailable or not perceivable.
+- Use color combinations that meet contrast requirements and pair speaking/non-speaking/absence encodings with text, patterns, labels, or other non-color distinctions. Do not use color as the only indication of status.
+- Respect `prefers-reduced-motion` and provide the same plot geometry with drawing animation disabled. Avoid flashing content and ensure focus indicators remain visible in every view and responsive breakpoint.
+- Test keyboard-only navigation, screen-reader-oriented semantics, reduced motion, zoom/reflow, contrast, mobile touch targets, and automated accessibility checks in Playwright for loading, ready, table, visualization, and error states.
+
 ## Constitution Check
 
 All gates pass with the selected design:
