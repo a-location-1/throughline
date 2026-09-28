@@ -44,9 +44,11 @@ Names are normalized only when formatting differences are sufficiently supported
 ## SceneAppearance
 
 - `scene_id` and `character_id`: relationship key.
-- `presence`: `speaking`, `non_speaking`, or `both`.
-- `line_count`: identifiable spoken lines, excluding stage directions.
+- `presence`: `speaking` when at least one attributable spoken line exists, otherwise `non_speaking` when the character's presence is supported without speech.
+- `line_count`: identifiable spoken lines, excluding stage directions; zero for `non_speaking` appearances.
 - `confidence`: `supported` or `ambiguous` with an explanation when needed.
+
+Presence is intentionally scene-level rather than event-level. Silent entrances, exits, or stage-direction moments in a scene that also contains speech do not produce a separate presence category.
 
 Collective and unnamed speakers retain line counts and remain distinct from named individual characters.
 
