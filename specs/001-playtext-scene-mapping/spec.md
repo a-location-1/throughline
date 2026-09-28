@@ -77,6 +77,8 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - A submission is empty, unreadable, malformed, inaccessible, or not a playtext; the application rejects it with a specific, user-understandable reason.
 - A play contains repeated or unusually formatted scene headings; the output remains deterministic and does not duplicate scenes solely because of formatting noise.
 - A play contains a single speaker throughout; the output still includes a valid one-character result.
+- A source uses Unicode characters, diacritics, punctuation, capitalization, or non-English names; the output preserves the source display form and does not silently strip meaningful characters.
+- A source uses naming conventions, transliteration, or honorifics that cannot be resolved confidently; the output preserves the ambiguity rather than silently merging or rewriting identities.
 
 ## Requirements *(mandatory)*
 
@@ -102,6 +104,13 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **FR-018**: The application MUST provide a useful next action for user-visible failures, such as correcting the source or submitting another playtext.
 - **FR-019**: The application MUST resolve an individually referenced character to a previously introduced character group only when the source provides sufficient evidence, and MUST otherwise preserve the ambiguity rather than silently creating or merging an identity.
 - **FR-020**: The application MUST preserve lines attributed to a collective or indeterminate speaker, such as a crowd, with their scene and line-count data, and MUST distinguish that attribution from a named individual character.
+- **FR-021**: The application MUST preserve source-provided character and speaker display forms, including Unicode characters, diacritics, punctuation, capitalization, and honorifics, except where a documented normalization rule is supported by clear source evidence.
+- **FR-022**: The application MUST NOT infer or display demographic, gender, racial, ethnic, disability, national, religious, or other personal identity attributes from names, pronouns, roles, or speech.
+- **FR-023**: The first release MUST clearly state its supported source scope: primarily English-language, Latin-script playtexts following recognizable Western dramatic conventions, with tolerance for formatting variation within that scope. Unsupported language, script, or structural forms MUST be identified as unsupported or uncertain rather than presented as reliable results.
+- **FR-024**: The application MUST preserve ambiguity caused by naming conventions, transliteration, honorifics, or formatting when the source does not provide sufficient evidence for identity resolution.
+- **FR-025**: The fixture corpus MUST include variation within the supported scope, including Unicode and diacritics, naming and capitalization differences, non-speaking roles, collective speakers, unusual but recognizable formatting, and accessible and inaccessible source conditions.
+- **FR-026**: Scene-detection and character-identification evaluation MUST report results by fixture category, including formatting, source type, ambiguity, accessibility, and invalid-input categories, so systematic failures are not hidden by an aggregate percentage.
+- **FR-027**: The application MUST remain usable on slow connections and modest mobile devices within the supported input limits, including visible progress, bounded client memory, responsive narrow-screen output, and no requirement for hover or high-bandwidth media.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -123,6 +132,8 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **SC-005**: Users can copy or download a completed result within 30 seconds of the result becoming available.
 - **SC-006**: For supported playtexts up to 200 pages or 10 MB, progress feedback begins within 2 seconds of submission and the interface remains responsive while analysis is in progress.
 - **SC-007**: In reviewer evaluation, the visualization clearly distinguishes speaking participation, non-speaking presence, and absence for representative scenes and remains usable on current desktop and mobile browsers.
+- **SC-008**: For each fixed fixture category, the application reports scene-detection and character-identification results separately; no category may be omitted from evaluation because the aggregate SC-001 percentage passes.
+- **SC-009**: Representative keyboard-only, screen-reader-oriented, low-vision zoom/reflow, reduced-motion, mobile, slow-connection, and modest-device scenarios can complete submission, review a result, and recover from an error without relying on color, hover, or high-bandwidth media.
 
 ## Assumptions
 
@@ -132,6 +143,9 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - The first release supports playtexts up to 200 pages or 10 MB for both PDF uploads and URL-based sources; larger inputs may be rejected with a size-specific explanation.
 - The first release's download action exports the completed character-by-scene table as CSV; the visualization remains available in the web page.
 - The source text is authoritative. When formatting is ambiguous, the application reports uncertainty or rejection rather than inventing characters, scenes, or relationships.
+- The first release is intentionally optimized for English-language, Latin-script playtexts using recognizable Western dramatic conventions. This is a scope boundary, not a claim that other performance-text traditions are less valid; future iterations may expand the supported corpus and parsing rules.
+- Source display names are preserved for reader visibility; internal identifiers may be deterministic and normalized without replacing the displayed source form.
+- The application does not infer personal identity attributes and does not treat names, pronouns, or dramatic roles as reliable evidence of identity.
 - Line counts mean identifiable spoken lines, using a consistent definition documented with the result; stage directions do not count as spoken lines.
 - The default character ordering is first appearance, while scene-level line-count sorting is available as a user action.
 - The standalone page supports current desktop and mobile versions of modern browsers.

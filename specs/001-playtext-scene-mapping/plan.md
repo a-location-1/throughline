@@ -47,6 +47,12 @@ Build a standalone web application that accepts a public playtext URL or selecta
 - Respect `prefers-reduced-motion` and provide the same plot geometry with drawing animation disabled. Avoid flashing content and ensure focus indicators remain visible in every view and responsive breakpoint.
 - Test keyboard-only navigation, screen-reader-oriented semantics, reduced motion, zoom/reflow, contrast, mobile touch targets, and automated accessibility checks in Playwright for loading, ready, table, visualization, and error states.
 
+## Equity and Supported Scope
+
+The first release is intentionally scoped to primarily English-language, Latin-script playtexts using recognizable Western dramatic conventions. This scope MUST be stated in the interface and documentation as a product boundary, not as a judgment about other performance-text traditions. Within that scope, fixtures and implementation MUST accommodate meaningful variation in formatting, Unicode, diacritics, capitalization, punctuation, honorifics, naming conventions, collective speakers, silent roles, and accessible versus difficult source files.
+
+Preserve source-provided display names for readers while using separate deterministic internal IDs. Do not infer demographic or other personal identity attributes from names, pronouns, roles, or speech. When naming, transliteration, honorific, or formatting evidence is insufficient, preserve and display the ambiguity. Unsupported language, script, or structural forms must produce an explicit limitation or uncertainty state rather than an apparently reliable result.
+
 ## Constitution Check
 
 All gates pass with the selected design:
@@ -113,9 +119,12 @@ Create at least one small, hand-verifiable fixture for each category below. Pref
 - `collective-speaker`: crowd/group attribution with preserved line counts and collective kind.
 - `silent-presence`: stage direction or entrance establishes a character without speech; verify `non_speaking` and zero line count.
 - `name-variation`: formatting or spelling variation that is safely normalized, plus a distinct ambiguous variation that is not silently merged.
+- `unicode-and-names`: Unicode, diacritics, punctuation, capitalization, honorifics, and naming-convention variation; verify source display forms remain intact.
 - `group-reference`: collective introduction followed by an individually referenced character, with both supported-resolution and unresolved-ambiguity cases.
 - `repeated-headings`: formatting noise or repeated headings that must not duplicate scenes.
+- `unsupported-scope`: an out-of-scope language, script, or structural form; verify an explicit limitation or uncertainty result rather than a false successful analysis.
 - `invalid-inputs`: empty, malformed, unreadable, non-playtext, image-only PDF, over-page-limit, and over-byte-limit cases.
+- `accessibility-and-resources`: fixture and browser scenarios covering keyboard-only use, screen-reader semantics, low-vision zoom/reflow, reduced motion, mobile layout, slow connections, and modest-device resource limits.
 
 ### Fixture format and expected outputs
 
@@ -138,7 +147,8 @@ tests/fixtures/
 - Include both text/HTML and PDF forms where extraction differences could affect parsing; the same semantic fixture may have separate expected extraction notes when outputs legitimately differ.
 - Any discovered parser defect MUST add or update a focused regression fixture and expected output before the parser fix is accepted.
 - Fixture changes require a short explanation in the manifest or test name; do not regenerate all expected files blindly.
-- CI MUST run the full fixture corpus, enforce the coverage threshold above 80%, and report the scene-detection result against the fixed representative corpus used for SC-001.
+- CI MUST run the full fixture corpus, enforce the coverage threshold above 80%, and report scene-detection and character-identification results separately for each fixture category. A passing aggregate percentage MUST NOT hide a failing category.
+- Accessibility and resource scenarios MUST be reported separately from parser accuracy, with failures classified by keyboard, screen-reader, low-vision, motion, mobile, connection, or device constraint.
 
 ## Phase 0 Research Summary
 
@@ -147,6 +157,7 @@ tests/fixtures/
 - Use explicit rule-based parsing with ambiguity metadata, not probabilistic inference.
 - Use vanilla TypeScript/Vite and adapt the existing mockup; import only the mockup 2 draw animation.
 - Build the golden fixture corpus before parser completion, with manifest-backed expected JSON, canonical comparison, invariants, and regression additions for every discovered parser defect.
+- Keep the initial corpus within the documented English/Latin-script Western-format scope while deliberately varying names, Unicode, formatting, source quality, accessibility conditions, and resource constraints; record out-of-scope cases as explicit rejection/limitation fixtures.
 - Validate with the fixture corpus, API tests, deterministic invariants, coverage enforcement, and Playwright visual/accessibility checks.
 
 ## Phase 1 Design Summary
