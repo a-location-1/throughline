@@ -26,6 +26,16 @@ Build a standalone web application that accepts a public playtext URL or selecta
 
 **Scale/Scope**: One focused single-page workflow, two source methods, one deterministic result schema, one table view, one visualization view, and CSV export
 
+## Security Requirements
+
+- URL retrieval accepts only `http` and `https`, rejects embedded credentials, and validates the destination before every request and redirect. Resolve hostnames and reject loopback, private, link-local, multicast, and cloud-metadata address ranges, including IPv4 and IPv6, to prevent SSRF and DNS-rebinding bypasses.
+- Stream URL responses and enforce the 10 MB limit while reading; apply connection/read/total timeouts, a bounded redirect count, response content-type checks, and cancellation for abandoned analyses. Do not follow redirects to a newly disallowed destination.
+- PDF uploads are validated by size, extension, declared type, and file signature; browser-provided MIME types and filenames are not trusted. Store temporary data under generated names, never execute or serve uploaded files, and remove temporary bytes after extraction or failure.
+- Treat PDFs as hostile input: use a patched `pypdf`, cap page count and extracted text size, and enforce CPU, memory, and wall-clock limits around extraction so malformed files or decompression-heavy content cannot exhaust the service. OCR is not enabled.
+- Bound concurrent analyses and expire in-memory analysis state after a short session TTL. Add rate limiting or equivalent deployment protection to submission endpoints and ensure failures clean up tasks, buffers, and temporary files.
+- Never log full submitted URLs, query strings, filenames, source text, or extracted text. Return opaque analysis IDs and generic retrieval/parsing errors that do not disclose network details or local paths.
+- Render parsed names and source metadata as escaped text in the frontend; never inject submitted HTML or SVG into the document. CSV export must escape formula-leading cell values and quote fields according to the CSV format.
+
 ## Constitution Check
 
 All gates pass with the selected design:
