@@ -61,6 +61,10 @@ backend/
 │   └── api.py
 └── tests/
     ├── fixtures/
+    │   ├── valid/
+    │   ├── invalid/
+    │   ├── sources/
+    │   └── expected/
     ├── unit/
     ├── integration/
     └── contract/
@@ -81,13 +85,58 @@ frontend/
 
 **Structure Decision**: Use separate `backend/` and `frontend/` projects. The backend owns acquisition, text extraction, deterministic parsing, domain models, visualization data, and API contracts. The frontend is a thin renderer and interaction layer based on `mockup_copilot_1`; it receives one `AnalysisResult` and derives both the table and SVG from that result. The source tree above is the planned implementation layout; the current repository contains the spec and mockups only.
 
+## Golden Fixture Requirements
+
+The implementation MUST create and run a versioned golden-fixture corpus before parser behavior is considered complete. Fixtures are test inputs and expected outputs, not production data.
+
+### Required fixture categories
+
+Create at least one small, hand-verifiable fixture for each category below. Prefer project-authored synthetic text for edge cases and public-domain or permission-cleared excerpts for realistic formatting. Record provenance for every non-synthetic source.
+
+- `explicit-acts-scenes`: multiple acts and scenes with ordered headings.
+- `one-act-no-scene-breaks`: one act with no explicit scene headings; verify no fabricated scenes.
+- `scene-breaks-no-acts`: scene headings without act headings; verify one default act.
+- `no-breaks-recognizable-play`: no act or scene headings but recognizable play structure; verify one act and one scene.
+- `single-speaker`: one character throughout, including valid first-appearance ordering.
+- `unnamed-speaker`: speech that cannot be assigned a supported name; verify an explicit unnamed entry.
+- `collective-speaker`: crowd/group attribution with preserved line counts and collective kind.
+- `silent-presence`: stage direction or entrance establishes a character without speech; verify `non_speaking` and zero line count.
+- `name-variation`: formatting or spelling variation that is safely normalized, plus a distinct ambiguous variation that is not silently merged.
+- `group-reference`: collective introduction followed by an individually referenced character, with both supported-resolution and unresolved-ambiguity cases.
+- `repeated-headings`: formatting noise or repeated headings that must not duplicate scenes.
+- `invalid-inputs`: empty, malformed, unreadable, non-playtext, image-only PDF, over-page-limit, and over-byte-limit cases.
+
+### Fixture format and expected outputs
+
+Each case MUST have a stable slug and consist of:
+
+```text
+tests/fixtures/
+├── sources/<slug>.txt|html|pdf
+├── expected/<slug>.json
+└── manifest.json
+```
+
+`manifest.json` records the slug, source format, provenance/license, scenario category, parser options, and whether the case is expected to be `ready` or `rejected`. Ready-case JSON is a complete serialized `AnalysisResult`; rejected-case JSON records the stable error code and required next-action category. Expected data MUST assert act/scene order, character IDs and kinds, first-appearance order, appearance presence, line counts, ambiguity metadata, and deterministic visualization inputs. It MUST exclude source contents and volatile request IDs.
+
+### Fixture test harness and maintenance rules
+
+- Add a parameterized backend test that loads every manifest entry, runs the parser, and compares canonical JSON to the checked-in expected output.
+- Canonicalization may remove only explicitly volatile fields; it MUST NOT sort away meaningful source order.
+- Add invariant checks for unique stable IDs, scene order, first-appearance character order, non-speaking line count of zero, collective/unnamed preservation, table/visualization agreement, and byte-identical repeated output.
+- Include both text/HTML and PDF forms where extraction differences could affect parsing; the same semantic fixture may have separate expected extraction notes when outputs legitimately differ.
+- Any discovered parser defect MUST add or update a focused regression fixture and expected output before the parser fix is accepted.
+- Fixture changes require a short explanation in the manifest or test name; do not regenerate all expected files blindly.
+- CI MUST run the full fixture corpus, enforce the coverage threshold above 80%, and report the scene-detection result against the fixed representative corpus used for SC-001.
+
 ## Phase 0 Research Summary
 
 - Use FastAPI/Pydantic for typed HTTP boundaries and a standalone Python parser library.
 - Use guarded `httpx` retrieval, BeautifulSoup HTML extraction, and `pypdf` selectable-text extraction.
 - Use explicit rule-based parsing with ambiguity metadata, not probabilistic inference.
 - Use vanilla TypeScript/Vite and adapt the existing mockup; import only the mockup 2 draw animation.
-- Validate with golden fixtures, API tests, deterministic invariants, coverage enforcement, and Playwright visual/accessibility checks.
+- Build the golden fixture corpus before parser completion, with manifest-backed expected JSON, canonical comparison, invariants, and regression additions for every discovered parser defect.
+- Validate with the fixture corpus, API tests, deterministic invariants, coverage enforcement, and Playwright visual/accessibility checks.
 
 ## Phase 1 Design Summary
 
