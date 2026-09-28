@@ -71,7 +71,9 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - A playtext has no act or scene breaks; the output reports the source as one act and one scene only when the content can otherwise be recognized as a playtext.
 - A scene contains only stage directions or silent characters; the output distinguishes non-speaking presence from speaking characters.
 - A character name appears with formatting or spelling variations; the application uses a consistent identity only when the source provides sufficient evidence, and otherwise surfaces the ambiguity rather than silently merging distinct characters.
+- A group of characters is introduced collectively and later referenced individually; the output associates an individual reference with the previously introduced group only when the source provides sufficient evidence, and otherwise surfaces the ambiguity rather than creating an unsupported character identity.
 - A scene contains an unnamed speaker; the unnamed entry remains distinct and is not presented as a named character.
+- A line is attributed to a collective speaker such as a crowd; the output preserves the line count and represents the collective attribution distinctly from a named individual character without inventing a character identity.
 - A submission is empty, unreadable, malformed, inaccessible, or not a playtext; the application rejects it with a specific, user-understandable reason.
 - A play contains repeated or unusually formatted scene headings; the output remains deterministic and does not duplicate scenes solely because of formatting noise.
 - A play contains a single speaker throughout; the output still includes a valid one-character result.
@@ -98,13 +100,15 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **FR-016**: The application MUST provide copy and CSV download actions for completed results, and MUST communicate whether each action succeeded or failed.
 - **FR-017**: The application MUST not retain submitted playtexts or generated results after the user leaves or resets the standalone page, unless the user explicitly downloads or copies them.
 - **FR-018**: The application MUST provide a useful next action for user-visible failures, such as correcting the source or submitting another playtext.
+- **FR-019**: The application MUST resolve an individually referenced character to a previously introduced character group only when the source provides sufficient evidence, and MUST otherwise preserve the ambiguity rather than silently creating or merging an identity.
+- **FR-020**: The application MUST preserve lines attributed to a collective or indeterminate speaker, such as a crowd, with their scene and line-count data, and MUST distinguish that attribution from a named individual character.
 
 ### Key Entities *(include if feature involves data)*
 
 - **Playtext Submission**: A URL or uploaded PDF provided for analysis, including its processing state and any retrieval or readability failure.
 - **Act**: An optional structural grouping in the playtext containing one or more scenes; a play without act breaks is represented as one act when appropriate.
 - **Scene**: An ordered portion of a playtext, identified by source structure or a supported default when no breaks are present.
-- **Character or Speaker**: A named character, unnamed speaker, or silent/non-speaking role identified in the playtext, with a deterministic first-appearance position.
+- **Character or Speaker**: A named character, unnamed speaker, collective or indeterminate speaker, or silent/non-speaking role identified in the playtext, with a deterministic first-appearance position.
 - **Scene Appearance**: The relationship between a character and a scene, including presence type and speaking line count when available.
 - **Analysis Result**: The complete structured table, ordering metadata, and visualization data generated from one submission.
 
