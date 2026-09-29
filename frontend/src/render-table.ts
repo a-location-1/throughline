@@ -27,4 +27,14 @@ export function renderTable(container: HTMLElement, result: AnalysisResult): voi
   const byKey = new Map(result.appearances.map((appearance) => [`${appearance.character_id}:${appearance.scene_id}`, appearance]));
   for (const character of result.characters) { const row = document.createElement('tr'); const name = document.createElement('th'); name.scope = 'row'; name.textContent = character.display_name; row.append(name); for (const scene of result.scenes) { const cell = document.createElement('td'); const appearance = byKey.get(`${character.id}:${scene.id}`); cell.textContent = appearance ? appearance.presence === 'speaking' ? `Speaking (${appearance.line_count})` : 'Present, silent' : 'Absent'; cell.className = appearance?.presence ?? 'absent'; row.append(cell); } body.append(row); }
   table.append(body); scroll.append(table); container.append(scroll);
+  const ambiguityNotes = result.characters.filter((character) => character.ambiguity?.alternatives.length);
+  if (ambiguityNotes.length) {
+    const notes = document.createElement('ol'); notes.className = 'table-footnotes'; notes.setAttribute('aria-label', 'Character normalization notes');
+    for (const character of ambiguityNotes) {
+      const note = document.createElement('li');
+      note.textContent = `${character.display_name}: ${character.ambiguity!.evidence}. Source labels: ${character.ambiguity!.alternatives.join(', ')}.`;
+      notes.append(note);
+    }
+    container.append(notes);
+  }
 }

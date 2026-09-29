@@ -27,3 +27,25 @@ it('groups scenes under act and special-section headers', () => {
 	expect(headerRows[0].textContent).toContain('Act I');
 	expect(headerRows[1].textContent).toContain('Scene I');
 });
+
+it('renders normalization ambiguity as footnotes below the table', () => {
+	const container = document.createElement('div');
+	const result = {
+		scenes: [{ id: 's1', ordinal: 1, label: 'Scene I' }],
+		characters: [{
+			id: 'c1', display_name: 'CAPULET',
+			ambiguity: {
+				evidence: 'descriptive speaker qualifier was grouped with the base role',
+				alternatives: ['CAPULET WITH A CAPE'],
+			},
+		}],
+		appearances: [],
+	} as unknown as AnalysisResult;
+
+	renderTable(container, result);
+
+	const footnotes = container.querySelector('.table-footnotes');
+	expect(footnotes).toBeTruthy();
+	expect(footnotes?.textContent).toContain('CAPULET WITH A CAPE');
+	expect(container.lastElementChild).toBe(footnotes);
+});

@@ -65,11 +65,10 @@ def test_parser_keeps_qualified_speaker_ambiguous_and_distinct(submission):
     assert [character.display_name for character in result.characters] == [
         "CAPULET",
         "LADY CAPULET",
-        "CAPULET WITH A CAPE",
     ]
-    qualified = result.characters[2]
+    qualified = result.characters[0]
     assert qualified.ambiguity is not None
-    assert qualified.ambiguity.alternatives == ["CAPULET", "LADY CAPULET"]
+    assert qualified.ambiguity.alternatives == ["CAPULET WITH A CAPE"]
 
 
 def test_parser_preserves_prologue_before_act_one(submission):

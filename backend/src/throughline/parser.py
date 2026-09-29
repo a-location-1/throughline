@@ -186,27 +186,6 @@ def _qualified_base(display: str) -> str | None:
     return match.group("base").strip() if match else None
 
 
-def _qualified_ambiguity(
-    display: str, characters: list[CharacterOrSpeaker]
-) -> Ambiguity | None:
-    base = _qualified_base(display)
-    if base is None:
-        return None
-    base_key = _identity_key(base)
-    alternatives = [
-        character.display_name
-        for character in characters
-        if _identity_key(character.display_name) == base_key
-        or _identity_key(character.display_name).endswith(base_key)
-    ]
-    if not alternatives:
-        alternatives = [base]
-    return Ambiguity(
-        evidence="descriptive speaker qualifier may refer to an existing role",
-        alternatives=alternatives,
-    )
-
-
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     chunks = _chunks(text)
     acts: list[Act] = []
@@ -271,23 +250,32 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 and _looks_like_speaker(line, speaker.group(1))
             ):
                 display = _normalize_speaker_display(speaker.group(1))
-                kind = _classify(display)
-                key = _identity_key(display) or f"unnamed-{scene.id}"
+                qualified_base = _qualified_base(display)
+                canonical_display = qualified_base or display
+                kind = _classify(canonical_display)
+                key = _identity_key(canonical_display) or f"unnamed-{scene.id}"
                 character = by_key.get(key)
                 if character is None:
                     character = CharacterOrSpeaker(
                         id=f"character-{len(characters) + 1:02d}",
                         display_name=(
-                            display
+                            canonical_display
                             if kind != CharacterKind.UNNAMED
                             else "Unnamed speaker"
                         ),
                         kind=kind,
                         first_appearance_scene_id=scene.id,
-                        ambiguity=_qualified_ambiguity(display, characters),
                     )
                     by_key[key] = character
                     characters.append(character)
+                if qualified_base:
+                    if character.ambiguity is None:
+                        character.ambiguity = Ambiguity(
+                            evidence="descriptive speaker qualifier was grouped with the base role",
+                            alternatives=[],
+                        )
+                    if display not in character.ambiguity.alternatives:
+                        character.ambiguity.alternatives.append(display)
                 elif character.display_name != display and character.ambiguity is None:
                     character.ambiguity = Ambiguity(
                         evidence="formatting or naming variation",
