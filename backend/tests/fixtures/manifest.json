@@ -7,6 +7,7 @@
 		{"slug":"single-speaker","source":"sources/single-speaker.txt","expected":"expected/single-speaker.json","category":"single-speaker","status":"ready","provenance":"synthetic"},
 		{"slug":"unnamed-collective-silent","source":"sources/unnamed-collective-silent.txt","expected":"expected/unnamed-collective-silent.json","category":"ambiguity","status":"ready","provenance":"synthetic"},
 		{"slug":"unicode-and-names","source":"sources/unicode-and-names.txt","expected":"expected/unicode-and-names.json","category":"unicode-and-names","status":"ready","provenance":"synthetic"},
-		{"slug":"accessibility-and-resources","source":"sources/accessibility-and-resources.txt","expected":"expected/accessibility-and-resources.json","category":"accessibility-and-resources","status":"ready","provenance":"synthetic"}
+		{"slug":"accessibility-and-resources","source":"sources/accessibility-and-resources.txt","expected":"expected/accessibility-and-resources.json","category":"accessibility-and-resources","status":"ready","provenance":"synthetic"},
+		{"slug":"formatting-test-trifles","source":"sources/formatting-test-trifles.txt","expected":"expected/formatting-test-trifles.json","category":"name-variation","status":"ready","provenance":"public-domain"}
 	]
 }
