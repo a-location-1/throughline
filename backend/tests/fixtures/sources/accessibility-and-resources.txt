@@ -1,0 +1,3 @@
+SCENE I
+ALICE
+A small readable fixture for keyboard, mobile, reduced-motion, and slow-connection scenarios.

@@ -1,0 +1,6 @@
+SCENE I
+ALICE
+First scene.
+SCENE II
+BOB
+Second scene.

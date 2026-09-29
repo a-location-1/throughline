@@ -1,0 +1,12 @@
+{
+	"version": "1",
+	"cases": [
+		{"slug":"explicit-acts-scenes","source":"sources/explicit-acts-scenes.txt","expected":"expected/explicit-acts-scenes.json","category":"explicit-acts-scenes","status":"ready","provenance":"synthetic"},
+		{"slug":"one-act-no-scene-breaks","source":"sources/one-act-no-scene-breaks.txt","expected":"expected/one-act-no-scene-breaks.json","category":"one-act-no-scene-breaks","status":"ready","provenance":"synthetic"},
+		{"slug":"scene-breaks-no-acts","source":"sources/scene-breaks-no-acts.txt","expected":"expected/scene-breaks-no-acts.json","category":"scene-breaks-no-acts","status":"ready","provenance":"synthetic"},
+		{"slug":"single-speaker","source":"sources/single-speaker.txt","expected":"expected/single-speaker.json","category":"single-speaker","status":"ready","provenance":"synthetic"},
+		{"slug":"unnamed-collective-silent","source":"sources/unnamed-collective-silent.txt","expected":"expected/unnamed-collective-silent.json","category":"ambiguity","status":"ready","provenance":"synthetic"},
+		{"slug":"unicode-and-names","source":"sources/unicode-and-names.txt","expected":"expected/unicode-and-names.json","category":"unicode-and-names","status":"ready","provenance":"synthetic"},
+		{"slug":"accessibility-and-resources","source":"sources/accessibility-and-resources.txt","expected":"expected/accessibility-and-resources.json","category":"accessibility-and-resources","status":"ready","provenance":"synthetic"}
+	]
+}

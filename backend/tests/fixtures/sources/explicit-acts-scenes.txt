@@ -1,0 +1,11 @@
+ACT I
+SCENE I
+ALICE
+Welcome.
+SCENE II
+BOB
+I have arrived.
+ACT II
+SCENE I
+ALICE
+Again.

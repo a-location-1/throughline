@@ -17,13 +17,13 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 **Purpose**: Establish the separate Python backend and Vite/TypeScript frontend projects.
 
-- [ ] T001 Create the backend package structure from `plan.md` under `backend/src/throughline/` and `backend/tests/`
-- [ ] T002 [P] Create the frontend Vite/TypeScript structure under `frontend/src/` and `frontend/tests/`
-- [ ] T003 [P] Define backend dependencies and test tooling in `backend/pyproject.toml` for Python 3.11+, FastAPI, Pydantic, httpx, pypdf, BeautifulSoup, pytest, pytest-cov, and coverage above 80%
-- [ ] T004 [P] Define frontend scripts and dependencies in `frontend/package.json` for Vite, TypeScript, unit tests, build, and Playwright end-to-end tests
-- [ ] T005 [P] Configure backend linting, formatting, pytest, and coverage settings in `backend/pyproject.toml`
-- [ ] T006 [P] Configure TypeScript, Vite, and test/build settings in `frontend/tsconfig.json`, `frontend/vite.config.ts`, and `frontend/package.json`
-- [ ] T007 [P] Copy the approved mockup 1 visual structure and responsive styles into `frontend/index.html` and `frontend/src/styles.css`, preserving the supported-scope statement and replacing seeded result content with render targets
+- [X] T001 Create the backend package structure from `plan.md` under `backend/src/throughline/` and `backend/tests/`
+- [X] T002 [P] Create the frontend Vite/TypeScript structure under `frontend/src/` and `frontend/tests/`
+- [X] T003 [P] Define backend dependencies and test tooling in `backend/pyproject.toml` for Python 3.11+, FastAPI, Pydantic, httpx, pypdf, BeautifulSoup, pytest, pytest-cov, and coverage above 80%
+- [X] T004 [P] Define frontend scripts and dependencies in `frontend/package.json` for Vite, TypeScript, unit tests, build, and Playwright end-to-end tests
+- [X] T005 [P] Configure backend linting, formatting, pytest, and coverage settings in `backend/pyproject.toml`
+- [X] T006 [P] Configure TypeScript, Vite, and test/build settings in `frontend/tsconfig.json`, `frontend/vite.config.ts`, and `frontend/package.json`
+- [X] T007 [P] Copy the approved mockup 1 visual structure and responsive styles into `frontend/index.html` and `frontend/src/styles.css`, preserving the supported-scope statement and replacing seeded result content with render targets
 
 ---
 
@@ -33,15 +33,15 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 **Critical**: User story work begins only after this phase is complete.
 
-- [ ] T008 Define Pydantic domain models and enums for submissions, acts, scenes, characters, appearances, analysis results, progress, failures, ambiguity, and visualization inputs in `backend/src/throughline/models.py`; enforce exactly one source method, `source_kind` values `url`/`pdf`, states `queued`/`retrieving`/`extracting`/`parsing`/`ready`/`rejected`, source size `<= 10 MB`, page count `<= 200`, zero lines for `non_speaking`, and stable schema/parser versions
-- [ ] T009 [P] Define the shared TypeScript interfaces and API response discriminated unions matching `contracts/api.md` and `data-model.md` in `frontend/src/api.ts`
-- [ ] T010 [P] Implement deterministic canonical serialization, stable IDs, first-appearance ordering, and invariant checks in `backend/src/throughline/models.py` and `backend/tests/unit/test_models.py`
+- [X] T008 Define Pydantic domain models and enums for submissions, acts, scenes, characters, appearances, analysis results, progress, failures, ambiguity, and visualization inputs in `backend/src/throughline/models.py`; enforce exactly one source method, `source_kind` values `url`/`pdf`, states `queued`/`retrieving`/`extracting`/`parsing`/`ready`/`rejected`, source size `<= 10 MB`, page count `<= 200`, zero lines for `non_speaking`, and stable schema/parser versions
+- [X] T009 [P] Define the shared TypeScript interfaces and API response discriminated unions matching `contracts/api.md` and `data-model.md` in `frontend/src/api.ts`
+- [X] T010 [P] Implement deterministic canonical serialization, stable IDs, first-appearance ordering, and invariant checks in `backend/src/throughline/models.py` and `backend/tests/unit/test_models.py`
 - [ ] T011 [P] Create the manifest-backed fixture harness and canonical expected-result comparison in `backend/tests/conftest.py` and `backend/tests/integration/test_fixture_corpus.py`
-- [ ] T012 [P] Add fixture manifest schema and initial fixture directory structure under `backend/tests/fixtures/{sources,expected,valid,invalid}` in `backend/tests/fixtures/manifest.json`, including an `accessibility-and-resources` category entry
-- [ ] T013 Implement bounded in-memory analysis state, opaque IDs, short session TTL, state transitions, cleanup, concurrent-analysis limits, and submission rate limiting or equivalent deployment protection in `backend/src/throughline/state.py`; add unit coverage in `backend/tests/unit/test_state.py`
-- [ ] T014 Implement API error envelopes, generic user-facing failure codes, logging redaction, and next-action mapping in `backend/src/throughline/errors.py` and `backend/src/throughline/logging.py`; add unit coverage in `backend/tests/unit/test_errors.py` and `backend/tests/unit/test_logging.py`
-- [ ] T015 [P] Add shared frontend state transitions, polling cancellation, reset cleanup, and `aria-live` status state in `frontend/src/state.ts`
-- [ ] T016 [P] Add a backend test command and frontend test/build command documented in `backend/README.md` and `frontend/README.md`
+- [X] T012 [P] Add fixture manifest schema and initial fixture directory structure under `backend/tests/fixtures/{sources,expected,valid,invalid}` in `backend/tests/fixtures/manifest.json`, including an `accessibility-and-resources` category entry
+- [X] T013 Implement bounded in-memory analysis state, opaque IDs, short session TTL, state transitions, cleanup, concurrent-analysis limits, and submission rate limiting or equivalent deployment protection in `backend/src/throughline/state.py`; add unit coverage in `backend/tests/unit/test_state.py`
+- [X] T014 Implement API error envelopes, generic user-facing failure codes, logging redaction, and next-action mapping in `backend/src/throughline/errors.py` and `backend/src/throughline/logging.py`; add unit coverage in `backend/tests/unit/test_errors.py` and `backend/tests/unit/test_logging.py`
+- [X] T015 [P] Add shared frontend state transitions, polling cancellation, reset cleanup, and `aria-live` status state in `frontend/src/state.ts`
+- [X] T016 [P] Add a backend test command and frontend test/build command documented in `backend/README.md` and `frontend/README.md`
 
 **Checkpoint**: Typed contracts, bounded state, fixture loading, and test commands are ready; user stories can proceed independently.
 
@@ -58,24 +58,24 @@ description: "Task list for implementing Playtext Scene Mapping"
 - [ ] T017 [P] [US1] Add golden sources and expected `AnalysisResult` files for explicit acts/scenes, one-act/no-scene-breaks, scene-breaks/no-acts, no-breaks recognizable play, and single-speaker cases under `backend/tests/fixtures/sources/` and `backend/tests/fixtures/expected/`
 - [ ] T018 [P] [US1] Add golden sources and expected outputs for unnamed speakers, collective speakers, silent presence, name variation, Unicode/diacritics, group references, repeated headings, unsupported scope, and accessibility/resource conditions under `backend/tests/fixtures/sources/` and `backend/tests/fixtures/expected/`; record category and provenance in `backend/tests/fixtures/manifest.json`
 - [ ] T019 [P] [US1] Add invalid and hostile-input fixtures for empty, malformed, unreadable, non-playtext, image-only PDF, over-page-limit, and over-byte-limit cases under `backend/tests/fixtures/invalid/` and `backend/tests/fixtures/expected/`
-- [ ] T020 [P] [US1] Add parser unit tests and parameterized fixture regression/invariant assertions for scene order, unique IDs, first-appearance order, ambiguity preservation, collective/unnamed retention, and non-speaking line count in `backend/tests/unit/test_parser.py` and `backend/tests/integration/test_fixture_corpus.py`
-- [ ] T021 [P] [US1] Add acquisition and extraction boundary tests for invalid schemes, embedded credentials, private/loopback/link-local/multicast/metadata addresses, unsafe redirects, timeouts, content type, 10 MB streaming limit, PDF signature, and 200-page limit in `backend/tests/unit/test_acquisition.py` and `backend/tests/unit/test_extraction.py`
+- [X] T020 [P] [US1] Add parser unit tests and parameterized fixture regression/invariant assertions for scene order, unique IDs, first-appearance order, ambiguity preservation, collective/unnamed retention, and non-speaking line count in `backend/tests/unit/test_parser.py` and `backend/tests/integration/test_fixture_corpus.py`
+- [X] T021 [P] [US1] Add acquisition and extraction boundary tests for invalid schemes, embedded credentials, private/loopback/link-local/multicast/metadata addresses, unsafe redirects, timeouts, content type, 10 MB streaming limit, PDF signature, and 200-page limit in `backend/tests/unit/test_acquisition.py` and `backend/tests/unit/test_extraction.py`
 
 ### Implementation for User Story 1
 
-- [ ] T022 [P] [US1] Implement guarded URL retrieval with HTTP/HTTPS-only validation, DNS/IP SSRF checks before every request and redirect, bounded redirects, connection/read/total timeouts, streaming byte limits, cancellation, and redacted errors in `backend/src/throughline/acquisition.py`
-- [ ] T023 [P] [US1] Implement PDF validation and selectable-text extraction with trusted file signatures, temporary generated filenames, patched `pypdf`, page/text/resource limits, cleanup on success/failure, and image-only rejection in `backend/src/throughline/extraction.py`
-- [ ] T024 [P] [US1] Implement HTML text extraction with BeautifulSoup, source metadata normalization, and no submitted HTML retention or injection in `backend/src/throughline/extraction.py`
-- [ ] T025 [US1] Implement act and scene heading recognition and normalization in `backend/src/throughline/parser.py`
-- [ ] T026 [US1] Implement ordered act/scene segmentation with one-act fallback, scene-only default act, no-break single-scene recognition, and fallback labels in `backend/src/throughline/parser.py`
-- [ ] T027 [US1] Implement repeated-heading suppression, stable act/scene IDs, and normalized source spans in `backend/src/throughline/parser.py`
-- [ ] T028 [US1] Implement deterministic speaker-block detection and classification for named, unnamed, collective, indeterminate, and silent speakers in `backend/src/throughline/parser.py`
-- [ ] T029 [US1] Implement conservative speaker identity normalization and display preservation in `backend/src/throughline/parser.py`, including Unicode, diacritics, punctuation, capitalization, honorifics, ambiguity metadata, and no inferred demographic attributes
-- [ ] T030 [US1] Aggregate parsed speaker blocks by scene and count identifiable spoken lines while excluding stage directions in `backend/src/throughline/parser.py`
-- [ ] T031 [US1] Classify speaking versus non-speaking presence, preserve collective/unnamed line counts, attach supported/ambiguous confidence, and generate first-appearance character ordering in `backend/src/throughline/parser.py`
-- [ ] T032 [US1] Implement library orchestration and rejection when the source lacks both usable playtext structure and at least one character/speaker in `backend/src/throughline/parser.py`
-- [ ] T033 [US1] Implement `POST /api/analyses` for URL JSON and PDF multipart requests plus `GET /api/analyses/{analysis_id}` progress, ready, rejected, and unknown-ID responses in `backend/src/throughline/api.py`
-- [ ] T034 [US1] Add FastAPI contract tests for URL/PDF submission, queued-to-ready progress, serialized `AnalysisResult`, stable error envelopes, opaque IDs, and `404` behavior in `backend/tests/contract/test_api.py`
+- [X] T022 [P] [US1] Implement guarded URL retrieval with HTTP/HTTPS-only validation, DNS/IP SSRF checks before every request and redirect, bounded redirects, connection/read/total timeouts, streaming byte limits, cancellation, and redacted errors in `backend/src/throughline/acquisition.py`
+- [X] T023 [P] [US1] Implement PDF validation and selectable-text extraction with trusted file signatures, temporary generated filenames, patched `pypdf`, page/text/resource limits, cleanup on success/failure, and image-only rejection in `backend/src/throughline/extraction.py`
+- [X] T024 [P] [US1] Implement HTML text extraction with BeautifulSoup, source metadata normalization, and no submitted HTML retention or injection in `backend/src/throughline/extraction.py`
+- [X] T025 [US1] Implement act and scene heading recognition and normalization in `backend/src/throughline/parser.py`
+- [X] T026 [US1] Implement ordered act/scene segmentation with one-act fallback, scene-only default act, no-break single-scene recognition, and fallback labels in `backend/src/throughline/parser.py`
+- [X] T027 [US1] Implement repeated-heading suppression, stable act/scene IDs, and normalized source spans in `backend/src/throughline/parser.py`
+- [X] T028 [US1] Implement deterministic speaker-block detection and classification for named, unnamed, collective, indeterminate, and silent speakers in `backend/src/throughline/parser.py`
+- [X] T029 [US1] Implement conservative speaker identity normalization and display preservation in `backend/src/throughline/parser.py`, including Unicode, diacritics, punctuation, capitalization, honorifics, ambiguity metadata, and no inferred demographic attributes
+- [X] T030 [US1] Aggregate parsed speaker blocks by scene and count identifiable spoken lines while excluding stage directions in `backend/src/throughline/parser.py`
+- [X] T031 [US1] Classify speaking versus non-speaking presence, preserve collective/unnamed line counts, attach supported/ambiguous confidence, and generate first-appearance character ordering in `backend/src/throughline/parser.py`
+- [X] T032 [US1] Implement library orchestration and rejection when the source lacks both usable playtext structure and at least one character/speaker in `backend/src/throughline/parser.py`
+- [X] T033 [US1] Implement `POST /api/analyses` for URL JSON and PDF multipart requests plus `GET /api/analyses/{analysis_id}` progress, ready, rejected, and unknown-ID responses in `backend/src/throughline/api.py`
+- [X] T034 [US1] Add FastAPI contract tests for URL/PDF submission, queued-to-ready progress, serialized `AnalysisResult`, stable error envelopes, opaque IDs, and `404` behavior in `backend/tests/contract/test_api.py`
 
 **Checkpoint**: The P1 analysis result is independently usable from either source method and all parser distinctions are covered by fixtures.
 
@@ -89,17 +89,17 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 ### Tests for User Story 2
 
-- [ ] T035 [P] [US2] Add visualization-data invariant tests for scene order, first-appearance order, deterministic color assignment, layout inputs, and table/plot appearance agreement in `backend/tests/unit/test_visualization.py`
-- [ ] T036 [P] [US2] Add frontend state and table-render tests for real HTML table semantics, scene line-count sorting, accessible presence text, narrow-screen scrolling, and shared-result derivation in `frontend/tests/unit/render-table.test.ts`
-- [ ] T037 [P] [US2] Add frontend SVG-render tests for speaking/non-speaking/absence encodings, labels, text summary, deterministic geometry, and reduced-motion geometry preservation in `frontend/tests/unit/render-visualization.test.ts`
+- [X] T035 [P] [US2] Add visualization-data invariant tests for scene order, first-appearance order, deterministic color assignment, layout inputs, and table/plot appearance agreement in `backend/tests/unit/test_visualization.py`
+- [X] T036 [P] [US2] Add frontend state and table-render tests for real HTML table semantics, scene line-count sorting, accessible presence text, narrow-screen scrolling, and shared-result derivation in `frontend/tests/unit/render-table.test.ts`
+- [X] T037 [P] [US2] Add frontend SVG-render tests for speaking/non-speaking/absence encodings, labels, text summary, deterministic geometry, and reduced-motion geometry preservation in `frontend/tests/unit/render-visualization.test.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T038 [US2] Implement deterministic visualization inputs, color assignments, scene/character ordering, and line-count sort support in `backend/src/throughline/visualization.py`
-- [ ] T039 [US2] Implement result-driven responsive character-by-scene table rendering with captions/header associations, speaking/non-speaking text alternatives, scene sorting, and accessible status text in `frontend/src/render-table.ts`
-- [ ] T040 [US2] Implement result-driven SVG reappearance visualization with scene order, first-appearance ordering, speaking/non-speaking/absence labels or patterns, concise text summary, and mockup 2 draw animation only in `frontend/src/render-visualization.ts`
-- [ ] T041 [US2] Implement the plot/table switch with selected-state semantics, keyboard operation, shared `AnalysisResult` state, and no client-side re-inference in `frontend/src/main.ts`
-- [ ] T042 [US2] Add deterministic repeated-run assertions comparing canonical JSON, appearance data, IDs, colors, and visualization layout inputs in `backend/tests/integration/test_determinism.py`
+- [X] T038 [US2] Implement deterministic visualization inputs, color assignments, scene/character ordering, and line-count sort support in `backend/src/throughline/visualization.py`
+- [X] T039 [US2] Implement result-driven responsive character-by-scene table rendering with captions/header associations, speaking/non-speaking text alternatives, scene sorting, and accessible status text in `frontend/src/render-table.ts`
+- [X] T040 [US2] Implement result-driven SVG reappearance visualization with scene order, first-appearance ordering, speaking/non-speaking/absence labels or patterns, concise text summary, and mockup 2 draw animation only in `frontend/src/render-visualization.ts`
+- [X] T041 [US2] Implement the plot/table switch with selected-state semantics, keyboard operation, shared `AnalysisResult` state, and no client-side re-inference in `frontend/src/main.ts`
+- [X] T042 [US2] Add deterministic repeated-run assertions comparing canonical JSON, appearance data, IDs, colors, and visualization layout inputs in `backend/tests/integration/test_determinism.py`
 
 **Checkpoint**: The table and plot are independently reviewable and provably derived from the same deterministic result contract.
 
@@ -113,18 +113,18 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 ### Tests for User Story 3
 
-- [ ] T043 [P] [US3] Add frontend API/state tests for progress polling, cancellation, ready/rejected states, retry/replace-source actions, reset cleanup, and `aria-live` announcements in `frontend/tests/unit/state.test.ts`
-- [ ] T044 [P] [US3] Add CSV tests for deterministic row/column order, quoting, formula-leading value escaping, collective/unnamed names, and parseability in `frontend/tests/unit/csv.test.ts`
-- [ ] T045 [P] [US3] Add API tests for copy/export metadata, cleanup after reset/expiry, redacted logs, rate/concurrency limits, and generic retrieval/parsing failures in `backend/tests/contract/test_api_outcomes.py`
+- [X] T043 [P] [US3] Add frontend API/state tests for progress polling, cancellation, ready/rejected states, retry/replace-source actions, reset cleanup, and `aria-live` announcements in `frontend/tests/unit/state.test.ts`
+- [X] T044 [P] [US3] Add CSV tests for deterministic row/column order, quoting, formula-leading value escaping, collective/unnamed names, and parseability in `frontend/tests/unit/csv.test.ts`
+- [X] T045 [P] [US3] Add API tests for copy/export metadata, cleanup after reset/expiry, redacted logs, rate/concurrency limits, and generic retrieval/parsing failures in `backend/tests/contract/test_api_outcomes.py`
 
 ### Implementation for User Story 3
 
-- [ ] T046 [US3] Implement progress-stage polling and cancellation from queued through retrieving/extracting/parsing to ready/rejected in `frontend/src/api.ts` and `frontend/src/state.ts`
-- [ ] T047 [US3] Implement accessible source submission UI for URL/PDF, validation, progress, error summary focus, retry/replace actions, and supported English/Latin-script scope messaging in `frontend/src/main.ts` and `frontend/index.html`
-- [ ] T048 [US3] Implement deterministic browser CSV generation for character identity, scene IDs/labels, presence type, and line counts with CSV quoting and formula-leading value escaping in `frontend/src/csv.ts`
-- [ ] T049 [US3] Implement copy of the table and visualization summary plus success/failure announcements and download action wiring in `frontend/src/main.ts`
-- [ ] T050 [US3] Implement optional `GET /api/analyses/{analysis_id}/csv` convenience export with the same safe escaping and deterministic ordering in `backend/src/throughline/api.py`
-- [ ] T051 [US3] Implement page-leave/reset cleanup so submitted source bytes, temporary files, polling, and in-memory results are not retained beyond the session TTL in `frontend/src/main.ts` and `backend/src/throughline/state.py`
+- [X] T046 [US3] Implement progress-stage polling and cancellation from queued through retrieving/extracting/parsing to ready/rejected in `frontend/src/api.ts` and `frontend/src/state.ts`
+- [X] T047 [US3] Implement accessible source submission UI for URL/PDF, validation, progress, error summary focus, retry/replace actions, and supported English/Latin-script scope messaging in `frontend/src/main.ts` and `frontend/index.html`
+- [X] T048 [US3] Implement deterministic browser CSV generation for character identity, scene IDs/labels, presence type, and line counts with CSV quoting and formula-leading value escaping in `frontend/src/csv.ts`
+- [X] T049 [US3] Implement copy of the table and visualization summary plus success/failure announcements and download action wiring in `frontend/src/main.ts`
+- [X] T050 [US3] Implement optional `GET /api/analyses/{analysis_id}/csv` convenience export with the same safe escaping and deterministic ordering in `backend/src/throughline/api.py`
+- [X] T051 [US3] Implement page-leave/reset cleanup so submitted source bytes, temporary files, polling, and in-memory results are not retained beyond the session TTL in `frontend/src/main.ts` and `backend/src/throughline/state.py`
 
 **Checkpoint**: Users can understand processing, recover from failures, and copy/download a completed result without confusing an incomplete result for success.
 
@@ -134,12 +134,12 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 **Purpose**: Validate the complete workflow against accessibility, responsive behavior, performance, security, documentation, and release gates.
 
-- [ ] T052 [P] Add Playwright scenarios for loading, ready, table, visualization, invalid/error, keyboard-only, screen-reader semantics, reduced motion, contrast, zoom/reflow, mobile touch targets, and responsive table/plot scrolling in `frontend/tests/visual/playwright.spec.ts`
-- [ ] T053 [P] Add Playwright resource scenarios for slow connections, 200-page/10 MB supported inputs, modest-device responsiveness, cancellation, and no-hover operation in `frontend/tests/visual/resource.spec.ts`
-- [ ] T054 [P] Add backend benchmark coverage for representative parsing and visualization workloads, reporting scene detection and character identification separately by fixture category in `backend/tests/integration/test_benchmarks.py`
-- [ ] T055 [P] Add security and accessibility documentation, supported-scope limitations, normalization/line-count definitions, fixture provenance, and known unsupported input behavior in `README.md`, `backend/README.md`, and `frontend/README.md`
-- [ ] T056 Run the documented quickstart validation from `specs/001-playtext-scene-mapping/quickstart.md`, including `pytest --cov=throughline --cov-fail-under=81`, frontend tests/build, and Playwright tests in `backend/README.md` and `frontend/README.md`
-- [ ] T057 Create and verify the CI workflow in `.github/workflows/ci.yml` so every fixture category and accessibility/resource category is reported separately, coverage stays above 80%, deterministic-output checks pass, and no aggregate metric masks a category failure
+- [X] T052 [P] Add Playwright scenarios for loading, ready, table, visualization, invalid/error, keyboard-only, screen-reader semantics, reduced motion, contrast, zoom/reflow, mobile touch targets, and responsive table/plot scrolling in `frontend/tests/visual/playwright.spec.ts`
+- [X] T053 [P] Add Playwright resource scenarios for slow connections, 200-page/10 MB supported inputs, modest-device responsiveness, cancellation, and no-hover operation in `frontend/tests/visual/resource.spec.ts`
+- [X] T054 [P] Add backend benchmark coverage for representative parsing and visualization workloads, reporting scene detection and character identification separately by fixture category in `backend/tests/integration/test_benchmarks.py`
+- [X] T055 [P] Add security and accessibility documentation, supported-scope limitations, normalization/line-count definitions, fixture provenance, and known unsupported input behavior in `README.md`, `backend/README.md`, and `frontend/README.md`
+- [X] T056 Run the documented quickstart validation from `specs/001-playtext-scene-mapping/quickstart.md`, including `pytest --cov=throughline --cov-fail-under=81`, frontend tests/build, and Playwright tests in `backend/README.md` and `frontend/README.md`
+- [X] T057 Create and verify the CI workflow in `.github/workflows/ci.yml` so every fixture category and accessibility/resource category is reported separately, coverage stays above 80%, deterministic-output checks pass, and no aggregate metric masks a category failure
 
 ---
 
