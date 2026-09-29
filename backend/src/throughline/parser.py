@@ -9,6 +9,7 @@ from .models import (
     Act,
     Ambiguity,
     AnalysisResult,
+    ActKind,
     CharacterKind,
     CharacterOrSpeaker,
     Confidence,
@@ -22,7 +23,21 @@ from .visualization import build_visualization
 
 ACT_RE = re.compile(r"^\s*(?:ACT|ACTO|AKT)\s+(.+?)\s*$", re.I)
 SCENE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s+(.+?)\s*$", re.I)
-SPEAKER_RE = re.compile(r"^\s*([A-Z][A-Z0-9 .,'’()\-]{1,48})(?::)?\s*$")
+SPECIAL_ACT_RE = re.compile(
+    r"^\s*(PROLOGUE|EPILOGUE|ENTR['’]?ACTE|ENTRACTE|INTERLUDE)\s*:?[ \t]*$",
+    re.I,
+)
+SPEAKER_RE = re.compile(
+    r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48}(?:\([^()]*\))?)(?::)?\s*$"
+)
+PLAY_END_RE = re.compile(
+    r"^\s*(?:THE END|END OF THE PLAY|FINIS|CURTAIN|"
+    r"PROJECT GUTENBERG(?: LICENSE)?|GUTENBERG LICENSE|"
+    r"ADVERTISEMENTS?|OTHER PLAYS|ABOUT THE AUTHOR|"
+    r"(?:EDITOR'?S?|AUTHOR'?S?) (?:NOTE|PREFACE|INTRODUCTION)|"
+    r"NOTES?|ESSAY|COMMENTARY|APPENDIX|APPENDICES|LICENSE|LICENCE)\s*:?[ \t]*$",
+    re.I,
+)
 ENTER_RE = re.compile(
     r"\b(?:enter|enters|entrance of)\s+([A-Z][A-Za-zÀ-ÿ'’\- ]+)", re.I
 )
@@ -37,11 +52,14 @@ COLLECTIVE_WORDS = {
     "ENSEMBLE",
 }
 UNNAMED_WORDS = {"UNKNOWN", "UNNAMED", "A VOICE", "VOICE", "SOMEONE"}
+DELIVERY_NOTE_RE = re.compile(r"\s+\([^()]*\)\s*$")
+QUALIFIED_SPEAKER_RE = re.compile(r"^(?P<base>.+?)\s+WITH\s+(?:A|AN|THE)\s+.+$", re.I)
 
 
 @dataclass
 class SceneChunk:
     act_label: str
+    act_kind: ActKind
     scene_label: str
     text: str
     start: int
@@ -53,28 +71,81 @@ def _heading(line: str, pattern: re.Pattern[str]) -> str | None:
     return match.group(1).strip() if match else None
 
 
+def _special_act(line: str) -> tuple[str, ActKind] | None:
+    match = SPECIAL_ACT_RE.match(line)
+    if not match:
+        return None
+    label = match.group(1).upper().replace("’", "'")
+    if label in {"ENTRACTE", "ENTR'ACTE"}:
+        return "Entr'acte", ActKind.ENTR_ACTE
+    kind = ActKind(label.casefold())
+    return label.title(), kind
+
+
+def _play_end(text: str, minimum: int) -> int:
+    offset = 0
+    for line in text.splitlines(keepends=True):
+        if offset > minimum and PLAY_END_RE.match(line.strip()):
+            return offset
+        offset += len(line)
+    return len(text)
+
+
 def _chunks(text: str) -> list[SceneChunk]:
     lines = text.splitlines(keepends=True)
-    markers: list[tuple[int, str, str]] = []
+    markers: list[tuple[int, str, ActKind, str]] = []
     offset = 0
     current_act = "Act I"
+    current_act_kind = ActKind.ACT
+    first_act_start: int | None = None
     for line in lines:
         clean = line.strip()
         act_label = _heading(clean, ACT_RE)
         scene_label = _heading(clean, SCENE_RE)
         if act_label:
+            if first_act_start is None:
+                first_act_start = offset
             current_act = f"Act {act_label}"
+            current_act_kind = ActKind.ACT
+        special_act = _special_act(clean)
+        if special_act:
+            current_act, current_act_kind = special_act
+            markers.append((offset, current_act, current_act_kind, current_act))
         if scene_label:
-            markers.append((offset, current_act, f"Scene {scene_label}"))
+            markers.append(
+                (offset, current_act, current_act_kind, f"Scene {scene_label}")
+            )
         offset += len(line)
     if not markers:
-        return [SceneChunk("Act I", "Scene I", text, 0, len(text))]
+        start = first_act_start or 0
+        end = _play_end(text, start)
+        return [
+            SceneChunk(
+                "Act I" if first_act_start is None else current_act,
+                ActKind.ACT,
+                "Scene I",
+                text[start:end],
+                start,
+                end,
+            )
+        ]
     chunks: list[SceneChunk] = []
-    for index, (start, act_label, scene_label) in enumerate(markers):
-        end = markers[index + 1][0] if index + 1 < len(markers) else len(text)
+    for index, (start, act_label, act_kind, scene_label) in enumerate(markers):
+        end = (
+            markers[index + 1][0]
+            if index + 1 < len(markers)
+            else _play_end(text, start)
+        )
         body_start = start + len(text[start:].splitlines(keepends=True)[0])
         chunks.append(
-            SceneChunk(act_label, scene_label, text[body_start:end], start, end)
+            SceneChunk(
+                act_label,
+                act_kind,
+                scene_label,
+                text[body_start:end],
+                start,
+                end,
+            )
         )
     return chunks
 
@@ -92,6 +163,50 @@ def _identity_key(display: str) -> str:
     return re.sub(r"[^\w]", "", display.casefold())
 
 
+def _normalize_speaker_display(display: str) -> str:
+    return DELIVERY_NOTE_RE.sub("", display).strip()
+
+
+def _looks_like_speaker(line: str, display: str) -> bool:
+    if line.endswith(":"):
+        return True
+    normalized = _normalize_speaker_display(display)
+    if not normalized or re.search(r"[.!?;]$", normalized):
+        return False
+    if normalized == normalized.upper():
+        return True
+    words = re.findall(r"[A-Za-zÀ-ÿ]+", normalized)
+    return bool(words) and all(
+        word[0].isupper() and word[1:] == word[1:].lower() for word in words
+    )
+
+
+def _qualified_base(display: str) -> str | None:
+    match = QUALIFIED_SPEAKER_RE.match(display)
+    return match.group("base").strip() if match else None
+
+
+def _qualified_ambiguity(
+    display: str, characters: list[CharacterOrSpeaker]
+) -> Ambiguity | None:
+    base = _qualified_base(display)
+    if base is None:
+        return None
+    base_key = _identity_key(base)
+    alternatives = [
+        character.display_name
+        for character in characters
+        if _identity_key(character.display_name) == base_key
+        or _identity_key(character.display_name).endswith(base_key)
+    ]
+    if not alternatives:
+        alternatives = [base]
+    return Ambiguity(
+        evidence="descriptive speaker qualifier may refer to an existing role",
+        alternatives=alternatives,
+    )
+
+
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     chunks = _chunks(text)
     acts: list[Act] = []
@@ -104,6 +219,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 id=f"act-{len(acts) + 1:02d}",
                 ordinal=len(acts) + 1,
                 label=chunk.act_label,
+                kind=chunk.act_kind,
             )
             acts.append(act)
             act_by_label[chunk.act_label] = act
@@ -145,8 +261,16 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                     scene_presence.add((scene.id, by_key[key].id))
                 continue
             speaker = SPEAKER_RE.match(line)
-            if speaker and not line.startswith(("ACT ", "SCENE ")):
-                display = speaker.group(1).strip()
+            if (
+                speaker
+                and not (
+                    ACT_RE.match(line)
+                    or SCENE_RE.match(line)
+                    or SPECIAL_ACT_RE.match(line)
+                )
+                and _looks_like_speaker(line, speaker.group(1))
+            ):
+                display = _normalize_speaker_display(speaker.group(1))
                 kind = _classify(display)
                 key = _identity_key(display) or f"unnamed-{scene.id}"
                 character = by_key.get(key)
@@ -160,6 +284,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                         ),
                         kind=kind,
                         first_appearance_scene_id=scene.id,
+                        ambiguity=_qualified_ambiguity(display, characters),
                     )
                     by_key[key] = character
                     characters.append(character)

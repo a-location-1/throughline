@@ -1,12 +1,13 @@
 export type SubmissionState = 'queued' | 'retrieving' | 'extracting' | 'parsing' | 'ready' | 'rejected';
 export type Presence = 'speaking' | 'non_speaking';
 export type CharacterKind = 'named' | 'unnamed' | 'collective' | 'indeterminate' | 'silent';
+export type ActKind = 'act' | 'prologue' | 'epilogue' | "entr'acte" | 'interlude';
 
 export interface Progress { stage: string; percent: number; }
 export interface Failure { code: string; message: string; next_action: string; }
 export interface Submission { submission_id: string; source_kind: 'url' | 'pdf'; source_name: string; page_count?: number; byte_count: number; state: SubmissionState; failure?: Failure; }
 export interface Scene { id: string; ordinal: number; act_id: string; label: string; source_span?: [number, number]; }
-export interface Act { id: string; ordinal: number; label: string; scenes: Scene[]; }
+export interface Act { id: string; ordinal: number; label: string; kind: ActKind; scenes: Scene[]; }
 export interface Character { id: string; display_name: string; kind: CharacterKind; first_appearance_scene_id: string; ambiguity?: { evidence: string; alternatives: string[] }; }
 export interface Appearance { scene_id: string; character_id: string; presence: Presence; line_count: number; confidence: 'supported' | 'ambiguous'; explanation?: string; }
 export interface Visualization { scene_ids: string[]; character_ids: string[]; colors: Record<string, string>; paths: Record<string, [number, number][]>; }

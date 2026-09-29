@@ -31,6 +31,14 @@ class CharacterKind(str, Enum):
     SILENT = "silent"
 
 
+class ActKind(str, Enum):
+    ACT = "act"
+    PROLOGUE = "prologue"
+    EPILOGUE = "epilogue"
+    ENTR_ACTE = "entr'acte"
+    INTERLUDE = "interlude"
+
+
 class Presence(str, Enum):
     SPEAKING = "speaking"
     NON_SPEAKING = "non_speaking"
@@ -76,6 +84,7 @@ class Act(BaseModel):
     id: str
     ordinal: int = Field(ge=1)
     label: str
+    kind: ActKind = ActKind.ACT
     scenes: list[Scene] = Field(default_factory=list)
 
 
