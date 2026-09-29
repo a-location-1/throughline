@@ -37,9 +37,9 @@ description: "Task list for implementing Playtext Scene Mapping"
 - [ ] T009 [P] Define the shared TypeScript interfaces and API response discriminated unions matching `contracts/api.md` and `data-model.md` in `frontend/src/api.ts`
 - [ ] T010 [P] Implement deterministic canonical serialization, stable IDs, first-appearance ordering, and invariant checks in `backend/src/throughline/models.py` and `backend/tests/unit/test_models.py`
 - [ ] T011 [P] Create the manifest-backed fixture harness and canonical expected-result comparison in `backend/tests/conftest.py` and `backend/tests/integration/test_fixture_corpus.py`
-- [ ] T012 [P] Add fixture manifest schema and initial fixture directory structure under `backend/tests/fixtures/{sources,expected,valid,invalid}` in `backend/tests/fixtures/manifest.json`
-- [ ] T013 Implement bounded in-memory analysis state, opaque IDs, short session TTL, state transitions, cleanup, and concurrent-analysis limits in `backend/src/throughline/state.py`
-- [ ] T014 Implement API error envelopes, generic user-facing failure codes, logging redaction, and next-action mapping in `backend/src/throughline/errors.py` and `backend/src/throughline/logging.py`
+- [ ] T012 [P] Add fixture manifest schema and initial fixture directory structure under `backend/tests/fixtures/{sources,expected,valid,invalid}` in `backend/tests/fixtures/manifest.json`, including an `accessibility-and-resources` category entry
+- [ ] T013 Implement bounded in-memory analysis state, opaque IDs, short session TTL, state transitions, cleanup, concurrent-analysis limits, and submission rate limiting or equivalent deployment protection in `backend/src/throughline/state.py`; add unit coverage in `backend/tests/unit/test_state.py`
+- [ ] T014 Implement API error envelopes, generic user-facing failure codes, logging redaction, and next-action mapping in `backend/src/throughline/errors.py` and `backend/src/throughline/logging.py`; add unit coverage in `backend/tests/unit/test_errors.py` and `backend/tests/unit/test_logging.py`
 - [ ] T015 [P] Add shared frontend state transitions, polling cancellation, reset cleanup, and `aria-live` status state in `frontend/src/state.ts`
 - [ ] T016 [P] Add a backend test command and frontend test/build command documented in `backend/README.md` and `frontend/README.md`
 
@@ -56,9 +56,9 @@ description: "Task list for implementing Playtext Scene Mapping"
 ### Tests for User Story 1
 
 - [ ] T017 [P] [US1] Add golden sources and expected `AnalysisResult` files for explicit acts/scenes, one-act/no-scene-breaks, scene-breaks/no-acts, no-breaks recognizable play, and single-speaker cases under `backend/tests/fixtures/sources/` and `backend/tests/fixtures/expected/`
-- [ ] T018 [P] [US1] Add golden sources and expected outputs for unnamed speakers, collective speakers, silent presence, name variation, Unicode/diacritics, group references, repeated headings, and unsupported scope under `backend/tests/fixtures/sources/` and `backend/tests/fixtures/expected/`
+- [ ] T018 [P] [US1] Add golden sources and expected outputs for unnamed speakers, collective speakers, silent presence, name variation, Unicode/diacritics, group references, repeated headings, unsupported scope, and accessibility/resource conditions under `backend/tests/fixtures/sources/` and `backend/tests/fixtures/expected/`; record category and provenance in `backend/tests/fixtures/manifest.json`
 - [ ] T019 [P] [US1] Add invalid and hostile-input fixtures for empty, malformed, unreadable, non-playtext, image-only PDF, over-page-limit, and over-byte-limit cases under `backend/tests/fixtures/invalid/` and `backend/tests/fixtures/expected/`
-- [ ] T020 [P] [US1] Add parameterized parser regression and invariant assertions for scene order, unique IDs, first-appearance order, ambiguity preservation, collective/unnamed retention, and non-speaking line count in `backend/tests/integration/test_fixture_corpus.py`
+- [ ] T020 [P] [US1] Add parser unit tests and parameterized fixture regression/invariant assertions for scene order, unique IDs, first-appearance order, ambiguity preservation, collective/unnamed retention, and non-speaking line count in `backend/tests/unit/test_parser.py` and `backend/tests/integration/test_fixture_corpus.py`
 - [ ] T021 [P] [US1] Add acquisition and extraction boundary tests for invalid schemes, embedded credentials, private/loopback/link-local/multicast/metadata addresses, unsafe redirects, timeouts, content type, 10 MB streaming limit, PDF signature, and 200-page limit in `backend/tests/unit/test_acquisition.py` and `backend/tests/unit/test_extraction.py`
 
 ### Implementation for User Story 1
@@ -139,7 +139,7 @@ description: "Task list for implementing Playtext Scene Mapping"
 - [ ] T054 [P] Add backend benchmark coverage for representative parsing and visualization workloads, reporting scene detection and character identification separately by fixture category in `backend/tests/integration/test_benchmarks.py`
 - [ ] T055 [P] Add security and accessibility documentation, supported-scope limitations, normalization/line-count definitions, fixture provenance, and known unsupported input behavior in `README.md`, `backend/README.md`, and `frontend/README.md`
 - [ ] T056 Run the documented quickstart validation from `specs/001-playtext-scene-mapping/quickstart.md`, including `pytest --cov=throughline --cov-fail-under=81`, frontend tests/build, and Playwright tests in `backend/README.md` and `frontend/README.md`
-- [ ] T057 Verify every fixture category and accessibility/resource category is reported separately in CI output, with coverage above 80%, deterministic-output checks passing, and no aggregate metric masking a category failure in `.github/workflows/ci.yml`
+- [ ] T057 Create and verify the CI workflow in `.github/workflows/ci.yml` so every fixture category and accessibility/resource category is reported separately, coverage stays above 80%, deterministic-output checks pass, and no aggregate metric masks a category failure
 
 ---
 
@@ -150,7 +150,7 @@ description: "Task list for implementing Playtext Scene Mapping"
 - **Phase 1 (Setup)**: No dependencies; T002-T007 can run in parallel after the project directories exist.
 - **Phase 2 (Foundational)**: Depends on Phase 1; T009-T012 and T015-T016 can run in parallel, while T013-T014 depend on the shared model decisions in T008.
 - **Phase 3 (US1)**: Depends on Phase 2; acquisition/extraction/parser work can proceed in parallel after T008, while API integration depends on T013-T014 and parser implementation.
-- **Phase 4 (US2)**: Depends on the P1 `AnalysisResult` contract and parser output; backend visualization and frontend rendering tests/implementation can proceed in parallel after T029.
+- **Phase 4 (US2)**: Depends on the P1 `AnalysisResult` contract and parser output; backend visualization and frontend rendering tests/implementation can proceed in parallel after T034.
 - **Phase 5 (US3)**: Depends on the API states from US1 and result/rendering contract from US2; frontend outcome work and backend outcome tests can proceed in parallel.
 - **Phase 6 (Polish)**: Depends on the desired stories being complete; browser, benchmark, documentation, and CI work can proceed in parallel before the final quickstart gate.
 
@@ -181,17 +181,17 @@ Developer D: T033-T034, wire and test the FastAPI contract after the shared mode
 ## Parallel Example: User Story 2
 
 ```text
-Developer A: T031 and T034, implement and test deterministic visualization inputs.
-Developer B: T032 and T035, implement and test the accessible table renderer.
-Developer C: T033 and T036-T037, implement and test SVG rendering and view switching.
+Developer A: T035 and T038, implement and test deterministic visualization inputs.
+Developer B: T036 and T039, implement and test the accessible table renderer.
+Developer C: T037 and T040-T041, implement and test SVG rendering and view switching.
 ```
 
 ## Parallel Example: User Story 3
 
 ```text
-Developer A: T039 and T042-T043, implement progress, errors, retry, and accessible submission UI.
-Developer B: T040 and T044-T045, implement and test copy and safe CSV download.
-Developer C: T041 and T046-T047, implement API outcome handling and lifecycle cleanup.
+Developer A: T043 and T046-T047, implement progress, errors, retry, and accessible submission UI.
+Developer B: T044 and T048-T049, implement and test copy and safe CSV download.
+Developer C: T045 and T050-T051, implement API outcome handling and lifecycle cleanup.
 ```
 
 ## Implementation Strategy

@@ -75,6 +75,9 @@ backend/
 │   ├── extraction.py
 │   ├── parser.py
 │   ├── visualization.py
+│   ├── state.py
+│   ├── errors.py
+│   ├── logging.py
 │   └── api.py
 └── tests/
     ├── fixtures/
@@ -92,6 +95,7 @@ frontend/
 ├── src/
 │   ├── api.ts
 │   ├── state.ts
+│   ├── csv.ts
 │   ├── render-table.ts
 │   ├── render-visualization.ts
 │   └── main.ts
