@@ -23,12 +23,16 @@ from .visualization import build_visualization
 
 ACT_RE = re.compile(r"^\s*(?:ACT|ACTO|AKT)\s+(.+?)\s*$", re.I)
 SCENE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s+(.+?)\s*$", re.I)
+SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
 SPECIAL_ACT_RE = re.compile(
     r"^\s*(PROLOGUE|EPILOGUE|ENTR['’]?ACTE|ENTRACTE|INTERLUDE)\s*:?[ \t]*$",
     re.I,
 )
 SPEAKER_RE = re.compile(
     r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48}(?:\([^()]*\))?)(?::)?\s*$"
+)
+SPEAKER_PREFIX_RE = re.compile(
+    r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48}(?:\([^()]*\))?)\s*:\s*(.*)$"
 )
 PLAY_END_RE = re.compile(
     r"^\s*(?:THE END|END OF THE PLAY|FINIS|CURTAIN|"
@@ -115,6 +119,8 @@ def _chunks(text: str) -> list[SceneChunk]:
             markers.append(
                 (offset, current_act, current_act_kind, f"Scene {scene_label}")
             )
+        elif SCENE_STAGE_RE.match(clean):
+            markers.append((offset, current_act, current_act_kind, "Scene I"))
         offset += len(line)
     if not markers:
         start = first_act_start or 0
@@ -163,6 +169,36 @@ def _identity_key(display: str) -> str:
     return re.sub(r"[^\w]", "", display.casefold())
 
 
+def _cast_aliases(text: str) -> dict[str, str]:
+    scene_start = re.search(r"(?im)^\s*(?:SCENE|SCÈNE|SZENE)\s*(?::|\s)", text)
+    preamble = text[: scene_start.start()] if scene_start else ""
+    aliases: dict[str, str] = {}
+    cast_line = re.compile(
+        r"^([A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ0-9 .,'’\-]{1,48}?)(?:\s*\(([^()]*)\)|,\s*.+)?$"
+    )
+    for raw_line in preamble.splitlines():
+        match = cast_line.match(raw_line.strip())
+        if not match:
+            continue
+        canonical = match.group(1).strip()
+        aliases[_identity_key(canonical)] = canonical
+        words = canonical.split()
+        if len(words) > 1:
+            aliases.setdefault(_identity_key(words[-1]), canonical)
+        if match.group(2):
+            aliases[_identity_key(match.group(2))] = canonical
+    return aliases
+
+
+def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
+    normalized = display.strip(" _.,;:")
+    normalized_key = _identity_key(normalized)
+    for alias_key, canonical in sorted(aliases.items(), key=lambda item: -len(item[0])):
+        if normalized_key.startswith(alias_key):
+            return canonical
+    return normalized
+
+
 def _normalize_speaker_display(display: str) -> str:
     return DELIVERY_NOTE_RE.sub("", display).strip()
 
@@ -176,7 +212,7 @@ def _looks_like_speaker(line: str, display: str) -> bool:
     if normalized == normalized.upper():
         return True
     words = re.findall(r"[A-Za-zÀ-ÿ]+", normalized)
-    return bool(words) and all(
+    return len(words) > 1 and all(
         word[0].isupper() and word[1:] == word[1:].lower() for word in words
     )
 
@@ -188,6 +224,7 @@ def _qualified_base(display: str) -> str | None:
 
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     chunks = _chunks(text)
+    cast_aliases = _cast_aliases(text)
     acts: list[Act] = []
     scenes: list[Scene] = []
     act_by_label: dict[str, Act] = {}
@@ -225,7 +262,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 continue
             entrance = ENTER_RE.search(line)
             if entrance:
-                display = entrance.group(1).strip()
+                display = _canonical_entrance_display(entrance.group(1), cast_aliases)
                 key = _identity_key(display)
                 if key and key not in by_key:
                     character = CharacterOrSpeaker(
@@ -239,7 +276,8 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 if key:
                     scene_presence.add((scene.id, by_key[key].id))
                 continue
-            speaker = SPEAKER_RE.match(line)
+            speaker_prefix = SPEAKER_PREFIX_RE.match(line)
+            speaker = speaker_prefix or SPEAKER_RE.match(line)
             if (
                 speaker
                 and not (
@@ -251,7 +289,10 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             ):
                 display = _normalize_speaker_display(speaker.group(1))
                 qualified_base = _qualified_base(display)
-                canonical_display = qualified_base or display
+                source_key = _identity_key(qualified_base or display)
+                canonical_display = cast_aliases.get(
+                    source_key, qualified_base or display
+                )
                 kind = _classify(canonical_display)
                 key = _identity_key(canonical_display) or f"unnamed-{scene.id}"
                 character = by_key.get(key)
@@ -276,6 +317,14 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                         )
                     if display not in character.ambiguity.alternatives:
                         character.ambiguity.alternatives.append(display)
+                elif canonical_display != display:
+                    if character.ambiguity is None:
+                        character.ambiguity = Ambiguity(
+                            evidence="source role label was grouped with the cast-list character",
+                            alternatives=[],
+                        )
+                    if display not in character.ambiguity.alternatives:
+                        character.ambiguity.alternatives.append(display)
                 elif character.display_name != display and character.ambiguity is None:
                     character.ambiguity = Ambiguity(
                         evidence="formatting or naming variation",
@@ -283,6 +332,12 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                     )
                 current = character
                 scene_presence.add((scene.id, character.id))
+                if speaker_prefix and speaker_prefix.group(2).strip():
+                    inline_text = speaker_prefix.group(2).strip()
+                    if not (inline_text.startswith("(") and inline_text.endswith(")")):
+                        appearance_counts[(scene.id, character.id)] = (
+                            appearance_counts.get((scene.id, character.id), 0) + 1
+                        )
                 continue
             if current is not None and not (
                 line.startswith("(") and line.endswith(")")

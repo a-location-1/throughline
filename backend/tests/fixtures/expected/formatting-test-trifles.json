@@ -22,7 +22,7 @@
           "ordinal": 1,
           "act_id": "act-01",
           "label": "Scene I",
-          "source_span": [0, 28367]
+          "source_span": [232, 28367]
         }
       ]
     }
@@ -33,7 +33,7 @@
       "ordinal": 1,
       "act_id": "act-01",
       "label": "Scene I",
-      "source_span": [0, 28367]
+      "source_span": [232, 28367]
     }
   ],
   "characters": [
