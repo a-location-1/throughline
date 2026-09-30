@@ -1,1 +1,121 @@
-{"status":"ready","category":"one-act-no-scene-breaks","provenance":"synthetic"}
+{
+    "schema_version": "1.0",
+    "parser_version": "0.1.0",
+    "submission": {
+        "submission_id": "one-act-no-scene-breaks",
+        "source_kind": "url",
+        "source_name": "one-act-no-scene-breaks.txt",
+        "page_count": null,
+        "byte_count": 59,
+        "state": "ready",
+        "failure": null
+    },
+    "acts": [
+        {
+            "id": "act-01",
+            "ordinal": 1,
+            "label": "Act I",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-01",
+                    "ordinal": 1,
+                    "act_id": "act-01",
+                    "label": "Scene I",
+                    "source_span": [
+                        0,
+                        59
+                    ]
+                }
+            ]
+        }
+    ],
+    "scenes": [
+        {
+            "id": "scene-01",
+            "ordinal": 1,
+            "act_id": "act-01",
+            "label": "Scene I",
+            "source_span": [
+                0,
+                59
+            ]
+        }
+    ],
+    "characters": [
+        {
+            "id": "character-01",
+            "display_name": "ALICE",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-02",
+            "display_name": "BOB",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        }
+    ],
+    "appearances": [
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        }
+    ],
+    "ordering": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02"
+        ],
+        "scene_line_count_desc": {
+            "scene-01": [
+                "character-01",
+                "character-02"
+            ]
+        }
+    },
+    "visualization": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02"
+        ],
+        "colors": {
+            "character-01": "#177254",
+            "character-02": "#b44336"
+        },
+        "paths": {
+            "character-01": [
+                [
+                    0,
+                    0
+                ]
+            ],
+            "character-02": [
+                [
+                    0,
+                    1
+                ]
+            ]
+        }
+    }
+}

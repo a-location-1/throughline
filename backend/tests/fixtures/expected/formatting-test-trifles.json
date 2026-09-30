@@ -1,161 +1,196 @@
 {
-  "schema_version": "1.0",
-  "parser_version": "0.1.0",
-  "submission": {
-    "submission_id": "fixture-formatting-test-trifles",
-    "source_kind": "url",
-    "source_name": "formatting-test-trifles.txt",
-    "page_count": null,
-    "byte_count": 28367,
-    "state": "ready",
-    "failure": null
-  },
-  "acts": [
-    {
-      "id": "act-01",
-      "ordinal": 1,
-      "label": "Act I",
-      "kind": "act",
-      "scenes": [
+    "schema_version": "1.0",
+    "parser_version": "0.1.0",
+    "submission": {
+        "submission_id": "fixture-formatting-test-trifles",
+        "source_kind": "url",
+        "source_name": "formatting-test-trifles.txt",
+        "page_count": null,
+        "byte_count": 28367,
+        "state": "ready",
+        "failure": null
+    },
+    "acts": [
         {
-          "id": "scene-01",
-          "ordinal": 1,
-          "act_id": "act-01",
-          "label": "Scene I",
-          "source_span": [232, 28367]
+            "id": "act-01",
+            "ordinal": 1,
+            "label": "Act I",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-01",
+                    "ordinal": 1,
+                    "act_id": "act-01",
+                    "label": "Scene I",
+                    "source_span": [
+                        232,
+                        28367
+                    ]
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "scenes": [
-    {
-      "id": "scene-01",
-      "ordinal": 1,
-      "act_id": "act-01",
-      "label": "Scene I",
-      "source_span": [232, 28367]
-    }
-  ],
-  "characters": [
-    {
-      "id": "character-01",
-      "display_name": "GEORGE HENDERSON",
-      "kind": "named",
-      "first_appearance_scene_id": "scene-01",
-      "ambiguity": null
-    },
-    {
-      "id": "character-02",
-      "display_name": "MRS PETERS",
-      "kind": "named",
-      "first_appearance_scene_id": "scene-01",
-      "ambiguity": null
-    },
-    {
-      "id": "character-03",
-      "display_name": "HENRY PETERS",
-      "kind": "named",
-      "first_appearance_scene_id": "scene-01",
-      "ambiguity": null
-    },
-    {
-      "id": "character-04",
-      "display_name": "LEWIS HALE",
-      "kind": "named",
-      "first_appearance_scene_id": "scene-01",
-      "ambiguity": null
-    },
-    {
-      "id": "character-05",
-      "display_name": "MRS HALE",
-      "kind": "named",
-      "first_appearance_scene_id": "scene-01",
-      "ambiguity": null
-    }
-  ],
-  "appearances": [
-    {
-      "scene_id": "scene-01",
-      "character_id": "character-01",
-      "presence": "speaking",
-      "line_count": 49,
-      "confidence": "supported",
-      "explanation": null
-    },
-    {
-      "scene_id": "scene-01",
-      "character_id": "character-02",
-      "presence": "speaking",
-      "line_count": 60,
-      "confidence": "supported",
-      "explanation": null
-    },
-    {
-      "scene_id": "scene-01",
-      "character_id": "character-03",
-      "presence": "speaking",
-      "line_count": 28,
-      "confidence": "supported",
-      "explanation": null
-    },
-    {
-      "scene_id": "scene-01",
-      "character_id": "character-04",
-      "presence": "speaking",
-      "line_count": 55,
-      "confidence": "supported",
-      "explanation": null
-    },
-    {
-      "scene_id": "scene-01",
-      "character_id": "character-05",
-      "presence": "speaking",
-      "line_count": 109,
-      "confidence": "supported",
-      "explanation": null
-    }
-  ],
-  "ordering": {
-    "scene_ids": ["scene-01"],
-    "character_ids": [
-      "character-01",
-      "character-02",
-      "character-03",
-      "character-04",
-      "character-05"
     ],
-    "scene_line_count_desc": {
-      "scene-01": [
-        "character-05",
-        "character-02",
-        "character-04",
-        "character-01",
-        "character-03"
-      ]
-    }
-  },
-  "visualization": {
-    "scene_ids": ["scene-01"],
-    "character_ids": [
-      "character-01",
-      "character-02",
-      "character-03",
-      "character-04",
-      "character-05"
+    "scenes": [
+        {
+            "id": "scene-01",
+            "ordinal": 1,
+            "act_id": "act-01",
+            "label": "Scene I",
+            "source_span": [
+                232,
+                28367
+            ]
+        }
     ],
-    "colors": {
-      "character-01": "#177254",
-      "character-02": "#b44336",
-      "character-03": "#b8860b",
-      "character-04": "#375a7f",
-      "character-05": "#7b4b94"
+    "characters": [
+        {
+            "id": "character-01",
+            "display_name": "GEORGE HENDERSON",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-02",
+            "display_name": "MRS PETERS",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-03",
+            "display_name": "HENRY PETERS",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-04",
+            "display_name": "LEWIS HALE",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-05",
+            "display_name": "MRS HALE",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        }
+    ],
+    "appearances": [
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 49,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 60,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-03",
+            "presence": "speaking",
+            "line_count": 28,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-04",
+            "presence": "speaking",
+            "line_count": 55,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-05",
+            "presence": "speaking",
+            "line_count": 109,
+            "confidence": "supported",
+            "explanation": null
+        }
+    ],
+    "ordering": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02",
+            "character-03",
+            "character-04",
+            "character-05"
+        ],
+        "scene_line_count_desc": {
+            "scene-01": [
+                "character-05",
+                "character-02",
+                "character-04",
+                "character-01",
+                "character-03"
+            ]
+        }
     },
-    "paths": {
-      "character-01": [[0, 0]],
-      "character-02": [[0, 1]],
-      "character-03": [[0, 2]],
-      "character-04": [[0, 3]],
-      "character-05": [[0, 4]]
+    "visualization": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02",
+            "character-03",
+            "character-04",
+            "character-05"
+        ],
+        "colors": {
+            "character-01": "#177254",
+            "character-02": "#b44336",
+            "character-03": "#b8860b",
+            "character-04": "#375a7f",
+            "character-05": "#7b4b94"
+        },
+        "paths": {
+            "character-01": [
+                [
+                    0,
+                    0
+                ]
+            ],
+            "character-02": [
+                [
+                    0,
+                    1
+                ]
+            ],
+            "character-03": [
+                [
+                    0,
+                    2
+                ]
+            ],
+            "character-04": [
+                [
+                    0,
+                    3
+                ]
+            ],
+            "character-05": [
+                [
+                    0,
+                    4
+                ]
+            ]
+        }
     }
-  }
 }

@@ -1,1 +1,150 @@
-{"status":"ready","category":"ambiguity","provenance":"synthetic"}
+{
+    "schema_version": "1.0",
+    "parser_version": "0.1.0",
+    "submission": {
+        "submission_id": "unnamed-collective-silent",
+        "source_kind": "url",
+        "source_name": "unnamed-collective-silent.txt",
+        "page_count": null,
+        "byte_count": 69,
+        "state": "ready",
+        "failure": null
+    },
+    "acts": [
+        {
+            "id": "act-01",
+            "ordinal": 1,
+            "label": "Act I",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-01",
+                    "ordinal": 1,
+                    "act_id": "act-01",
+                    "label": "Scene I",
+                    "source_span": [
+                        0,
+                        69
+                    ]
+                }
+            ]
+        }
+    ],
+    "scenes": [
+        {
+            "id": "scene-01",
+            "ordinal": 1,
+            "act_id": "act-01",
+            "label": "Scene I",
+            "source_span": [
+                0,
+                69
+            ]
+        }
+    ],
+    "characters": [
+        {
+            "id": "character-01",
+            "display_name": "Unnamed speaker",
+            "kind": "unnamed",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": {
+                "evidence": "formatting or naming variation",
+                "alternatives": [
+                    "UNKNOWN"
+                ]
+            }
+        },
+        {
+            "id": "character-02",
+            "display_name": "CROWD",
+            "kind": "collective",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-03",
+            "display_name": "WATCHMAN",
+            "kind": "silent",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        }
+    ],
+    "appearances": [
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-03",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        }
+    ],
+    "ordering": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02",
+            "character-03"
+        ],
+        "scene_line_count_desc": {
+            "scene-01": [
+                "character-01",
+                "character-02"
+            ]
+        }
+    },
+    "visualization": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02",
+            "character-03"
+        ],
+        "colors": {
+            "character-01": "#177254",
+            "character-02": "#b44336",
+            "character-03": "#b8860b"
+        },
+        "paths": {
+            "character-01": [
+                [
+                    0,
+                    0
+                ]
+            ],
+            "character-02": [
+                [
+                    0,
+                    1
+                ]
+            ],
+            "character-03": [
+                [
+                    0,
+                    2
+                ]
+            ]
+        }
+    }
+}

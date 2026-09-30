@@ -172,6 +172,12 @@ def _identity_key(display: str) -> str:
 def _cast_aliases(text: str) -> dict[str, str]:
     scene_start = re.search(r"(?im)^\s*(?:SCENE|SCÈNE|SZENE)\s*(?::|\s)", text)
     preamble = text[: scene_start.start()] if scene_start else ""
+    cast_start = re.search(r"(?im)^\s*CAST OF CHARACTERS\s*$", preamble)
+    if cast_start:
+        preamble = preamble[cast_start.end() :]
+        play_start = re.search(r"(?im)^\s*(?:ACT|ACTO|AKT)\s+", preamble)
+        if play_start:
+            preamble = preamble[: play_start.start()]
     aliases: dict[str, str] = {}
     cast_line = re.compile(
         r"^([A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ0-9 .,'’\-]{1,48}?)(?:\s*\(([^()]*)\)|,\s*.+)?$"
@@ -349,6 +355,28 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 scene_confidence[(scene.id, current.id if current else "")] = (
                     Confidence.AMBIGUOUS
                 )
+
+        if not characters:
+            cast_names = list(dict.fromkeys(cast_aliases.values()))
+            if len(cast_names) == 1:
+                character = CharacterOrSpeaker(
+                    id="character-01",
+                    display_name=cast_names[0],
+                    kind=_classify(cast_names[0]),
+                    first_appearance_scene_id=scenes[0].id,
+                )
+                characters.append(character)
+                for scene in scenes:
+                    scene_presence.add((scene.id, character.id))
+                    speech_lines = [
+                        line.strip()
+                        for line in next(
+                            chunk.text.splitlines() for chunk in chunks if chunk.text
+                        )
+                        if line.strip()
+                        and not line.strip().startswith(("(", "*"))
+                    ]
+                    appearance_counts[(scene.id, character.id)] = len(speech_lines)
 
     appearances: list[SceneAppearance] = []
     for scene in scenes:

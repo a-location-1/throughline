@@ -1,1 +1,409 @@
-{"status":"ready","category":"explicit-acts-scenes","provenance":"synthetic"}
+{
+    "schema_version": "1.0",
+    "parser_version": "0.1.0",
+    "submission": {
+        "submission_id": "explicit-acts-scenes",
+        "source_kind": "url",
+        "source_name": "explicit-acts-scenes.txt",
+        "page_count": null,
+        "byte_count": 275,
+        "state": "ready",
+        "failure": null
+    },
+    "acts": [
+        {
+            "id": "act-01",
+            "ordinal": 1,
+            "label": "Act I",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-01",
+                    "ordinal": 1,
+                    "act_id": "act-01",
+                    "label": "Scene I",
+                    "source_span": [
+                        6,
+                        29
+                    ]
+                },
+                {
+                    "id": "scene-02",
+                    "ordinal": 2,
+                    "act_id": "act-01",
+                    "label": "Scene II",
+                    "source_span": [
+                        29,
+                        65
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "act-02",
+            "ordinal": 2,
+            "label": "Act II",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-03",
+                    "ordinal": 3,
+                    "act_id": "act-02",
+                    "label": "Scene I",
+                    "source_span": [
+                        65,
+                        94
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "act-03",
+            "ordinal": 3,
+            "label": "Act III",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-04",
+                    "ordinal": 4,
+                    "act_id": "act-03",
+                    "label": "Scene I",
+                    "source_span": [
+                        94,
+                        136
+                    ]
+                },
+                {
+                    "id": "scene-05",
+                    "ordinal": 5,
+                    "act_id": "act-03",
+                    "label": "Scene II",
+                    "source_span": [
+                        136,
+                        168
+                    ]
+                },
+                {
+                    "id": "scene-06",
+                    "ordinal": 6,
+                    "act_id": "act-03",
+                    "label": "Scene III",
+                    "source_span": [
+                        168,
+                        199
+                    ]
+                },
+                {
+                    "id": "scene-07",
+                    "ordinal": 7,
+                    "act_id": "act-03",
+                    "label": "Scene IV",
+                    "source_span": [
+                        199,
+                        233
+                    ]
+                },
+                {
+                    "id": "scene-08",
+                    "ordinal": 8,
+                    "act_id": "act-03",
+                    "label": "Scene V",
+                    "source_span": [
+                        233,
+                        275
+                    ]
+                }
+            ]
+        }
+    ],
+    "scenes": [
+        {
+            "id": "scene-01",
+            "ordinal": 1,
+            "act_id": "act-01",
+            "label": "Scene I",
+            "source_span": [
+                6,
+                29
+            ]
+        },
+        {
+            "id": "scene-02",
+            "ordinal": 2,
+            "act_id": "act-01",
+            "label": "Scene II",
+            "source_span": [
+                29,
+                65
+            ]
+        },
+        {
+            "id": "scene-03",
+            "ordinal": 3,
+            "act_id": "act-02",
+            "label": "Scene I",
+            "source_span": [
+                65,
+                94
+            ]
+        },
+        {
+            "id": "scene-04",
+            "ordinal": 4,
+            "act_id": "act-03",
+            "label": "Scene I",
+            "source_span": [
+                94,
+                136
+            ]
+        },
+        {
+            "id": "scene-05",
+            "ordinal": 5,
+            "act_id": "act-03",
+            "label": "Scene II",
+            "source_span": [
+                136,
+                168
+            ]
+        },
+        {
+            "id": "scene-06",
+            "ordinal": 6,
+            "act_id": "act-03",
+            "label": "Scene III",
+            "source_span": [
+                168,
+                199
+            ]
+        },
+        {
+            "id": "scene-07",
+            "ordinal": 7,
+            "act_id": "act-03",
+            "label": "Scene IV",
+            "source_span": [
+                199,
+                233
+            ]
+        },
+        {
+            "id": "scene-08",
+            "ordinal": 8,
+            "act_id": "act-03",
+            "label": "Scene V",
+            "source_span": [
+                233,
+                275
+            ]
+        }
+    ],
+    "characters": [
+        {
+            "id": "character-01",
+            "display_name": "ALICE",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-02",
+            "display_name": "BOB",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        }
+    ],
+    "appearances": [
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-02",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 2,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-03",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 2,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-05",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-06",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-07",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-08",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-08",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        }
+    ],
+    "ordering": {
+        "scene_ids": [
+            "scene-01",
+            "scene-02",
+            "scene-03",
+            "scene-04",
+            "scene-05",
+            "scene-06",
+            "scene-07",
+            "scene-08"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02"
+        ],
+        "scene_line_count_desc": {
+            "scene-01": [
+                "character-01"
+            ],
+            "scene-02": [
+                "character-02"
+            ],
+            "scene-03": [
+                "character-01"
+            ],
+            "scene-04": [
+                "character-01",
+                "character-02"
+            ],
+            "scene-05": [
+                "character-01"
+            ],
+            "scene-06": [
+                "character-01"
+            ],
+            "scene-07": [
+                "character-02"
+            ],
+            "scene-08": [
+                "character-01",
+                "character-02"
+            ]
+        }
+    },
+    "visualization": {
+        "scene_ids": [
+            "scene-01",
+            "scene-02",
+            "scene-03",
+            "scene-04",
+            "scene-05",
+            "scene-06",
+            "scene-07",
+            "scene-08"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02"
+        ],
+        "colors": {
+            "character-01": "#177254",
+            "character-02": "#b44336"
+        },
+        "paths": {
+            "character-01": [
+                [
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    0
+                ],
+                [
+                    3,
+                    0
+                ],
+                [
+                    4,
+                    0
+                ],
+                [
+                    5,
+                    0
+                ],
+                [
+                    7,
+                    0
+                ]
+            ],
+            "character-02": [
+                [
+                    1,
+                    1
+                ],
+                [
+                    3,
+                    1
+                ],
+                [
+                    6,
+                    1
+                ],
+                [
+                    7,
+                    1
+                ]
+            ]
+        }
+    }
+}

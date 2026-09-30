@@ -9,3 +9,23 @@ ACT II
 SCENE I
 ALICE
 Again.
+ACT III
+SCENE I
+BOB
+Hello world.
+ALICE
+Hello Bob.
+SCENE II
+ALICE
+I'm in this one.
+SCENE III
+ALICE
+Just me again.
+SCENE IV
+BOB
+A monologue for me. 
+SCENE V
+ALICE
+The finale.
+BOB
+We made it. 
