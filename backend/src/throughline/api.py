@@ -144,6 +144,11 @@ async def _finish_parse(analysis_id: str, extracted, kind: SourceKind) -> None:
     )
 
 
+@app.get("/health")
+async def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+
 @app.post("/api/analyses", status_code=202, response_model=CreateAnalysisResponse)
 async def create_analysis(
     background_tasks: BackgroundTasks, request: Request
