@@ -32,6 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 store = AnalysisStore()
+CPU_TIMEOUT_SECONDS = 60
 
 
 class UrlRequest(BaseModel):
@@ -62,13 +63,22 @@ async def _process_url(analysis_id: str, url: str) -> None:
             progress=Progress(stage="Extracting text", percent=45),
         )
         if source.content_type == "application/pdf":
-            extracted = extract_pdf(source.content, source.source_name)
+            extracted = await asyncio.wait_for(
+                asyncio.to_thread(extract_pdf, source.content, source.source_name),
+                CPU_TIMEOUT_SECONDS,
+            )
             kind = SourceKind.PDF
         elif source.content_type == "text/plain":
-            extracted = extract_plain(source.content, source.source_name)
+            extracted = await asyncio.wait_for(
+                asyncio.to_thread(extract_plain, source.content, source.source_name),
+                CPU_TIMEOUT_SECONDS,
+            )
             kind = SourceKind.URL
         else:
-            extracted = extract_html(source.content, source.source_name)
+            extracted = await asyncio.wait_for(
+                asyncio.to_thread(extract_html, source.content, source.source_name),
+                CPU_TIMEOUT_SECONDS,
+            )
             kind = SourceKind.URL
         await _finish_parse(analysis_id, extracted, kind)
     except Exception as exc:  # generic response; no source details leave the process
@@ -92,7 +102,9 @@ async def _process_pdf(analysis_id: str, data: bytes, filename: str) -> None:
             state=SubmissionState.EXTRACTING,
             progress=Progress(stage="Extracting text", percent=45),
         )
-        extracted = extract_pdf(data, filename)
+        extracted = await asyncio.wait_for(
+            asyncio.to_thread(extract_pdf, data, filename), CPU_TIMEOUT_SECONDS
+        )
         await _finish_parse(analysis_id, extracted, SourceKind.PDF)
     except ValueError as exc:
         code = (
@@ -126,7 +138,10 @@ async def _finish_parse(analysis_id: str, extracted, kind: SourceKind) -> None:
         state=SubmissionState.PARSING,
     )
     try:
-        result = parse_playtext(extracted.text, submission)
+        result = await asyncio.wait_for(
+            asyncio.to_thread(parse_playtext, extracted.text, submission),
+            CPU_TIMEOUT_SECONDS,
+        )
     except ValueError:
         store.update(
             analysis_id,
@@ -173,7 +188,8 @@ async def create_analysis(
             status_code=400, detail="Provide exactly one URL or PDF file."
         )
     try:
-        item = store.create()
+        client_id = request.client.host if request.client else "unknown"
+        item = store.create(client_id)
     except RuntimeError as exc:
         code = "RATE_LIMITED" if "rate" in str(exc) else "CAPACITY_REACHED"
         raise HTTPException(

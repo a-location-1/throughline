@@ -19,6 +19,7 @@ class StoredAnalysis:
     error: Failure | None = None
     created_at: float = 0.0
     updated_at: float = 0.0
+    client_id: str = "global"
 
 
 class AnalysisStore:
@@ -29,7 +30,7 @@ class AnalysisStore:
         self.max_active = max_active
         self.rate_limit = rate_limit
         self._items: dict[str, StoredAnalysis] = {}
-        self._submissions: list[float] = []
+        self._submissions: dict[str, list[float]] = {}
         self._lock = threading.RLock()
 
     def _purge(self) -> None:
@@ -41,9 +42,13 @@ class AnalysisStore:
         ]
         for key in expired:
             del self._items[key]
-        self._submissions = [stamp for stamp in self._submissions if now - stamp < 60]
+        self._submissions = {
+            client_id: [stamp for stamp in stamps if now - stamp < 60]
+            for client_id, stamps in self._submissions.items()
+            if any(now - stamp < 60 for stamp in stamps)
+        }
 
-    def create(self) -> StoredAnalysis:
+    def create(self, client_id: str = "global") -> StoredAnalysis:
         with self._lock:
             self._purge()
             if (
@@ -51,6 +56,7 @@ class AnalysisStore:
                     [
                         item
                         for item in self._items.values()
+                        if item.client_id == client_id
                         if item.state
                         not in {SubmissionState.READY, SubmissionState.REJECTED}
                     ]
@@ -58,10 +64,11 @@ class AnalysisStore:
                 >= self.max_active
             ):
                 raise RuntimeError("analysis capacity reached")
-            if len(self._submissions) >= self.rate_limit:
+            submissions = self._submissions.setdefault(client_id, [])
+            if len(submissions) >= self.rate_limit:
                 raise RuntimeError("submission rate limit reached")
             now = time.monotonic()
-            self._submissions.append(now)
+            submissions.append(now)
             analysis_id = secrets.token_urlsafe(16)
             item = StoredAnalysis(
                 analysis_id,
@@ -69,6 +76,7 @@ class AnalysisStore:
                 Progress(stage="queued", percent=0),
                 created_at=now,
                 updated_at=now,
+                client_id=client_id,
             )
             self._items[analysis_id] = item
             return item

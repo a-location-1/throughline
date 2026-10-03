@@ -15,3 +15,11 @@ def test_reset_removes_analysis():
     item = store.create()
     store.reset(item.analysis_id)
     assert store.get(item.analysis_id) is None
+
+
+def test_rate_limit_is_partitioned_by_client():
+    store = AnalysisStore(rate_limit=1)
+    store.create("client-a")
+    store.create("client-b")
+    with pytest.raises(RuntimeError, match="rate limit"):
+        store.create("client-a")

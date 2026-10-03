@@ -35,7 +35,7 @@ SPEAKER_PREFIX_RE = re.compile(
     r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48}(?:\([^()]*\))?)\s*:\s*(.*)$"
 )
 PLAY_END_RE = re.compile(
-    r"^\s*(?:THE END|END OF THE PLAY|FINIS|CURTAIN|END OF PLAY"
+    r"^\s*(?:THE END|END OF THE PLAY|FINIS|CURTAIN|"
     r"PROJECT GUTENBERG(?: LICENSE)?|GUTENBERG LICENSE|"
     r"ADVERTISEMENTS?|OTHER PLAYS|ABOUT THE AUTHOR|"
     r"(?:EDITOR'?S?|AUTHOR'?S?) (?:NOTE|PREFACE|INTRODUCTION)|"
