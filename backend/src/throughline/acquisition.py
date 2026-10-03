@@ -13,6 +13,23 @@ import httpx
 MAX_BYTES = 10 * 1024 * 1024
 MAX_REDIRECTS = 4
 TIMEOUT = httpx.Timeout(connect=5, read=20, write=10, pool=5)
+REJECT_HOST_SUFFIXES = (
+    ".localhost",
+    ".local",
+    ".localdomain",
+    ".internal",
+    ".lan",
+    ".home.arpa",
+)
+
+
+def _is_rejected_hostname(hostname: str | None) -> bool:
+    if hostname is None:
+        return True
+    host = hostname.lower().rstrip(".")
+    if host in {"localhost", "localhost.localdomain", "127.0.0.1", "::1", "0.0.0.0"}:
+        return True
+    return any(host.endswith(suffix) for suffix in REJECT_HOST_SUFFIXES)
 
 
 @dataclass
@@ -54,6 +71,8 @@ def validate_url(value: str) -> str:
         or parsed.password
     ):
         raise ValueError("invalid URL")
+    if _is_rejected_hostname(parsed.hostname):
+        raise ValueError("disallowed destination")
     _public_host(parsed.hostname)
     return value
 
@@ -67,7 +86,14 @@ async def fetch_url(url: str) -> RetrievedSource:
                 location = response.headers.get("location")
                 if not location:
                     raise ValueError("unsafe redirect")
-                current = str(response.url.join(location))
+                try:
+                    redirect_url = response.url.join(location)
+                except ValueError as exc:
+                    raise ValueError("unsafe redirect") from exc
+                parsed_redirect = urlparse(str(redirect_url))
+                if parsed_redirect.scheme.lower() not in {"http", "https"}:
+                    raise ValueError("unsafe redirect")
+                current = str(redirect_url)
                 validate_url(current)
                 continue
             response.raise_for_status()
