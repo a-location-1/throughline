@@ -1,0 +1,152 @@
+{
+    "schema_version": "1.0",
+    "parser_version": "0.1.0",
+    "submission": {
+        "submission_id": "no-breaks-recognizable-play",
+        "source_kind": "url",
+        "source_name": "no-breaks-recognizable-play.txt",
+        "page_count": null,
+        "byte_count": 0,
+        "state": "queued",
+        "failure": null
+    },
+    "acts": [
+        {
+            "id": "act-01",
+            "ordinal": 1,
+            "label": "Act I",
+            "kind": "act",
+            "scenes": [
+                {
+                    "id": "scene-01",
+                    "ordinal": 1,
+                    "act_id": "act-01",
+                    "label": "Scene I",
+                    "source_span": [
+                        0,
+                        193
+                    ]
+                }
+            ]
+        }
+    ],
+    "scenes": [
+        {
+            "id": "scene-01",
+            "ordinal": 1,
+            "act_id": "act-01",
+            "label": "Scene I",
+            "source_span": [
+                0,
+                193
+            ]
+        }
+    ],
+    "characters": [
+        {
+            "id": "character-01",
+            "display_name": "A SMALL PLAY WITHOUT HEADINGS",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-02",
+            "display_name": "ALPHA",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        },
+        {
+            "id": "character-03",
+            "display_name": "BETA",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-01",
+            "ambiguity": null
+        }
+    ],
+    "appearances": [
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-01",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-02",
+            "presence": "speaking",
+            "line_count": 2,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-01",
+            "character_id": "character-03",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        }
+    ],
+    "notices": [
+        {
+            "code": "UNCONVENTIONAL_STRUCTURE",
+            "message": "The source did not provide conventional act or scene markers; the analysis uses one best-effort scene."
+        }
+    ],
+    "ordering": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02",
+            "character-03"
+        ],
+        "scene_line_count_desc": {
+            "scene-01": [
+                "character-02",
+                "character-01",
+                "character-03"
+            ]
+        }
+    },
+    "visualization": {
+        "scene_ids": [
+            "scene-01"
+        ],
+        "character_ids": [
+            "character-01",
+            "character-02",
+            "character-03"
+        ],
+        "colors": {
+            "character-01": "#177254",
+            "character-02": "#b44336",
+            "character-03": "#b8860b"
+        },
+        "paths": {
+            "character-01": [
+                [
+                    0,
+                    0
+                ]
+            ],
+            "character-02": [
+                [
+                    0,
+                    1
+                ]
+            ],
+            "character-03": [
+                [
+                    0,
+                    2
+                ]
+            ]
+        }
+    }
+}

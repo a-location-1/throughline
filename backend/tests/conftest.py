@@ -25,7 +25,11 @@ def _ready_fixture_cases() -> list[dict[str, object]]:
 
 def _rejected_fixture_cases() -> list[dict[str, object]]:
     manifest = json.loads((FIXTURE_ROOT / "manifest.json").read_text())
-    return [case for case in manifest["cases"] if case["status"] == "rejected"]
+    return [
+        case
+        for case in manifest["cases"]
+        if case["status"] == "rejected" and case.get("parser_check", True)
+    ]
 
 
 @pytest.fixture(params=_ready_fixture_cases(), ids=lambda case: case["slug"])

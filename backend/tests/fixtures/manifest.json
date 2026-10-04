@@ -14,6 +14,17 @@
 		{"slug":"unconventional-formatting","source":"sources/unconventional-formatting.txt","expected":"expected/unconventional-formatting.json","category":"unconventional-formatting","status":"ready","provenance":"synthetic"},
 		{"slug":"separator-scenes","source":"sources/separator-scenes.txt","expected":"expected/separator-scenes.json","category":"unconventional-formatting","status":"ready","provenance":"synthetic"},
 		{"slug":"multiple-plays","source":"sources/multiple-plays.txt","expected":"expected/multiple-plays.json","category":"multiple-plays","status":"ready","provenance":"synthetic"},
-		{"slug":"non-play","source":"invalid/non-play.txt","expected":"expected/non-play.json","category":"non-play","status":"rejected","provenance":"synthetic"}
+		{"slug":"non-play","source":"invalid/non-play.txt","expected":"expected/non-play.json","category":"non-play","status":"rejected","provenance":"synthetic"},
+		{"slug":"no-breaks-recognizable-play","source":"sources/no-breaks-recognizable-play.txt","expected":"expected/no-breaks-recognizable-play.json","category":"no-breaks-recognizable-play","status":"ready","provenance":"synthetic"},
+		{"slug":"unheaded-lyric-play","source":"sources/unheaded-lyric-play.txt","expected":"expected/unheaded-lyric-play.json","category":"unheaded-lyric-play","status":"ready","provenance":"synthetic"},
+		{"slug":"group-reference","source":"sources/group-reference.txt","expected":"expected/group-reference.json","category":"group-reference","status":"ready","provenance":"synthetic"},
+		{"slug":"repeated-headings","source":"sources/repeated-headings.txt","expected":"expected/repeated-headings.json","category":"repeated-headings","status":"ready","provenance":"synthetic"},
+		{"slug":"roman-scene-multiple-plays","source":"sources/roman-scene-multiple-plays.txt","expected":"expected/roman-scene-multiple-plays.json","category":"multiple-plays","status":"ready","provenance":"synthetic"},
+		{"slug":"unsupported-scope","source":"sources/unsupported-scope.txt","expected":"expected/unsupported-scope.json","category":"unsupported-scope","status":"rejected","provenance":"synthetic"},
+		{"slug":"malformed","source":"invalid/malformed.txt","expected":"expected/malformed.json","category":"invalid-inputs","status":"rejected","parser_check":false,"provenance":"synthetic"},
+		{"slug":"unreadable","source":"invalid/unreadable.txt","expected":"expected/unreadable.json","category":"invalid-inputs","status":"rejected","parser_check":false,"provenance":"synthetic"},
+		{"slug":"image-only-pdf","source":"invalid/image-only-pdf.txt","expected":"expected/image-only-pdf.json","category":"invalid-inputs","status":"rejected","parser_check":false,"provenance":"synthetic"},
+		{"slug":"over-page-limit","source":"invalid/over-page-limit.txt","expected":"expected/over-page-limit.json","category":"invalid-inputs","status":"rejected","parser_check":false,"provenance":"synthetic"},
+		{"slug":"over-byte-limit","source":"invalid/over-byte-limit.txt","expected":"expected/over-byte-limit.json","category":"invalid-inputs","status":"rejected","parser_check":false,"provenance":"synthetic"}
 	]
 }

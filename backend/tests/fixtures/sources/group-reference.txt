@@ -1,0 +1,9 @@
+ACT I
+SCENE I
+THE COMPANY
+We enter together.
+ALPHA
+One member speaks alone.
+SCENE II
+ALPHA
+The individual returns.

@@ -243,6 +243,12 @@ def _chunks(text: str) -> list[SceneChunk]:
             for start, label, kind in act_markers
             if start < play_end
         ]
+    deduplicated_markers: list[tuple[int, str, ActKind, str]] = []
+    for marker in markers:
+        if deduplicated_markers and marker[1:] == deduplicated_markers[-1][1:]:
+            continue
+        deduplicated_markers.append(marker)
+    markers = deduplicated_markers
     markers = [marker for marker in markers if marker[0] < play_end]
     if not markers:
         start = first_act_start or 0

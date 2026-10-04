@@ -1,0 +1,10 @@
+ACT I
+SCENE I
+ALPHA
+Opening speech.
+SCENE I
+BETA
+Repeated heading noise should not invent a second scene.
+SCENE II
+ALPHA
+A distinct scene begins.
