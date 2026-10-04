@@ -35,6 +35,23 @@ store = AnalysisStore()
 CPU_TIMEOUT_SECONDS = 60
 
 
+def _processing_error_code(error: Exception) -> str:
+    message = str(error).lower()
+    if "image-only pdf" in message:
+        return "PDF_NO_TEXT"
+    if "too many pages" in message:
+        return "PDF_TOO_MANY_PAGES"
+    if "extracted text too large" in message:
+        return "PDF_TEXT_TOO_LARGE"
+    if "invalid pdf" in message:
+        return "PDF_INVALID"
+    if "empty source" in message:
+        return "SOURCE_EMPTY"
+    if "large" in message:
+        return "PDF_TOO_LARGE"
+    return "SOURCE_UNREADABLE"
+
+
 class UrlRequest(BaseModel):
     url: HttpUrl
 
@@ -88,9 +105,13 @@ async def _process_url(analysis_id: str, url: str) -> None:
             state=SubmissionState.REJECTED,
             progress=Progress(stage="Unable to process source", percent=100),
             error=failure(
-                "SOURCE_INACCESSIBLE"
-                if "retrieve" in str(exc).lower()
-                else "SOURCE_UNREADABLE"
+                _processing_error_code(exc)
+                if isinstance(exc, ValueError)
+                else (
+                    "SOURCE_INACCESSIBLE"
+                    if "retrieve" in str(exc).lower()
+                    else "SOURCE_UNREADABLE"
+                )
             ),
         )
 
@@ -107,11 +128,7 @@ async def _process_pdf(analysis_id: str, data: bytes, filename: str) -> None:
         )
         await _finish_parse(analysis_id, extracted, SourceKind.PDF)
     except ValueError as exc:
-        code = (
-            "LIMIT_EXCEEDED"
-            if "large" in str(exc) or "pages" in str(exc)
-            else "SOURCE_UNREADABLE"
-        )
+        code = _processing_error_code(exc)
         store.update(
             analysis_id,
             state=SubmissionState.REJECTED,
@@ -203,7 +220,7 @@ async def create_analysis(
         if len(data) > 10 * 1024 * 1024:
             store.reset(item.analysis_id)
             raise HTTPException(
-                status_code=413, detail=failure("LIMIT_EXCEEDED").model_dump()
+                status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
             )
         background_tasks.add_task(
             _process_pdf, item.analysis_id, data, file.filename or "upload.pdf"
