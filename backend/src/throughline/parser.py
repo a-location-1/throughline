@@ -116,9 +116,7 @@ def _play_start(text: str) -> int:
             else candidate.end() + 3000
         )
         following = text[candidate.end() : next_act]
-        if re.search(
-            r"(?im)^\s*[A-Z][A-ZÀ-ÿ0-9 .,'’\-]{1,48}:\s*$", following
-        ):
+        if re.search(r"(?im)^\s*[A-Z][A-ZÀ-ÿ0-9 .,'’\-]{1,48}:\s*$", following):
             return candidate.start()
     return 0
 
