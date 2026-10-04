@@ -302,6 +302,9 @@ def _cast_aliases(text: str) -> dict[str, str]:
             continue
         canonical = match.group(1).strip()
         aliases[_identity_key(canonical)] = canonical
+        shared_parts = _shared_speaker_parts(canonical)
+        for part in shared_parts:
+            aliases[_identity_key(part)] = part
         words = canonical.split()
         if len(words) > 1:
             aliases.setdefault(_identity_key(words[-1]), canonical)
@@ -364,6 +367,18 @@ def _looks_like_speaker(
 def _qualified_base(display: str) -> str | None:
     match = QUALIFIED_SPEAKER_RE.match(display)
     return match.group("base").strip() if match else None
+
+
+def _shared_speaker_parts(display: str, require_uppercase: bool = True) -> list[str]:
+    normalized = display.strip().rstrip(".").strip()
+    parts = re.split(r"\s+(?:and|&)\s+", normalized, maxsplit=1, flags=re.I)
+    if len(parts) != 2:
+        return []
+    if not all(re.match(r"^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ .,'’\-]*$", part) for part in parts):
+        return []
+    if require_uppercase and not all(part == part.upper() for part in parts):
+        return []
+    return [part.strip() for part in parts]
 
 
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
@@ -434,7 +449,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     scene_presence: set[tuple[str, str]] = set()
     scene_confidence: dict[tuple[str, str], Confidence] = {}
     for scene, chunk in zip(scenes, chunks):
-        current: CharacterOrSpeaker | None = None
+        current: list[CharacterOrSpeaker] = []
         saw_speaker = False
         for raw_line in chunk.text.splitlines():
             line = raw_line.strip()
@@ -443,18 +458,22 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             entrance = ENTER_RE.search(line)
             if entrance:
                 display = _canonical_entrance_display(entrance.group(1), cast_aliases)
-                key = _identity_key(display)
-                if key and key not in by_key:
-                    character = CharacterOrSpeaker(
-                        id=f"character-{len(characters) + 1:02d}",
-                        display_name=display,
-                        kind=CharacterKind.SILENT,
-                        first_appearance_scene_id=scene.id,
-                    )
-                    by_key[key] = character
-                    characters.append(character)
-                if key:
-                    scene_presence.add((scene.id, by_key[key].id))
+                entrance_displays = _shared_speaker_parts(
+                    display, require_uppercase=False
+                ) or [display]
+                for entrance_display in entrance_displays:
+                    key = _identity_key(entrance_display)
+                    if key and key not in by_key:
+                        character = CharacterOrSpeaker(
+                            id=f"character-{len(characters) + 1:02d}",
+                            display_name=entrance_display,
+                            kind=CharacterKind.SILENT,
+                            first_appearance_scene_id=scene.id,
+                        )
+                        by_key[key] = character
+                        characters.append(character)
+                    if key:
+                        scene_presence.add((scene.id, by_key[key].id))
                 continue
             speaker_prefix = (
                 None
@@ -472,75 +491,77 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                     or SCENE_RE.match(line)
                     or SPECIAL_ACT_RE.match(line)
                 )
-                and _looks_like_speaker(
-                    line, speaker.group(1), allow_terminal_period=unheaded_play
+                and (
+                    _looks_like_speaker(
+                        line, speaker.group(1), allow_terminal_period=unheaded_play
+                    )
+                    or _shared_speaker_parts(speaker.group(1))
                 )
             ):
                 display = _normalize_speaker_display(speaker.group(1))
                 if unheaded_play:
                     display = display.rstrip(".")
-                qualified_base = _qualified_base(display)
-                source_key = _identity_key(qualified_base or display)
-                canonical_display = cast_aliases.get(
-                    source_key, qualified_base or display
-                )
-                kind = _classify(canonical_display)
-                key = _identity_key(canonical_display) or f"unnamed-{scene.id}"
-                character = by_key.get(key)
-                if character is None:
-                    character = CharacterOrSpeaker(
-                        id=f"character-{len(characters) + 1:02d}",
-                        display_name=(
-                            canonical_display
-                            if kind != CharacterKind.UNNAMED
-                            else "Unnamed speaker"
-                        ),
-                        kind=kind,
-                        first_appearance_scene_id=scene.id,
+                shared_parts = _shared_speaker_parts(display)
+                speaker_displays = shared_parts or [display]
+                current = []
+                for speaker_display in speaker_displays:
+                    qualified_base = _qualified_base(speaker_display)
+                    source_key = _identity_key(qualified_base or speaker_display)
+                    canonical_display = cast_aliases.get(
+                        source_key, qualified_base or speaker_display
                     )
-                    by_key[key] = character
-                    characters.append(character)
-                if qualified_base:
-                    if character.ambiguity is None:
-                        character.ambiguity = Ambiguity(
-                            evidence="descriptive speaker qualifier was grouped with the base role",
-                            alternatives=[],
+                    kind = _classify(canonical_display)
+                    key = _identity_key(canonical_display) or f"unnamed-{scene.id}"
+                    character = by_key.get(key)
+                    if character is None:
+                        character = CharacterOrSpeaker(
+                            id=f"character-{len(characters) + 1:02d}",
+                            display_name=(
+                                canonical_display
+                                if kind != CharacterKind.UNNAMED
+                                else "Unnamed speaker"
+                            ),
+                            kind=kind,
+                            first_appearance_scene_id=scene.id,
                         )
-                    if display not in character.ambiguity.alternatives:
-                        character.ambiguity.alternatives.append(display)
-                elif canonical_display != display:
-                    if character.ambiguity is None:
-                        character.ambiguity = Ambiguity(
-                            evidence="source role label was grouped with the cast-list character",
-                            alternatives=[],
-                        )
-                    if display not in character.ambiguity.alternatives:
-                        character.ambiguity.alternatives.append(display)
-                elif character.display_name != display and character.ambiguity is None:
-                    character.ambiguity = Ambiguity(
-                        evidence="formatting or naming variation",
-                        alternatives=[display],
-                    )
-                current = character
+                        by_key[key] = character
+                        characters.append(character)
+                    if qualified_base:
+                        if character.ambiguity is None:
+                            character.ambiguity = Ambiguity(
+                                evidence="descriptive speaker qualifier was grouped with the base role",
+                                alternatives=[],
+                            )
+                        if speaker_display not in character.ambiguity.alternatives:
+                            character.ambiguity.alternatives.append(speaker_display)
+                    elif canonical_display != speaker_display:
+                        if character.ambiguity is None:
+                            character.ambiguity = Ambiguity(
+                                evidence="source role label was grouped with the cast-list character",
+                                alternatives=[],
+                            )
+                        if speaker_display not in character.ambiguity.alternatives:
+                            character.ambiguity.alternatives.append(speaker_display)
+                    current.append(character)
                 saw_speaker = True
-                scene_presence.add((scene.id, character.id))
+                for character in current:
+                    scene_presence.add((scene.id, character.id))
                 if speaker_prefix and speaker_prefix.group(2).strip():
                     inline_text = speaker_prefix.group(2).strip()
                     if not (inline_text.startswith("(") and inline_text.endswith(")")):
-                        appearance_counts[(scene.id, character.id)] = (
-                            appearance_counts.get((scene.id, character.id), 0) + 1
-                        )
+                        for character in current:
+                            appearance_counts[(scene.id, character.id)] = (
+                                appearance_counts.get((scene.id, character.id), 0) + 1
+                            )
                 continue
-            if current is not None and not (
-                line.startswith("(") and line.endswith(")")
-            ):
-                appearance_counts[(scene.id, current.id)] = (
-                    appearance_counts.get((scene.id, current.id), 0) + 1
-                )
+            if current and not (line.startswith("(") and line.endswith(")")):
+                for character in current:
+                    appearance_counts[(scene.id, character.id)] = (
+                        appearance_counts.get((scene.id, character.id), 0) + 1
+                    )
             elif line.startswith("(") and line.endswith(")"):
-                scene_confidence[(scene.id, current.id if current else "")] = (
-                    Confidence.AMBIGUOUS
-                )
+                for character in current:
+                    scene_confidence[(scene.id, character.id)] = Confidence.AMBIGUOUS
 
         if not saw_speaker and len(characters) == 1:
             character = characters[0]

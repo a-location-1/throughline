@@ -14,6 +14,33 @@ def test_parser_preserves_order_and_speaking_lines(submission):
     assert result.appearances[0].line_count == 1
 
 
+def test_parser_splits_shared_speaker_labels(submission):
+    text = """ACT I
+SCENE I
+ALPHA
+The first character speaks.
+BETA
+The second character speaks.
+ALPHA and BETA.
+We will wait upon you.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "ALPHA",
+        "BETA",
+    ]
+    assert all(" and " not in character.display_name for character in result.characters)
+    counts = {
+        character.display_name: appearance.line_count
+        for character in result.characters
+        for appearance in result.appearances
+        if appearance.character_id == character.id
+    }
+    assert counts == {"ALPHA": 2, "BETA": 2}
+
+
 def test_parser_accepts_mixed_case_headers_and_speaker_labels(submission):
     text = """Title page
     Act I
@@ -326,7 +353,7 @@ The third play must not be analyzed.
         "Scene II",
         "Scene III",
     ]
-    assert [character.display_name for character in result.characters] == ["EVA"]
+    assert [character.display_name for character in result.characters] == ["JULIET"]
     assert [appearance.line_count for appearance in result.appearances] == [
         1,
         1,
@@ -362,7 +389,7 @@ END OF PLAY
     assert [scene.label for scene in result.scenes] == ["Scene ONE", "Scene 2"]
     assert {character.display_name for character in result.characters} == {
         "INIABASI",
-        "GRAHAM",
+        "QUI",
     }
     assert all(appearance.line_count == 1 for appearance in result.appearances)
 
