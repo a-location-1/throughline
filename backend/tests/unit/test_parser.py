@@ -186,3 +186,103 @@ def test_parser_excludes_back_matter_after_the_play(submission):
 
     assert [character.display_name for character in result.characters] == ["ALICE"]
     assert result.appearances[0].line_count == 1
+
+
+def test_parser_accepts_consistent_chapter_scene_markers(submission):
+    text = """ACT I:
+CHAPTER 1
+ALICE
+The word scene is spoken here.
+CHAPTER 2
+BOB
+The second section begins.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [act.label for act in result.acts] == ["Act I"]
+    assert [scene.label for scene in result.scenes] == [
+        "Chapter 1",
+        "Chapter 2",
+    ]
+
+
+def test_parser_accepts_separator_scene_markers(submission):
+    text = """ACT I
+ALICE
+The opening section.
+---
+BOB
+The next section.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == ["Scene I", "Scene II"]
+
+
+def test_parser_warns_and_scopes_to_first_play(submission):
+    text = """ACT I
+SCENE I
+ALICE
+First play.
+END
+
+ACT I
+SCENE I
+BOB
+Second play.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == ["ALICE"]
+    assert [notice.code for notice in result.notices] == ["MULTIPLE_PLAYS"]
+
+
+def test_parser_rejects_ordinary_non_play_text(submission):
+    text = """Welcome to our website.
+This page describes a scene from a product launch.
+Read more about our company below.
+"""
+
+    try:
+        parse_playtext(text, submission)
+    except ValueError as exc:
+        assert str(exc) == "not playtext"
+    else:
+        raise AssertionError("ordinary prose must not be accepted as a playtext")
+
+
+def test_parser_handles_unheaded_gutenberg_play_and_notes_boundary(submission):
+    text = """Preface and publication history.
+
+CHARACTERS OF THE PLAY
+IPHIGENIA
+ORESTES
+
+THE IPHIGENIA IN TAURIS
+
+[The Scene shows a temple on a sea-coast.]
+
+IPHIGENIA.
+The play begins without an act or scene heading.
+
+CHORUS.
+[STROPHE 1.]
+The strophe is part of the scene.
+
+NOTES TO IPHIGENIA IN TAURIS
+P. 3, 1. 1. Explanatory notes begin here.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert len(result.acts) == 1
+    assert len(result.scenes) == 1
+    assert result.scenes[0].label == "Scene I"
+    assert "NOTES TO IPHIGENIA IN TAURIS" not in result.scenes[0].label
+    assert {character.display_name for character in result.characters} >= {
+        "IPHIGENIA.",
+        "CHORUS.",
+    }

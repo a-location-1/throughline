@@ -120,6 +120,7 @@ Create at least one small, hand-verifiable fixture for each category below. Pref
 - `no-breaks-recognizable-play`: no act or scene headings but recognizable play structure; verify one act and one scene.
 - `unconventional-formatting`: consistent `Scene`, `SCENE`, `Scene:`, `Chapter`, separator, and act-marker variants; verify contextual detection and no dialogue false positives.
 - `unconventional-recognizable-play`: playtext without conventional act, scene, or character labels; verify best-effort output with unidentified-attribute notices.
+- `unheaded-lyric-play`: recognizable play beginning without act/scene headings, containing strophe/antistrophe labels, and ending at a notes heading; verify one scene, no lyric-label splits, and no notes contamination.
 - `multiple-plays`: anthology source containing at least two plays; verify a warning and first-play-only analysis.
 - `non-play`: ordinary non-play source containing incidental words such as "scene"; verify rejection.
 - `single-speaker`: one character throughout, including valid first-appearance ordering.

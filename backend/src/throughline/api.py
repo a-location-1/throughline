@@ -147,7 +147,7 @@ async def _finish_parse(analysis_id: str, extracted, kind: SourceKind) -> None:
             analysis_id,
             state=SubmissionState.REJECTED,
             progress=Progress(stage="No usable playtext found", percent=100),
-            error=failure("NO_PLAYTEXT_STRUCTURE"),
+            error=failure("NOT_PLAYTEXT"),
         )
         return
     result.submission.state = SubmissionState.READY

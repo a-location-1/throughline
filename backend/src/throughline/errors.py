@@ -3,6 +3,7 @@
 from .models import Failure
 
 ERRORS = {
+    "NOT_PLAYTEXT": "We could not establish that this source contains a playtext.",
     "NO_PLAYTEXT_STRUCTURE": "We could not identify scenes or speakers in this source.",
     "SOURCE_UNREADABLE": "We could not read this source.",
     "SOURCE_INACCESSIBLE": "We could not retrieve this source.",

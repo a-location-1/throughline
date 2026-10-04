@@ -1,0 +1,10 @@
+ACT I
+SCENE I
+ALICE
+First play.
+END
+
+ACT I
+SCENE I
+BOB
+Second play.

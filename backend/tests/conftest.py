@@ -23,8 +23,23 @@ def _ready_fixture_cases() -> list[dict[str, object]]:
     return cases
 
 
+def _rejected_fixture_cases() -> list[dict[str, object]]:
+    manifest = json.loads((FIXTURE_ROOT / "manifest.json").read_text())
+    return [case for case in manifest["cases"] if case["status"] == "rejected"]
+
+
 @pytest.fixture(params=_ready_fixture_cases(), ids=lambda case: case["slug"])
 def golden_fixture(request: pytest.FixtureRequest) -> dict[str, object]:
+    case = request.param
+    return {
+        **case,
+        "source_text": (FIXTURE_ROOT / case["source"]).read_text(),
+        "expected": json.loads((FIXTURE_ROOT / case["expected"]).read_text()),
+    }
+
+
+@pytest.fixture(params=_rejected_fixture_cases(), ids=lambda case: case["slug"])
+def rejected_fixture(request: pytest.FixtureRequest) -> dict[str, object]:
     case = request.param
     return {
         **case,

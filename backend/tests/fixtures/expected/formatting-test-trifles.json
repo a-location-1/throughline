@@ -2,12 +2,12 @@
     "schema_version": "1.0",
     "parser_version": "0.1.0",
     "submission": {
-        "submission_id": "fixture-formatting-test-trifles",
+        "submission_id": "formatting-test-trifles",
         "source_kind": "url",
         "source_name": "formatting-test-trifles.txt",
         "page_count": null,
-        "byte_count": 28367,
-        "state": "ready",
+        "byte_count": 0,
+        "state": "queued",
         "failure": null
     },
     "acts": [
@@ -48,7 +48,12 @@
             "display_name": "GEORGE HENDERSON",
             "kind": "named",
             "first_appearance_scene_id": "scene-01",
-            "ambiguity": null
+            "ambiguity": {
+                "evidence": "source role label was grouped with the cast-list character",
+                "alternatives": [
+                    "COUNTY ATTORNEY"
+                ]
+            }
         },
         {
             "id": "character-02",
@@ -62,14 +67,24 @@
             "display_name": "HENRY PETERS",
             "kind": "named",
             "first_appearance_scene_id": "scene-01",
-            "ambiguity": null
+            "ambiguity": {
+                "evidence": "source role label was grouped with the cast-list character",
+                "alternatives": [
+                    "SHERIFF"
+                ]
+            }
         },
         {
             "id": "character-04",
             "display_name": "LEWIS HALE",
             "kind": "named",
             "first_appearance_scene_id": "scene-01",
-            "ambiguity": null
+            "ambiguity": {
+                "evidence": "source role label was grouped with the cast-list character",
+                "alternatives": [
+                    "HALE"
+                ]
+            }
         },
         {
             "id": "character-05",
@@ -84,43 +99,44 @@
             "scene_id": "scene-01",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 49,
-            "confidence": "supported",
-            "explanation": null
+            "line_count": 82,
+            "confidence": "ambiguous",
+            "explanation": "Source attribution is ambiguous."
         },
         {
             "scene_id": "scene-01",
             "character_id": "character-02",
             "presence": "speaking",
-            "line_count": 60,
-            "confidence": "supported",
-            "explanation": null
+            "line_count": 106,
+            "confidence": "ambiguous",
+            "explanation": "Source attribution is ambiguous."
         },
         {
             "scene_id": "scene-01",
             "character_id": "character-03",
             "presence": "speaking",
-            "line_count": 28,
-            "confidence": "supported",
-            "explanation": null
+            "line_count": 38,
+            "confidence": "ambiguous",
+            "explanation": "Source attribution is ambiguous."
         },
         {
             "scene_id": "scene-01",
             "character_id": "character-04",
             "presence": "speaking",
-            "line_count": 55,
-            "confidence": "supported",
-            "explanation": null
+            "line_count": 65,
+            "confidence": "ambiguous",
+            "explanation": "Source attribution is ambiguous."
         },
         {
             "scene_id": "scene-01",
             "character_id": "character-05",
             "presence": "speaking",
-            "line_count": 109,
-            "confidence": "supported",
-            "explanation": null
+            "line_count": 159,
+            "confidence": "ambiguous",
+            "explanation": "Source attribution is ambiguous."
         }
     ],
+    "notices": [],
     "ordering": {
         "scene_ids": [
             "scene-01"
@@ -136,8 +152,8 @@
             "scene-01": [
                 "character-05",
                 "character-02",
-                "character-04",
                 "character-01",
+                "character-04",
                 "character-03"
             ]
         }

@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from throughline.parser import parse_playtext
 
 
@@ -22,6 +24,7 @@ def _structural_projection(result: dict) -> dict:
             {
                 "label": scene["label"],
                 "act": acts_by_id[scene["act_id"]]["label"],
+                "source_span": scene.get("source_span"),
             }
             for scene in result["scenes"]
         ],
@@ -43,11 +46,16 @@ def _structural_projection(result: dict) -> dict:
                         "display_name"
                     ],
                     "presence": appearance["presence"],
+                    "line_count": appearance["line_count"],
                 }
                 for appearance in result["appearances"]
             ],
             key=lambda item: (item["scene"], item["character"]),
         ),
+        "notices": [
+            {"code": notice["code"], "message": notice["message"]}
+            for notice in result.get("notices", [])
+        ],
     }
 
 
@@ -88,3 +96,12 @@ def test_ready_fixtures_match_structural_answer_keys(golden_fixture, submission)
     expected = _structural_projection(golden_fixture["expected"])
 
     assert actual == expected
+
+
+def test_rejected_fixtures_match_stable_error_keys(rejected_fixture, submission):
+    with pytest.raises(ValueError) as error:
+        parse_playtext(rejected_fixture["source_text"], submission)
+
+    assert str(error.value) == rejected_fixture["expected"]["error"][
+        "code"
+    ].lower().replace("_", " ")

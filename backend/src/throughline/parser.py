@@ -14,6 +14,7 @@ from .models import (
     CharacterOrSpeaker,
     Confidence,
     Ordering,
+    ParserNotice,
     PlaytextSubmission,
     Presence,
     Scene,
@@ -21,11 +22,16 @@ from .models import (
 )
 from .visualization import build_visualization
 
-ACT_RE = re.compile(r"^\s*(?:ACT|ACTO|AKT)\s+(.+?)\s*$", re.I)
-SCENE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s+(.+?)\s*$", re.I)
+ACT_RE = re.compile(r"^\s*(ACT|ACTO|AKT)\s*[:.]?\s+(.+?)\s*:?[ \t]*$", re.I)
+SCENE_RE = re.compile(
+    r"^\s*(SCENE|SCÈNE|SZENE|CHAPTER)\s*[:.]?\s+(.+?)\s*:?[ \t]*$",
+    re.I,
+)
 SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
+NUMBERED_SCENE_RE = re.compile(r"^\s*(\d+)\s*[-–—]\s*(.+?)\s*$")
+SEPARATOR_SCENE_RE = re.compile(r"^\s*(?:-{3,}|_{3,}|={3,})\s*$")
 SPECIAL_ACT_RE = re.compile(
-    r"^\s*(PROLOGUE|EPILOGUE|ENTR['’]?ACTE|ENTRACTE|INTERLUDE)\s*:?[ \t]*$",
+    r"^\s*(?:THE\s+)?(PROLOGUE|EPILOGUE|ENTR['’]?ACTE|ENTRACTE|INTERLUDE)\.?\s*:?[ \t]*$",
     re.I,
 )
 SPEAKER_RE = re.compile(
@@ -35,8 +41,9 @@ SPEAKER_PREFIX_RE = re.compile(
     r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48}(?:\([^()]*\))?)\s*:\s*(.*)$"
 )
 PLAY_END_RE = re.compile(
-    r"^\s*(?:THE END|END OF THE PLAY|FINIS|CURTAIN|"
+    r"^\s*(?:END|THE END|END OF THE PLAY|END OF THE PROJECT GUTENBERG EBOOK.*|FINIS|CURTAIN|"
     r"PROJECT GUTENBERG(?: LICENSE)?|GUTENBERG LICENSE|"
+    r"NOTES TO .+|"
     r"ADVERTISEMENTS?|OTHER PLAYS|ABOUT THE AUTHOR|"
     r"(?:EDITOR'?S?|AUTHOR'?S?) (?:NOTE|PREFACE|INTRODUCTION)|"
     r"NOTES?|ESSAY|COMMENTARY|APPENDIX|APPENDICES|LICENSE|LICENCE)\s*:?[ \t]*$",
@@ -56,6 +63,7 @@ COLLECTIVE_WORDS = {
     "ENSEMBLE",
 }
 UNNAMED_WORDS = {"UNKNOWN", "UNNAMED", "A VOICE", "VOICE", "SOMEONE"}
+PAGE_NUMBER_RE = re.compile(r"^\d+$")
 DELIVERY_NOTE_RE = re.compile(r"\s+\([^()]*\)\s*$")
 QUALIFIED_SPEAKER_RE = re.compile(r"^(?P<base>.+?)\s+WITH\s+(?:A|AN|THE)\s+.+$", re.I)
 
@@ -70,9 +78,17 @@ class SceneChunk:
     end: int
 
 
-def _heading(line: str, pattern: re.Pattern[str]) -> str | None:
+def _play_start(text: str) -> int:
+    matches = list(re.finditer(r"(?im)^\s*THE\s+PROLOGUE\.?\s*$", text))
+    if matches:
+        return matches[-1].start()
+    dramatic_start = list(re.finditer(r"(?im)^\s*\[The Scene shows\b", text))
+    return dramatic_start[0].start() if dramatic_start else 0
+
+
+def _heading(line: str, pattern: re.Pattern[str]) -> tuple[str, str] | None:
     match = pattern.match(line)
-    return match.group(1).strip() if match else None
+    return (match.group(1), match.group(2).strip()) if match else None
 
 
 def _special_act(line: str) -> tuple[str, ActKind] | None:
@@ -104,27 +120,64 @@ def _chunks(text: str) -> list[SceneChunk]:
     first_act_start: int | None = None
     for line in lines:
         clean = line.strip()
-        act_label = _heading(clean, ACT_RE)
-        scene_label = _heading(clean, SCENE_RE)
-        if act_label:
+        act_heading = _heading(clean, ACT_RE)
+        scene_heading = _heading(clean, SCENE_RE)
+        numbered_scene = NUMBERED_SCENE_RE.match(clean)
+        if act_heading:
             if first_act_start is None:
                 first_act_start = offset
-            current_act = f"Act {act_label}"
+            prefix, value = act_heading
+            current_act = f"{prefix.title()} {value.rstrip(':').strip()}"
             current_act_kind = ActKind.ACT
         special_act = _special_act(clean)
         if special_act:
             current_act, current_act_kind = special_act
             markers.append((offset, current_act, current_act_kind, current_act))
-        if scene_label:
+        is_stage_description = bool(
+            scene_heading
+            and scene_heading[0].upper() in {"SCENE", "SCÈNE", "SZENE"}
+            and scene_heading[1].startswith("_")
+        )
+        if scene_heading and not is_stage_description:
+            prefix, value = scene_heading
             markers.append(
-                (offset, current_act, current_act_kind, f"Scene {scene_label}")
+                (offset, current_act, current_act_kind, f"{prefix.title()} {value}")
+            )
+        elif numbered_scene:
+            markers.append(
+                (
+                    offset,
+                    current_act,
+                    current_act_kind,
+                    f"Scene {numbered_scene.group(1)} — {numbered_scene.group(2)}",
+                )
+            )
+        elif SEPARATOR_SCENE_RE.match(clean):
+            if not markers:
+                markers.append(
+                    (
+                        first_act_start or 0,
+                        current_act,
+                        current_act_kind,
+                        "Scene I",
+                    )
+                )
+            markers.append(
+                (
+                    offset,
+                    current_act,
+                    current_act_kind,
+                    f"Scene {_roman(len(markers) + 1)}",
+                )
             )
         elif SCENE_STAGE_RE.match(clean):
             markers.append((offset, current_act, current_act_kind, "Scene I"))
         offset += len(line)
+    play_end = _play_end(text, 0)
+    markers = [marker for marker in markers if marker[0] < play_end]
     if not markers:
         start = first_act_start or 0
-        end = _play_end(text, start)
+        end = play_end
         return [
             SceneChunk(
                 "Act I" if first_act_start is None else current_act,
@@ -137,11 +190,7 @@ def _chunks(text: str) -> list[SceneChunk]:
         ]
     chunks: list[SceneChunk] = []
     for index, (start, act_label, act_kind, scene_label) in enumerate(markers):
-        end = (
-            markers[index + 1][0]
-            if index + 1 < len(markers)
-            else _play_end(text, start)
-        )
+        end = markers[index + 1][0] if index + 1 < len(markers) else play_end
         body_start = start + len(text[start:].splitlines(keepends=True)[0])
         chunks.append(
             SceneChunk(
@@ -154,6 +203,43 @@ def _chunks(text: str) -> list[SceneChunk]:
             )
         )
     return chunks
+
+
+def _roman(number: int) -> str:
+    values = ((10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I"))
+    result = ""
+    for value, symbol in values:
+        count, number = divmod(number, value)
+        result += symbol * count
+    return result
+
+
+def _has_play_evidence(text: str) -> bool:
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if (
+            ACT_RE.match(line)
+            or SCENE_RE.match(line)
+            or SPECIAL_ACT_RE.match(line)
+            or NUMBERED_SCENE_RE.match(line)
+            or SEPARATOR_SCENE_RE.match(line)
+            or ENTER_RE.search(line)
+        ):
+            return True
+        speaker = SPEAKER_PREFIX_RE.match(line) or SPEAKER_RE.match(line)
+        if speaker and _looks_like_speaker(line, speaker.group(1), True):
+            return True
+    return False
+
+
+def _tail_contains_play(text: str) -> bool:
+    return any(
+        ACT_RE.match(line.strip())
+        or SCENE_RE.match(line.strip())
+        or SPECIAL_ACT_RE.match(line.strip())
+        or NUMBERED_SCENE_RE.match(line.strip())
+        for line in text.splitlines()
+    )
 
 
 def _classify(display: str) -> CharacterKind:
@@ -209,15 +295,39 @@ def _normalize_speaker_display(display: str) -> str:
     return DELIVERY_NOTE_RE.sub("", display).strip()
 
 
-def _looks_like_speaker(line: str, display: str) -> bool:
-    if line.endswith(":"):
-        return True
+def _looks_like_speaker(
+    line: str, display: str, allow_terminal_period: bool = False
+) -> bool:
     normalized = _normalize_speaker_display(display)
-    if not normalized or re.search(r"[.!?;]$", normalized):
+    if normalized.endswith(".") and not allow_terminal_period:
+        return False
+    if allow_terminal_period:
+        normalized = normalized.rstrip(".")
+    if not normalized or re.search(r"[!?;]$", normalized):
         return False
     if normalized == normalized.upper():
         return True
     words = re.findall(r"[A-Za-zÀ-ÿ]+", normalized)
+    if ":" in line:
+        stopwords = {
+            "a",
+            "an",
+            "and",
+            "as",
+            "by",
+            "for",
+            "from",
+            "in",
+            "of",
+            "the",
+            "to",
+        }
+        return (
+            len(words) <= 2
+            and words
+            and words[0].casefold() not in stopwords
+            and all(word[0].isupper() for word in words)
+        )
     return len(words) > 1 and all(
         word[0].isupper() and word[1:] == word[1:].lower() for word in words
     )
@@ -229,8 +339,32 @@ def _qualified_base(display: str) -> str | None:
 
 
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
-    chunks = _chunks(text)
-    cast_aliases = _cast_aliases(text)
+    play_start = _play_start(text)
+    playtext = text[play_start:]
+    if not _has_play_evidence(playtext):
+        raise ValueError("not playtext")
+    chunks = _chunks(playtext)
+    cast_aliases = _cast_aliases(playtext)
+    unheaded_play = not any(
+        ACT_RE.match(line.strip())
+        or SCENE_RE.match(line.strip())
+        or SPECIAL_ACT_RE.match(line.strip())
+        or NUMBERED_SCENE_RE.match(line.strip())
+        or SEPARATOR_SCENE_RE.match(line.strip())
+        for line in playtext.splitlines()
+    )
+    play_end = _play_end(playtext, 0)
+    notices: list[ParserNotice] = []
+    if _tail_contains_play(playtext[play_end:]):
+        notices.append(
+            ParserNotice(
+                code="MULTIPLE_PLAYS",
+                message="Multiple plays were found; only the first play was analyzed.",
+            )
+        )
+    monologue_mode = any(
+        NUMBERED_SCENE_RE.match(line.strip()) for line in playtext.splitlines()
+    )
     acts: list[Act] = []
     scenes: list[Scene] = []
     act_by_label: dict[str, Act] = {}
@@ -250,7 +384,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             ordinal=index,
             act_id=act.id,
             label=chunk.scene_label,
-            source_span=(chunk.start, chunk.end),
+            source_span=(chunk.start + play_start, chunk.end + play_start),
         )
         act.scenes.append(scene)
         scenes.append(scene)
@@ -264,7 +398,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         current: CharacterOrSpeaker | None = None
         for raw_line in chunk.text.splitlines():
             line = raw_line.strip()
-            if not line:
+            if not line or PAGE_NUMBER_RE.fullmatch(line):
                 continue
             entrance = ENTER_RE.search(line)
             if entrance:
@@ -282,8 +416,10 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 if key:
                     scene_presence.add((scene.id, by_key[key].id))
                 continue
-            speaker_prefix = SPEAKER_PREFIX_RE.match(line)
-            speaker = speaker_prefix or SPEAKER_RE.match(line)
+            speaker_prefix = None if monologue_mode else SPEAKER_PREFIX_RE.match(line)
+            speaker = (
+                None if monologue_mode else speaker_prefix or SPEAKER_RE.match(line)
+            )
             if (
                 speaker
                 and not (
@@ -291,7 +427,9 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                     or SCENE_RE.match(line)
                     or SPECIAL_ACT_RE.match(line)
                 )
-                and _looks_like_speaker(line, speaker.group(1))
+                and _looks_like_speaker(
+                    line, speaker.group(1), allow_terminal_period=unheaded_play
+                )
             ):
                 display = _normalize_speaker_display(speaker.group(1))
                 qualified_base = _qualified_base(display)
@@ -373,10 +511,29 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                         for line in next(
                             chunk.text.splitlines() for chunk in chunks if chunk.text
                         )
-                        if line.strip()
-                        and not line.strip().startswith(("(", "*"))
+                        if line.strip() and not line.strip().startswith(("(", "*"))
                     ]
                     appearance_counts[(scene.id, character.id)] = len(speech_lines)
+
+    if not characters and scenes:
+        character = CharacterOrSpeaker(
+            id="character-01",
+            display_name="Unnamed speaker",
+            kind=CharacterKind.UNNAMED,
+            first_appearance_scene_id=scenes[0].id,
+        )
+        characters.append(character)
+        for scene, chunk in zip(scenes, chunks):
+            speech_lines = [
+                line.strip()
+                for line in chunk.text.splitlines()
+                if line.strip()
+                and not PAGE_NUMBER_RE.fullmatch(line.strip())
+                and not line.strip().startswith(("(", "[", "<<"))
+            ]
+            if speech_lines:
+                scene_presence.add((scene.id, character.id))
+                appearance_counts[(scene.id, character.id)] = len(speech_lines)
 
     appearances: list[SceneAppearance] = []
     for scene in scenes:
@@ -429,6 +586,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         scenes=scenes,
         characters=characters,
         appearances=appearances,
+        notices=notices,
         ordering=ordering,
         visualization=build_visualization(scene_ids, character_ids, appearances),
     )

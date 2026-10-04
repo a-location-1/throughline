@@ -83,6 +83,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - A source is a play that lacks conventional act, scene, or character labels; the application makes a best-effort analysis when possible and reports which conventional attributes could not be identified.
 - A source contains multiple plays, such as an anthology page or document; the application identifies the first play, warns that additional plays were found, and does not combine them into one result.
 - A source uses one consistent structural formatting convention throughout, even when that convention is unconventional; the parser applies that convention consistently and does not treat alternate casing or punctuation as a second convention within the same source.
+- A play begins with dramatic text but no act or scene headings, uses lyric labels such as strophe and antistrophe within the action, and transitions directly to a notes section; the parser reports one best-effort scene, does not split on lyric labels, and excludes the notes and later back matter.
 - A play contains repeated or unusually formatted scene headings; the output remains deterministic and does not duplicate scenes solely because of formatting noise.
 - A play contains a single speaker throughout; the output still includes a valid one-character result.
 - A source uses Unicode characters, diacritics, punctuation, capitalization, or non-English names; the output preserves the source display form and does not silently strip meaningful characters.
@@ -124,6 +125,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **FR-030**: The application MUST reject ordinary non-play content when the source lacks sufficient combined evidence of dramatic text, even if it contains isolated words that can also occur in plays.
 - **FR-031**: Scene-detection and character-identification evaluation MUST report results by fixture category, including formatting, source type, ambiguity, multiple-play, non-play, accessibility, and invalid-input categories, so systematic failures are not hidden by an aggregate percentage.
 - **FR-032**: The application MUST remain usable on slow connections and modest mobile devices within the supported input limits, including visible progress, bounded client memory, responsive narrow-screen output, and no requirement for hover or high-bandwidth media.
+- **FR-033**: For an otherwise recognizable play that has no act or scene headings, the parser MUST use one default act and one default scene, MUST NOT treat internal lyric labels such as strophe or antistrophe as scene boundaries, and MUST stop the play analysis at an explicit notes or equivalent back-matter heading.
 
 ### Key Entities *(include if feature involves data)*
 

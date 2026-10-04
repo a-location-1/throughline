@@ -93,6 +93,11 @@ class Ambiguity(BaseModel):
     alternatives: list[str] = Field(default_factory=list)
 
 
+class ParserNotice(BaseModel):
+    code: str
+    message: str
+
+
 class CharacterOrSpeaker(BaseModel):
     id: str
     display_name: str
@@ -137,6 +142,7 @@ class AnalysisResult(BaseModel):
     scenes: list[Scene]
     characters: list[CharacterOrSpeaker]
     appearances: list[SceneAppearance]
+    notices: list[ParserNotice] = Field(default_factory=list)
     ordering: Ordering
     visualization: VisualizationInputs
 

@@ -11,7 +11,8 @@ export interface Act { id: string; ordinal: number; label: string; kind: ActKind
 export interface Character { id: string; display_name: string; kind: CharacterKind; first_appearance_scene_id: string; ambiguity?: { evidence: string; alternatives: string[] }; }
 export interface Appearance { scene_id: string; character_id: string; presence: Presence; line_count: number; confidence: 'supported' | 'ambiguous'; explanation?: string; }
 export interface Visualization { scene_ids: string[]; character_ids: string[]; colors: Record<string, string>; paths: Record<string, [number, number][]>; }
-export interface AnalysisResult { schema_version: string; parser_version: string; submission: Submission; acts: Act[]; scenes: Scene[]; characters: Character[]; appearances: Appearance[]; ordering: { scene_ids: string[]; character_ids: string[]; scene_line_count_desc: Record<string, string[]> }; visualization: Visualization; }
+export interface ParserNotice { code: string; message: string }
+export interface AnalysisResult { schema_version: string; parser_version: string; submission: Submission; acts: Act[]; scenes: Scene[]; characters: Character[]; appearances: Appearance[]; notices: ParserNotice[]; ordering: { scene_ids: string[]; character_ids: string[]; scene_line_count_desc: Record<string, string[]> }; visualization: Visualization; }
 export interface AnalysisStatus { analysis_id: string; state: SubmissionState; progress?: Progress; error?: Failure; result?: AnalysisResult; }
 export interface CreateResponse { analysis_id: string; state: SubmissionState; progress: Progress; }
 

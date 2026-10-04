@@ -8,6 +8,12 @@
 		{"slug":"unnamed-collective-silent","source":"sources/unnamed-collective-silent.txt","expected":"expected/unnamed-collective-silent.json","category":"ambiguity","status":"ready","provenance":"synthetic"},
 		{"slug":"unicode-and-names","source":"sources/unicode-and-names.txt","expected":"expected/unicode-and-names.json","category":"unicode-and-names","status":"ready","provenance":"synthetic"},
 		{"slug":"accessibility-and-resources","source":"sources/accessibility-and-resources.txt","expected":"expected/accessibility-and-resources.json","category":"accessibility-and-resources","status":"ready","provenance":"synthetic"},
-		{"slug":"formatting-test-trifles","source":"sources/formatting-test-trifles.txt","expected":"expected/formatting-test-trifles.json","category":"name-variation","status":"ready","provenance":"public-domain"}
+		{"slug":"formatting-test-trifles","source":"sources/formatting-test-trifles.txt","expected":"expected/formatting-test-trifles.json","category":"name-variation","status":"ready","provenance":"public-domain"},
+		{"slug":"formatting-test-r-and-j","source":"sources/formatting-test-r-and-j.txt","expected":"expected/formatting-test-r-and-j.json","category":"formatting","status":"ready","provenance":"public-domain"},
+		{"slug":"unconventional-unnamed","source":"sources/unconventional-unnamed.txt","expected":"expected/unconventional-unnamed.json","category":"unconventional-formatting","status":"ready","provenance":"source-provided-license"},
+		{"slug":"unconventional-formatting","source":"sources/unconventional-formatting.txt","expected":"expected/unconventional-formatting.json","category":"unconventional-formatting","status":"ready","provenance":"synthetic"},
+		{"slug":"separator-scenes","source":"sources/separator-scenes.txt","expected":"expected/separator-scenes.json","category":"unconventional-formatting","status":"ready","provenance":"synthetic"},
+		{"slug":"multiple-plays","source":"sources/multiple-plays.txt","expected":"expected/multiple-plays.json","category":"multiple-plays","status":"ready","provenance":"synthetic"},
+		{"slug":"non-play","source":"invalid/non-play.txt","expected":"expected/non-play.json","category":"non-play","status":"rejected","provenance":"synthetic"}
 	]
 }

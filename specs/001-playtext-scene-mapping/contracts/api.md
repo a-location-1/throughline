@@ -38,6 +38,7 @@ Ready response returns `AnalysisResult` as defined in [data-model.md](../data-mo
 
 ```json
 {"analysis_id":"a_opaque_id","state":"rejected","error":{"code":"NOT_PLAYTEXT","message":"We could not establish that this source contains a playtext.","next_action":"Submit a playtext URL or a text-based play PDF."}}
+```
 
 The parser MUST reserve rejection for sources with insufficient combined evidence of playtext or no usable character/speaker. Missing conventional act, scene, or character labels MUST be represented as notices in a ready best-effort result when the source otherwise supports playtext analysis. When multiple plays are detected, the ready result MUST contain a notice and data for only the first play.
 ```

@@ -1,0 +1,1579 @@
+THE AGONY
+AND THE ECSTASY
+OF STEVE JOBS
+By Mike Daisey
+Release 2.0.1
+9/17/14
+http://mikedaisey.com
+2
+September 21, 2012
+Brooklyn, New York
+Friends,
+When we released THE AGONY AND THE ECSTASY OF STEVE JOBS under a royalty-free,
+open-source license we called it an experiment. When it generated over 100,000 downloads in its
+first week, more than every new American play of the last few decades, we knew it was a
+phenomenon larger than us. And today, after there have been over one hundred and twenty-five
+productions in theaters around the world that have translated into six languages, we know it’s
+been a massive success because so many other artists have given their own time and energy to
+this story.
+This is TATESJ 2.0. It’s a new version of TATESJ that is both stronger and sharper—in fact, the
+New York Times called it “more powerful, funny and engaging” than ever. We’ve worked
+tirelessly on it over the last seven months, and if there’s one feature that stands out in this 2.0
+release, the kind Steve Jobs would crow about from the stage, it’s that it is made ethically.
+In a manner of speaking it’s similar to what so many have been demanding from Apple—I want
+them to make it a priority to consider how they are building their devices, and to take real
+measures to respect human rights and pay living wages in the process of their manufacturing.
+Just as I expect Apple and other manufacturers to reform their ways, I needed to look to my own
+house and do the same.
+If I expect them to build an ethical iPhone, then I needed to build an ethical monologue.
+Sadly, Apple didn’t follow my lead, and many things in China have not changed—after some PR
+flourishes where Apple promised massive reforms, and glowing reports from the auditors they’re
+paying handsomely, they were caught using forced labor by rounding up students and forcing
+them to work on the launch of the iPhone 5 as “interns.”
+Undercover reporters working on Foxconn lines confirm that deeply inhumane work conditions
+coupled with excessive overtime are still happening daily. And the reports still coming from
+SACOM and China Labor Watch show other manufacturers like Samsung have been caught
+using child labor in their supply lines.
+It can make one feel hopeless. But that is an illusion.
+When I started performing this monologue, almost no one in the audience had ever heard the
+word “Foxconn” even though they make almost half of all the electronics in the world. Today
+when I tell this story it’s common knowledge. When I started, people would lecture me, speaking
+slowly so I would understand, that nothing could ever change—no one would ever notice or care
+about labor in China, period.
+But that changed. People did wake up, and for the first time in decades began to actually think
+about the web of relationships between their things and how they are made. The labor movement
+3
+took a hundred years in my country, and it’s absolutely not over today. This war started long
+before I told this story, and it will be going on long after I have died, and it will require more
+than any of us could ever give alone. It’s been an honor and a privilege to give what I have to it
+these last few years, and I hope this monologue can be useful as a tool for others.
+Instead of abandoning this monologue and shirking our duty, we did the hard and rewarding
+work of reforming it, and the adversity of these months has served as a crucible for refining this
+story. And I’m grateful to the theaters who stood by us and supported our efforts to keep telling
+this story: the Public Theater, Woolly Mammoth Theatre Company, Seattle Repertory Theatre,
+the Spoleto Festival, the High Tide Festival, the Flynn Center, Texas Performing Arts,
+TCG/Emerson College, and the Cape Cod Theatre Project. Without their loyalty and faith, you
+would not be reading these words now.
+And finally I’d like to thank everyone who supported me when it was darkest. Even people who
+didn’t agree with my actions—and there were many of you—if you spoke with me civilly, and
+you listened and let me speak, I will always treasure your forbearance.
+I hope we meet again in the culture, where I will not promise to play by the rules, but I will
+promise to deal from the top of the deck with my audiences.
+Be seeing you,
+md
+4
+2/21/12
+Dear Reader,
+This document is an experiment.
+Working together as monologist and director for the past fifteen years, we have never committed
+any of the monologues to text before. They are created in the room as they are told to live
+audiences, again and again, and refined over time. We’ve never allowed other people to perform
+the monologues, because there is no script, and because it never seemed right—in the same way
+that no one would perform, say, a transcript of Cosby or Hicks.
+But the massive response to this work has made us want to open a path so that others in the
+theater can participate. We’ve received an overwhelming number of inquiries—over 500
+different groups and individuals in more than eleven countries, all asking if they can have the
+rights to perform the monologue.
+The answer today, to everyone, is yes.
+From the largest American theaters to the smallest high school drama clubs, from prestigious
+European theaters to the lone actor who tells us he wants to mount a production in Kurdistan on
+the Iraq border—we invite you, artists of all stripes, to take our monologue and put your own
+unique spin on it.
+Since our announcement that this document would be available royalty-free, the response has
+been overwhelmingly positive from artists everywhere—and confused and wary from the media.
+We’ve been asked if we are afraid of what will happen when these words are free, if we’re afraid
+of what will happen to this work?
+We’re not afraid at all. We’re truly excited to see what people will make. One of the most
+powerful forces for humanism is that we are capable of doing things that are not motivated by
+profit—something corporations are incapable of. We’re delighted to throw away the royalties
+and control in favor of real openness, so that the work will bloom everywhere.
+To that end, below you’ll find some thoughts and guidelines that may be useful as you think
+about how to make this work your own.
+ADAPTATION:
+The truth is that this work is not ours now—it is yours. The transcript is a theatrical blueprint
+which you can amend or change as you see fit. You are encouraged to use whatever is useful in
+this transcript—from performing the entire piece verbatim, to editing it, to amending it in any
+way that furthers the needs of your particular production. Perhaps your production is not a
+monologue, but an ensemble of five actors? Perhaps you’d like to use this material as the
+framework for a musical? Perhaps a traditional play, built out of pieces of the show transformed
+into dialogue? Perhaps you will intercut sections of this text with short films of your own
+devising or use the text to score an opera? The possibilities are endless. Please explore them if
+you feel inspired to do so.
+5
+STAGING:
+Those who have seen Mike’s monologues before will know they are staged in a particular
+manner, with Mike seated at a table, and the outline of the work in front of him. This work has
+no outline, as it is a transcript derived from those performances, and there’s no need to feel
+beholden to that staging. Feel free to adhere as closely to, or as far away from, that staging as is
+useful to you in your work.
+CASTING:
+Please don’t feel hamstrung by casting. There’s a tendency in the theater to sometimes think
+linearly about casting, and it is utterly unnecessary. To be specific: you do not have to be a very
+large white man in his thirties to speak this monologue. In fact, we are very much hoping that
+there will be a great diversity of speakers for this work, and if your particulars makes certain
+lines of the text not work, you should amend or delete them.
+CONNECTIVITY:
+We are hoping that people embarking on productions or using this text in any way will let us
+know about this. You can do that by emailing us at dilettante@mikedaisey.com, or sending
+twitter messages to @mdaisey, and by using the hashtag #agonyecstasy. You do not have to do
+this, but we hope that you will, because part of this effort is trying to track how far the show
+spreads, what happens to productions of it, and you might get synergy for your efforts as you
+find other people who have been following this work.
+ACTIVISM:
+This monologue has always had an activist component by its nature—it charges people to
+examine their lives, their roles in our economic realities, and take action within those
+frameworks. In our productions we follow the performance with a “reverse program”—a kind of
+action sheet that is handed out at the door as you leave, just as you got the program when you
+came in. We have included a version of this document at the end of this file, and we’d urge you
+to consider using it, or if you have other ideas on how to connect this work to action, feel free to
+implement those.
+We sincerely hope that this transcript is provocative, exciting, and useful to you—and please
+know that you can make a difference. When we started performing this monologue in the
+summer of 2010, few would have believed that it would become a powerful force for change in
+the world. In fact, many in our age believe it’s impossible for the arts to ever make a difference.
+But one should never doubt the power that comes from humans gathering together in a charged
+space. The fact that you are reading this now is testament to the transformative power of art and
+theater, something that is larger than any of us.
+We are delighted to welcome you into this process, and we can’t wait to see what you dream up.
+Break a leg,
+Mike Daisey & Jean-Michele Gregory
+Creator and Director
+6
+OPEN PERFORMANCE LICENSE
+TERMS:
+This is a non-traditional license, written in simple English. As such it may not cover every
+contingency, but it outlines the parameters, and presumes good faith on the both the part of the
+person drafting it and the people reading it.
+DISTRIBUTION:
+The document this license is contained in is available at http://mikedaisey.com. People are free to
+distribute that file however they wish, but are asked not to amend the document itself. Whenever
+possible, please link to the site instead of hosting the file separately, as that way people will have
+access to the most updated version of the transcript. Note that this last point is a request, not a
+requirement.
+USE:
+Anyone is free to use and stage THE AGONY AND THE ECSTASY OF STEVE JOBS
+(TATESJ) for live performances. There are no restrictions as to venue, location, or size of live
+performance. There is no permission needed from anyone at anytime to perform the work in any
+venue.
+ROYALTIES:
+There are no royalties or payments of any kind for staging TATESJ—it is free to use for all
+theatrical purposes, from readings to full productions. No one may profit from the distribution of
+this transcript without express permission—in other words, agencies can’t charge people to
+produce the show, and they have no right to negotiate such things. It is free.
+TRANSLATION:
+Permission is granted to translate the text into any other language for the purposes of staging the
+work. Any translations must be made free under the same terms of this license, and it is
+requested that artists making those translations send their translations to
+dilettante@mikedaisey.com so that they can be made available for others to use.
+ADAPTATION:
+Any and all parts of the text of the transcript may be amended or altered in any fashion by
+anyone for the purposes of staging a live production. The work may be abridged or expanded.
+The transcript of the monologue is provided as a theatrical blueprint—individual artists adapting
+it are expected to use their judgment and make changes accordingly.
+TITLE:
+It is asked that if artists are staging a work that is substantially similar to what is presented here,
+they call it THE AGONY AND THE ECSTASY OF STEVE JOBS. If the work has been wildly
+adapted by the artists they are still free to call it TATESJ, or if they feel another title is now
+appropriate, they may call it that instead.
+7
+CREDITING:
+It is requested that one of the following credits be used: “by Mike Daisey,” or “Adapted from the
+monologue by Mike Daisey,” or “Adapted from the monologue ‘The Agony and the Ecstasy of
+Steve Jobs’ by Mike Daisey,” as is deemed appropriate for your production.
+CONTACT:
+It is requested that artists staging the work contact Mike Daisey with details of their productions,
+so that word can be spread about productions around the world. This is absolutely voluntary, and
+not required, but if one wishes to take part they should email agonyecstasy@mikedaisey.com or
+via twitter to @mdaisey and using the hashtag #agonyecstasy.
+RECORDING:
+Artists are free to record and disseminate work that arises out of live performances of this work.
+If the artists wish to post to the public more than excerpts, they are asked to contact
+dilettante@mikedaisey.com.
+OTHER USE:
+This license is expressly for the staging of theatrical productions and live events, and in the
+creation of work toward that end. Quoting from the text, attributed and referred to as a transcript,
+is permitted for commentary and analysis.
+CONTEXT:
+This work is not Mike Daisey’s monologue, because that is a living construct made of ideas in
+the moment it is executed. It does not represent the totality of TATESJ, as each performance is
+an extemporaneous, live event, and this transcript should not be interpreted as the definitive
+version. If people would make an effort to be mindful of this distinction, Mr. Daisey would
+appreciate it.
+8
+THE AGONY
+AND THE ECSTASY
+OF STEVE JOBS
+By Mike Daisey
+9
+“Remembering that you are going to die is the best way I know
+to avoid the trap of thinking you have something to lose.
+You are already naked.”
+—Steve Jobs
+“If you have money, you can make the ghosts and
+devils turn your grindstone.”
+—Chinese proverb
+“If you want to enjoy a good steak, don’t visit the slaughterhouse.”
+—American proverb
+10
+1 — MIDNIGHT IN THE CHUNGKING MANSIONS
+The Mira Hotel in Kowloon, Hong Kong, is exquisitely designed. It’s like the inside of a
+sailing ship: everything has a place and everything is in its place. I actually find myself opening
+and closing the little drawers just to see the intricate way they’re fitted together…I can’t help it.
+It’s just the way I’m wired.
+And I head down to the lobby of the Mira Hotel in Kowloon, Hong Kong, and I step out
+into a twenty-first century Hong Kong monsoon season night—the air is so thick with moisture
+that it’s smearing the ubiquitous neon like we’ve all done just a little bit of LSD—
+—and I’m walking down the streets and even though it’s after midnight, there are
+hundreds of people on every block, and there’s this humid sort of animal smell, the smell of
+humans in close proximity with one another, a smell we’ve all almost entirely forgotten.
+And a few blocks down from the Mira Hotel in Kowloon, Hong Kong, sits the
+Chungking Mansions.
+The Chungking Mansions are a wretched hive of scum and villainy. They sit in the heart
+of Kowloon; they are nothing more and nothing less than a mall of inequities. Anything you
+want to get that you probably aren’t supposed to have you can find in the Chungking Mansions
+after midnight, and I am there, walking up and down the aisles.
+It’s like globalism in action. It’s like a pirate-themed Benetton ad.
+Sub-Saharan Africans with tribal scars are getting into arguments over garbage bags
+filled with second-hand cell phones, mainlanders are debating with Koreans over some
+mysterious root, and in an Indian food stall there are stacks and stacks of tiffins and an off-brand
+Slurpee machine called a Slurvee.
+11
+And in all of this, I am the only minority. Because I am white, and large, and I am
+wearing…a Hawaiian shirt.
+Because you get to a certain point where you realize you just aren’t going to fit in. You
+get to a certain point and you realize it might be advantageous to just Columbo yourself right
+into the middle of a situation. I’ve been doing this for a long time, it’s a kind of professional
+blundering. I just kind of…wot, wot? Wot wot wot wot wot!
+You get in the most interesting situations that way. Doesn’t help you get back out of them
+again, but it does make for an interesting life.
+And I make my way up to the third floor of the Chungking Mansions, which is where
+things start getting a little sketchy. And in the course of half an hour I am offered hashish,
+opium, heroin, sex with women, sex with men, and sex in a combination only described as
+“delightful.”
+And I decline all these offers because that’s not what I’m here for—I find what I’m
+looking for in a far corner of that third floor next to a rack of cut-rate papaya…there’s this booth.
+And in this booth on strands of fishing wire are hundreds and hundreds of cell phones—
+as though they’ve been caught by some fisherman—and in a sense they have, because the man in
+the booth is seated at a workbench, he has a phone in front of him with the back popped off, he
+has a soldering iron in one hand and a big magnifying glass over his left eye. When I walk in he
+looks at me and his eye looms at me enormously.
+And I speak to him in the only international language I know: I say,
+“iPhone?”
+12
+And he smiles, and there’s his gold tooth, and he reaches under the counter and he pulls
+out an iPhone…except it’s not an iPhone. You can tell right away from the packaging: the
+kerning on the fonts is all fucked up.
+Then when you open it, the phone itself is a pretty good copy but when you turn it on,
+instead of the graceful swoop of icons onto the screen, these icons stagger on like they all got
+drunk in Kowloon. And then when you press one of them, instead of a photo-realistic address
+book, you get a big blue window and the words “ERROR IS MAKING.”
+I hand back the “iPhone” and show him what it I mean: I reach into my pocket and I take
+out my iPhone and when he sees it, he understands and he reaches out his hand. And I take my
+baby, and I put it in his hand, and he takes a grimy dock cable and he shoves it into the bottom of
+the phone and his screens light up.
+Because this man is a pirate. He’s a hacker, a jailbreaker, an unlocker, a person you go to
+to fiddle with the baseband of your phone, a person who writes tailored viruses to crack your
+phone open and give it back to you again, because—you may not know this—but there’s a war
+going on right now over all those devices in your pockets. A war over who owns them.
+You probably think you own them. Why? Because you paid for them?
+Silly! The corporations would see it a different way. They would say the devices run on
+their networks, so they should control them, and there’s a war going on right now, back and
+forth, over who will own those devices…and in a war like that, there’s a small percentage to be
+made by pirates like this one who give people back ownership of the things they thought they
+already owned.
+13
+And as he works, we talk back and forth in broken English, and I ask him if it’s hard to
+stay ahead of Apple and Nokia and Samsung and all the different technology makers who are
+always building up their defenses that the pirates then have to tear back down again.
+And he smiles…and there’s that gold tooth again. And he gestures, a grand gesture that
+seems incongruous in this tiny booth, and for a moment—he doesn’t look like a hacker in the
+Chungking Mansions.
+He looks like a warrior prince, and these are all his subjects.
+He smiles, as if to say,
+“It’s me against Apple. Who do you think is going to win?”
+14
+2 — THE WORLD BEFORE
+My only hobby is technology.
+I love technology, I love everything about it. I love looking at technology, I love
+comparing one piece of technology with another, I love reading rumors about technology that
+doesn’t exist yet, I love browsing technology, I love buying technology, I love opening
+technology—even when it’s in that bubble packaging—I love it. I love the smell of a new piece
+of technology—that sort of burnt PVC smell when you run electricity through it the first time?—
+I love that.
+And of all the kinds of technology that I love in the world, I love the technology that
+comes from Apple the most.
+Because I am an Apple aficionado, I am an Apple partisan, I am an Apple fanboy, I am a
+worshipper in the cult of Mac. I have been to the House of Jobs, I have walked through the
+stations of his cross, I have knelt before his throne.
+And like so many of you who may be members of this religion with me, you may know
+that it can be difficult, at times, to keep the faith. And I have strayed now and again. Like many
+of you, I indulged in the Linux heresies. And in the late nineties, I did sleep with a Windows
+system or two…but who didn’t, really?
+But for the most part, I have been faithful. And we speak tonight of the operating system
+as a religion and I submit to you, how could it be otherwise? Because in this age, when so much
+of our lives are mediated by technology, I say to you, if you control the metaphor through which
+people see the world, then you control the world itself.
+15
+What I’m saying is, if you have never thought, in a deep way, about your choice of
+operating systems…you may be living an unexamined life.
+And when I was young, I dreamed of the future, and we knew what the future was going
+to be. We knew the future was going to be cyberspace and we knew exactly how it was going to
+work. We were all going to have ports—BIG FUCKING PORTS —on the base of our skulls. We
+were going to have these giant stereo jacks and be like, “I’m jackin’ in, motherfucker! Ahhhh!”
+and we would jack into cyberspace.
+Thank God that never happened.
+Can you imagine? Having a port at the base of your skull? And having software running
+at the base of your skull? At the quality level that software is written today?
+“I’m sorry, man, I can’t come over—the left side of my visual field is crashing over and
+over again. I booted into safe mode but it won’t fucking stop. I’m on hold with tech support. Aw,
+shit, it’s happening again, I gotta go. I gotta go, I gotta go.”
+Thank God that never happened, right?
+Except it did. It did happen. Because the future never arrives the way we expect it to.
+That’s why it’s called “the future.” And right now, out there in the darkness, almost each and
+every one of you has a device in your pocket that is more powerful than any personal computer
+from ten or twelve years ago, and it is connected to a world wide network of information that it
+can send to and receive from at will.
+What I’m saying is, We are cyborgs already. The future already happened.
+And if my time with Apple has taught me anything, it has taught me that to be in love
+with Apple is a little bit to be in love with heartbreak itself. Because they break your heart, again
+and again…because Steve Jobs was the master of the forced upgrade.
+16
+Just when you think everything is finally working out, just when you think all of your
+systems are in alignment—not only in their capabilities but also aesthetically—just when you
+think everything you own can actually speak to one another—he fucks you.
+I remember, there was one week in 1999, I looked at all of my systems and I thought,
+“Oh! It’s perfect! Everything I own is bulbous and fruit-colored. This will never go out of
+style!”
+But it did. It did!
+And Steve Jobs was so good at telling us the story we long to hear, the story of a future
+where technology actually works.
+I’ve never been to that place. I really want to go.
+And when the devices rise up on their glass pillars—as though they were born from the
+mind of Jobs himself! Like one day he’s walking down the street and he’s like, “An iPad!” and
+MWRRRAAAAP, there it is! —they’re so beautiful!
+He was so good at making us need things we never even knew we wanted.
+Like I never knew that I needed a laptop so thin I could slice a sandwich with it. I didn’t
+know that. But then I saw it. And I wanted it.
+<<mimes slicing a sandwich>>
+And there are some of you out there in the darkness right now, watching me, thinking,
+“Mike . . . use a knife.”
+But I say to you, in a better designed world, I would need only one tool: the tool that
+Steve has given me.
+<<mimes slicing a sandwich again>>
+17
+And when I watch the keynotes, I am filled with a curious combination of lust and
+geekery. I stare into the screen and I have one window open with the livestream running,
+showing the devices being introduced, and I have multiple other windows open with chat rooms
+filled with other people—also in their underwear—in apartments all over the world, typing
+furiously. And when it is over, I rise up, transformed, and I go to the other room of our
+apartment, where my wife is—who is, I should note, a more normal person—and I try to explain
+to her what I have seen…and it is like I am speaking in Egyptian:
+<<in the voice of the devouring consumer>>
+“I want a new router. I want a new router! Because our current router—ha-ha!—our
+current router is 802.11.g . G! Pathetic G! It’s sooooo sloooowwww. I can’t believe how
+slowwwwww it is. I didn’t even know it was slow until minutes ago but now that I do know…I
+can’t even LOOK at the fucking thing! I just want to rip it out of our systems and smash it
+against the edge of the toilet and flush it away. The new router—ahhhh! —the new router is
+802.11.n. N! N is fast. With N, everything is finally going to work the way they always said it
+would. With N, we’ll finally be able to stream high definition video wirelessly across our
+apartment from our RAID arrray server!”
+And there is a rational voice in the back of my mind saying,
+“Michael. You do not own a RAID array server. And you do not stream any high
+definition video. In fact, the only thing you use your router for is downloading webpages from
+the internet.”
+And I speak to that voice, and I tell that voice to SHUT UP.
+Because I want it! Because it is small, and white, and square…and has perfect Bauhaus-
+inspired design.
+18
+And before we go too much further here tonight, I think we should speak, for a moment,
+about the nature of geekishness.
+Because geeks are a little bit like lowland gorillas: they fight for dominance. And out
+there in the darkness I feel certain that there is someone who believes that they are geekier than
+me. They’re sitting out there in the darkness, even now, watching me, thinking…
+<<in a shrill nasal manner>>
+“I don’t think he knows anything about Steve Jobs. I have a tattoo of Steve Jobs’ face on
+the back of my skull. When I have a USB thumb drive that doesn’t work the way I want it to, I
+like to write my own drivers for it in machine code.”
+You win.
+You are geekier than me.
+You, out there in the darkness.
+If…you made it out of your apartment this evening.
+But I do think it’s important to understand where I sit in that hierarchy for the purposes of
+our story, and so the best way I know to describe it is to say that I am at the level of geekishness
+where, to relax, after performances like this one, sometimes, I will go back to my apartment and
+I will field strip my MacBook Pro into its 43 component pieces. I will clean them with
+compressed air and I will put them back together again.
+It soothes me.
+So the truth is, I never would have questioned this religion, I never would have looked
+deeply at this belief system—because it gave me so much pleasure—if it hadn’t been for the
+pictures.
+19
+Because one day, I was relaxing on the internet—which for me means reading Macintosh
+news sites, which, I should specify, have no actual news in them. They’re instead filled with
+rumors about what Apple will do next, written exclusively by people who have no fucking idea
+what Apple will do next, but, for some reason, I find this soothing.
+So, I’m reading one of these news sites when this article gets posted. And it’s about the
+fact that someone bought an iPhone and when they got it, it wasn’t blank—it had information on
+it from inside the factory. And in fact, in the camera roll, there were pictures on it. From inside
+the factory. They posted these pictures into the article, and I looked at these pictures, and they
+took my breath away.
+They’re not very good pictures, you know—they’re just testing that the camera on the
+phone works, they’re not of anything, but I’ll never forget them. There were four of them.
+First was of a stack of pallets, wooden pallets, stacked up; and the second was the edge of
+a conveyor belt; the third was totally out of focus—it could just be an enormous space—and the
+fourth was a woman. She doesn’t know her picture’s being taken. She’s looking off in another
+direction, she’s wearing a clean suit, she has no expression on her face.
+And I looked at these pictures, and I downloaded these pictures to my desktop, and I put
+them in a folder on my desktop, and in the weeks and months that followed I found myself
+returning to them again and again, almost compulsively. I would mouse over, and I would open
+that folder, and then I would use Exposé and I would fan the pictures across my desktop and I
+would look at them.
+Who are these people?
+Because you have to understand, I have dedicated an embarrassing amount of my life to
+the study of these machines. I’m an amateur, but I am a dedicated amateur. I understand as best I
+20
+can how the hardware works and how the software rests on the hardware, and in all that time,
+until I saw those pictures, it was only then that I realized I had never thought, ever, in a dedicated
+way, about how they were made.
+It’s actually hard now to reconstruct what I did think. I think what I thought is they were
+made by robots.
+I had an image in my mind that I now realize I just stole from a 60 Minutes story about
+Japanese automotive plants. I just copy-and-pasted that and I was like, PWOP, Command-V…it
+looks like that.
+But smaller.
+Because they’re laptops. Instead of cars.
+I started to think how if this phone has four pictures on it, taken by hand in testing, then
+every iPhone has four pictures on it, taken in testing, every iPhone in the world. By hand. I
+started to think. And that’s always a problem, for any religion.
+The moment when you begin to think.
+21
+3 — FRUIT OF EARLY PIRATES
+IN THE BEGINNING there were two Steves, and this is very important: there was Steve
+Jobs and Steve Wozniak.
+Wozniak was a geek’s geek, sort of like a geek version of Santa Claus: very fat, very
+jolly, and he could code like a motherfucker. He would drink Mountain Dew—
+WHARRRRRRRRRGGGGGHHHHH!—then he would code, all night long. Serious geek—
+serious genius.
+Steve Jobs was something else entirely. He wasn’t even really a geek, he was more like a
+showman, like an inventor-entrepreneur, and he loomed over the tech industry.
+You know, we don’t have many giants like Steve Jobs anymore. I mean, who do we have
+today?
+Ballmer? At Microsoft?
+<<makes horrible cat throwing up sound>>
+Ballmer’s a fucking monkey! He throws chairs at his subordinates when he’s angry.
+Steve Jobs didn’t need to throw chairs.
+Steve Jobs could do that shit with his mind.
+If Steve Jobs even looked at a subordinate in a certain way, the subordinate would get up
+and go and get a chair…and beat themselves to death with it.
+That’s power. That’s real power.
+Jobs was adopted into a working class family. He was always driven and idiosyncratic.
+He went off to college and dropped out after one semester, but he stayed on campus, auditing the
+22
+classes he wanted to take while he surfed on other people’s couches, and he began to live a kind
+of dual existence: half of it in the Pacific Northwest, where he went to vegan communes and
+dropped a lot of acid, and the other half in what is today Silicon Valley, where he became more
+and more obsessed with electronics.
+And he fused these two parts of himself together until he became a kind of techno-
+libertarian hippie—someone who believed passionately in the power of technology to transform
+all our lives, and believed that transformation could be welded to humanist values.
+And he hooks up with Wozniak, and the first thing they work on together is a pirate box:
+it’s a box that lets you hack into the telephone company and steal long-distance calls.
+They don’t just make one of them—they make hundreds of them, and they sell them to
+everybody, but they need to test it, so Jobs has Wozniak test the box by using it to place a call to
+the Vatican—but spoofing the call so it looks like the call is coming from the White House.
+So Wozniak does this and says, “Hello Vatican, this is the White House. I have Henry
+Kissinger on the line for the Pope.”
+And the cardinal—or whoever the fuck answers the phone at the Vatican in the middle of
+the night—says, “His Holiness is sleeping, but please hold on, we’ll go and wake him.”
+And Wozniak says, “OH MY GOD I’M SORRY DON’T DO THAT THIS WAS A
+MISTAKE DON’T WAKE THE POPE GOODBYE!”
+Because he’s a regular geek so he’s like,
+“It fucking works, proof of concept. Jesus Christ!”
+Now if Jobs had placed that call, Jobs would’ve said,
+“Excellent.
+Please go and get him.
+23
+And while I have you here on the line, listen to the sound of my voice…”
+Their next project together is the Apple I. It’s a computer, but it doesn’t look very much
+like a computer as we imagine them today. And that’s because the beginning of the personal
+computer revolution was a hobbyist movement, so the kind of people who are going to buy a
+computer are the people who are into chemistry sets and ham radios.
+And so the Apple I is a bundle of circuit boards; it actually comes with a manual that
+explains exactly how it’s circuited because it’s expected you’ll want to hack it or modify it or
+fuck with it. It doesn’t even always have a case, and it definitely doesn’t have a keyboard—and
+that’s a feature, not a bug. Because if you’re the kind of person who bought one, you’re the kind
+of person who would say, “There’s no keyboard? You mean I get to make my own keyboard?
+Awesome!”
+Now their next project, the Apple II, is entirely different. This looks like a product, it
+looks like something you could buy in a store, and indeed, thousands of Americans run out and
+buy it. And they have this brand new experience that Americans had never had before, the
+experience of going out and buying an incredibly expensive piece of machinery, setting it all up
+correctly, turning it on…and nothing happens. It just goes:
+<<mimics the sound of an Apple II booting up, disk drive whiring, then mimes a cursor
+blinking>>
+That’s because a computer fundamentally is an appliance, and appliances, by their nature,
+do one thing: your blender blends, your iron irons, and your computer computes—it executes the
+programs that are run on it. What’s different about a computer is it’s kind of like a chameleon: it
+becomes whatever program is executing on it—so the value of a computer increases
+exponentially as more programs are written for it.
+24
+And the Apple II drops at this fortuitous moment, when a critical mass of Americans are
+getting into computing, and it’s them—the users—they are the ones that give value to that
+machine, that make that computer a success.
+They come up with programs that Apple never would’ve thought of, like spreadsheets.
+People are like,
+“You know what’d be great? If there were spreadsheets on the computer. That would be
+so much better than these clay tablets we’re using now.”
+And the Apple II goes on to be the best-selling computer in the history of the world, and
+a mind virus starts to spread across America, infecting parents everywhere with the idea that if
+they do not get a computer for their child, their child is fucked.
+And parents everywhere fall prey to this—they don’t even know what they do, but
+they’re like, “Well, Junior, this was certainly very fucking expensive…I hope you know what the
+fuck to do with it!”
+And that’s how I got my first computer.
+My first computer was an Apple IIc.
+It was bought for my family by my grandfather, who was fairly well off—my family was
+actually fairly poor, so when the Apple IIc came into our home, it was easily the most expensive
+thing that had ever been in our home, and so it was treated with a degree of deference as befitting
+something with that lineage: it was given its own room—the Computer Room—where it sat in its
+own desk, and we had to ask permission to go and speak with the computer.
+It was a beautiful machine. I think everything I fundamentally understand about industrial
+design I learned looking at and working with that machine. It had this beautiful off-white
+platinum finish, and there were these slits cut perfectly, vertically, into the top case…the keys
+25
+had this wonderful travel to them, they were a delight to use, and the font on the keys was
+Garamond—a font I still feel strongly about today. The disk drive would open and close with a
+satisfying chunk, and I learned on that machine. I started with the tutorials, played a lot of
+Lemonade Stand, and moved on to programming in Basic, Pascal, typing in programs from
+magazines.
+I became a writer on that machine. I and the machine learned to write together late into
+the night, the cold Maine night, everyone else in the house is asleep, I would be there, seated
+before the computer, the thoughts in my fevered brain traveling down my arms, out my fingers,
+into the keys, up through the computer, into the screen and spraying back at me as light, this
+virtuous circle, I and the computer, learning together.
+I remember everything about that machine. I remember how the power brick would
+oscillate…in the depths of the night you could hear the whine going up and down and up and
+down. I remember how you had to stack pillows on top of the printer if you wanted to print in the
+middle of the night because it was dot matrix, and it would go:
+<<emits a horrifying, piercing impersonation of a dot-matrix printer>>
+AIIIIIEEEAAAAAAAAA! AIIIIIEEEAAAAAAAAA! AIIIIIEEEAAAAAAAAA!
+<<audience recovers from horrifying dot-matrix printer sound>>
+And there were two axes that ran right through Steve Jobs’ character. One is that he was
+passionate about design, and the other is that he was ruthless in business. And the place where
+these two best intersect is the Breakout story.
+When Apple was barely out of the garage, just starting out, Jobs goes to Wozniak and
+says, “Listen, I got us a project. It’s a rush job, we have to do it in seventy-two hours. It’s
+programming this game, Breakout, for Atari. Here’s the deal: if we can make the game fit on
+26
+fifty chips then we get seven hundred dollars. But if we can make the game fit on fourty
+chips…then, we get a thousand dollars.”
+And Wozniak listens to this, and then he goes, “WHARRRRGGG!,” and he drinks three
+liters of Mountain Dew! And then he just starts coding—day and night and night and day—and
+three days later, he’s done it and he goes to Jobs—
+<<groggy incomprehensible bear-like geek sounds>>
+—and he’s made the game fit on thirty-eight chips. The people at Atari don’t even
+understand how he did it. They’re like, “What the fuck? I don’t even understand this…just ship
+it. Just fucking ship it.”
+It isn’t until years later, when Apple is a global company and everyone involved are
+multi-multi-millionaires, it isn’t until then that Wozniak discovers that Jobs was paid five
+thousand dollars for that project.
+And further, there were no conditions from Atari about the number of chips to be used.
+Jobs just liked things to be efficient.
+27
+4 — THE GATES OF FOXCONN
+Shenzhen is a city without history.
+The people who live there will tell you that, because thirty-one years ago, Shenzhen was
+a fishing village. They had little reed huts, little reed walkways between the huts, the men would
+fish into the late afternoon—I hear it was lovely. Today, Shenzhen is a city of fourteen million
+people. It is larger than New York City, it is the third largest city in all of China, and it is the
+place where almost all of your shit comes from.
+And the most amazing thing is, almost no one in America knows its name.
+Isn’t that remarkable?
+That there’s a place where almost all of our shit comes from and no one knows its
+fucking name?
+I mean, we think we do know where our shit comes from—we think our shit comes from
+China.
+Right? In kind of a generalized way? “China.”
+But it doesn’t come from “China”—it comes from Shenzhen. It’s a city, it’s a place, and I
+am there, in an elevator, going down to the lobby of my hotel to meet with my translator, Cathy.
+Cathy is fascinating: she’s very small, and she has sort of rounded shoulders, and she has
+these glasses that are way too big for her face so they keep sliding down and she has to push
+them up assiduously. She also has this sort of unnerving habit that when she is listening to you,
+she leans forward…indeterminately. So you get the feeling that if you were to talk to her for long
+enough, she would actually fall into your chest, and you’d have to pick her back up again.
+28
+We go outside and get into a taxi and begin to drive through the streets of downtown
+Shenzhen.
+Shenzhen looks like Blade Runner threw up on itself.
+LEDs, neon, and fifteen-story-high video walls covered in shitty Chinese advertising: it’s
+everything they promised us the future would be.
+We get out to the edge of the core of Shenzhen and we come to the gates. Because thirty-
+one years ago, when Deng Xiaoping carved this area off from the rest of China with a big red
+pen, he said, “This will be the Special Economic Zone,” and he made a deal with the
+corporations, he said, “Listen, use our people, do whatever you want to our people, just give us a
+modern China.” And the corporations took that deal and they squeezed and they squeezed and
+what they got is the Shenzhen we find today.
+And on the other side of the gates it’s the factory zone and WHOO! —it’s like going
+from the Eloi to the Morlocks: everything changes. I’ve never seen anything like it. Everything is
+under construction. Every road has a bypass, every bypass has a bypass—it’s bypasses all the
+way down. I swear to God, I actually see buildings being built up on one side as they’re being
+torn down on the other.
+And we pull onto an elevated expressway, and we begin to drive under a silver poisoned
+sky, because the air in Shenzhen…it’s not good in Hong Kong, but when you get to Shenzhen,
+you can actually feel it. Like a booted foot pressing down on your chest. But it’s amazing, what
+human beings will get used to, isn’t it?
+Because after just a few days
+<<takes a deep breath>>
+you hardly even notice it at all.
+29
+And as we’re driving, we’re passing by arcology after arcology, these immense buildings
+that are so large they are redefining my sense of scale moment by moment, and then our taxi
+driver takes an exit ramp, and he stops.
+Because the exit ramp stops. In mid-air.
+There’s some rebar sticking out…and an eighty-five foot drop to the ground.
+The only sign that the exit ramp ends is a single, solitary, orange cone.
+It’s sitting there, as if to say,
+“We’re busy…? Be alert…?”
+<<makes elaborate hand mime of officiousness>>
+We back back onto the expressway and begin to drive again, and then Cathy turns to me,
+pushes up her glasses, and says, “Excuse me, but I do not think this is going to work.”
+And I hasten to assure her that it will work, but I’m talking out of my ass because I don’t
+know that it’s going to work; in fact, I have a lot of evidence that this is not going to work. In
+fact, all the people I have talked to in Hong Kong, when I tell them about my plan, you can
+actually see them wrestling with just how to express to me just how totally fucked my plan is.
+My plan is this: We are in a taxi right now, in the factory zone, we are driving on our way
+to Foxconn.
+Foxconn is the biggest company you’ve never heard of—or maybe you have? Foxconn
+makes almost fifty percent of all the electronics in the world. So if you’re ever wondering how
+much of your shit comes from Foxconn, just take all the electronics you have in your house, put
+them together in a big pile, cut them all in half: that’s Foxconn.
+And at this plant, they make all kinds of things for all kinds of companies, including
+MacBooks and iPhones and iPads, and so my plan is to take this taxi to the main gates, and then
+30
+I’m going to get out of the taxi with my translator, and then my plan is to stand at the main gates
+and talk to anybody who wants to talk to me.
+And when I tell people in Hong Kong about this plan, they say,
+“That’s…different. That’s not really how we usually do things in China…ah…that’s
+really a bad idea—”
+But I don’t know what the fuck else to do. I have been trying to do things “the right
+way,” I can’t get anywhere. I’ve been working with a fixer for the BBC—all the doors are
+closed.
+And you reach a certain point when you realize you may need to obey your natural
+inclinations.
+And at the end of the day, I am large,
+I am American,
+and I am wearing a fucking Hawaiian shirt.
+And we are going to the main gates.
+But I have to say, when we get there…my resolve wavers.
+Because the Foxconn plant in Shenzhen is enormous. The Foxconn plant in Shenzhen has
+four-hundred-and-thirty-thousand workers.
+That can be a difficult number to conceptualize. I find it’s useful to instead think about
+how there are twenty-five cafeterias at the plant and you just have to understand that some of
+these cafeterias seat up to ten thousand people.
+So now you just need to visualize a cafeteria that seats ten thousand people.
+I’ll wait.
+No, really. I’ll wait.
+31
+You know what you could try? Try visualizing a cafeteria from your youth—maybe one
+from grade school, maybe one you went to hundreds and hundreds of times against your will,
+that would be appropriate. Summon it up in your mind.
+Ok. Now. Hold it in your mind.
+What I want you to do now is push the walls outward…start cloning the space like a
+Photoshop tool, over and over and over until it holds thousands of people.
+Now, imagine twenty five rooms, all that size, all next to each other.
+And now imagine them always full—because they always are. If you’re late from your
+shift, even a little bit, you aren’t getting any dinner.
+And I get to the main gates, and I get out of the taxi with my translator, and the first thing
+I see at the gates are the guards.
+And the guards look pissed. They look really pissed.
+And I look back at the taxi which is now pulling away…and I’m involuntarily reminded
+of this Google News alert that popped into my inbox a few weeks earlier about an Reuters
+photographer who was taking pictures not at the Foxconn plant but near the Foxconn plant and
+Foxconn security went out, scooped him up, and beat him before releasing him.
+I hope they’re in a better mood today.
+And I look up past the gates and the guards, I look up at the buildings, these immense
+buildings, they are so enormous, and along the edges of each enormous building are the nets.
+Because right at the time that I am making this visit, there’s been an epidemic of suicides
+at the Foxconn plant.
+32
+Day after day, week after week, worker after worker is climbing all the way up to the
+tops of these enormous buildings and then throwing themselves off, killing themselves in a brutal
+and public manner, not thinking very much about just how bad this makes Foxconn look.
+Foxconn’s response to month after month of suicides has been to put up these nets.
+<<silence>>
+I think it’s Foxconn’s version of corporate responsibility.
+It’s shift change, and the workers are coming out of the plant, and I’m standing there
+under the hot monsoon sun in the gaze of the guards. I feel ridiculous. I look absurd in this
+landscape—I mean, I wouldn’t talk to me!
+And Cathy surprises me—she’s a spitfire, who knew?—she runs right over to the very
+first worker, grabs them by the arm, drags them over to us, we start talking…and in short order,
+we cannot keep up.
+First, there’s one worker waiting, then there’s two, then there’s three, and before long the
+guards are like,
+“mrrrrrrr??? RRRRRR,”
+and we move further and further away from the plant, but everyone wants to talk! It’s like
+they were coming to work every day, thinking,
+“You know what’d be great? It’d be so great if somebody who uses all this crap we make,
+all day long, it’d be so great if one of those people came and asked us what is going on. Because
+we would have stories for them.”
+And I’m just ad-hoc-ing questions, I’m asking the questions you would expect: “What
+village in China are you from? How long have you been working at Foxconn? What do you do at
+the plant? How do you find your job? What would you change at Foxconn if you could change
+33
+anything?”
+That last question always gets them. They always react like a bee has flown into their
+faces and then they say something to Cathy and Cathy says, “He says he never thought of that
+before.” Every time. Every time.
+And the stories are fascinating. I talk to one young woman who works on the iPhone line.
+She cleans the screens of iPhones by hand, in these huge racks, thousands and thousands of them
+every day, and she shows me how she does it, and I show her my iPhone and I hand her my
+iPhone—I take a picture of her holding my iPhone—and I say to her, “We’ll never know, you
+may have cleaned the screen of this iPhone when it came by you on the line, we’ll never know.”
+And, quick as a whip, she takes my phone and she rubs it against her pants and then she says,
+“There, I’ve cleaned it a second time.”
+And stories about China often get bogged down in numbers, it all becomes so enormous
+it can seem impossible. So let’s talk about one story, let’s talk about one person, let’s talk about
+Sun Danyong.
+Sun Danyong was a worker at this very Foxconn plant that I am standing in front of. He
+came from a village hundreds of miles to the north, where his father was a stonemason, and he
+got a degree in electrical engineering—and there’s a revolution in one generation, from the father
+as a stonemason, to the son an electrical engineer. There are tens, hundreds of thousands of
+workers with degrees like that. They get those degrees, leave behind their homes and everything
+they know to make money that can transform their lives, and the lives of everyone in the villages
+they’ve left behind.
+And by all accounts Sun Danyong was honest, brave, and true, a credit to his family, and
+he rose at Foxconn and was given an important responsibility: he was responsible for twelve
+34
+iPhone prototypes.
+And then one day, one of those prototypes went missing.
+Funny thing is, the exact same thing happens months later at Apple, in Cupertino. The
+very same type of prototype iPhone went missing.
+In this case, they were testing it in the field, and a worker from Apple was at a fake
+German beer hall in Palo Alto, drinking fake German beer, like you do, and he leaves the iPhone
+prototype behind.
+And I think we’ve all had that experience, when we drink too much and leave our iPhone
+behind. And that terrible moment when we realize
+<<with sudden hysteria>>
+“My God…I CAN’T TEXT, I CAN’T TWEET, I CAN’T TEXT ANYONE”
+and we get the Black Shakes and we run back to the bar.
+It’s a little bit different when what you’ve left behind is Steve Jobs’ Super Secret Surprise
+iPhone. When that happens the tech sites get their claws into it, and they rip it apart, put it up
+online like a porno mag, and everone in the world is looking at it going
+<<slavering geek mode>>
+IPHONE IPHONE IPHONE IPHONE
+And the surprise is RUINED. Steve’s surprise is RUINED.
+Imagine…what it must have been like for that worker, on Monday morning.
+See him in your mind, sitting in his cubicle.
+His coworkers? Have shunned him already, saying YOU’RE DEAD TO US, they won’t
+even look at him. Because he is fucking dead.
+Because they can feel the air pressure changing.
+35
+They’re like the rabbits in Watership fucking Down.
+They know…that HE is coming!
+He’s walking toward them, step by step. The walls are warping around him, it’s like the
+fucking Matrix as he gets CLOSER, and CLOSER…
+When he comes into the room, he isn’t even going to have to look at this motherfucker!
+His head will SPLIT OPEN, and GREEN FIRE will roar up!
+It will be very Raiders of the Lost Ark.
+<<pause. then:>>
+That. Is hyperbole.
+That is a literary technique called hyperbole.
+That does not literally occur.
+In fact, nothing happens to that worker. In fact, he doesn’t even lose his job.
+Scout’s honor.
+It goes a little differently for Sun Danyong. He’s beaten and interrogated for twelve
+continuous hours, and at the end of that time Foxconn security tells him he’ll be turned over to
+Chinese authorities in the morning. He knows what that means—it means he’s going to prison,
+for years and years, possibly for the rest of his life.
+And he leaves that room, and walks across the bright sunlit quad of Foxconn, to the
+public computer terminals, he logs in, and he posts to a bulletin board to tell his friends what has
+happened.
+And that’s why we have this story, you know? That’s why we have this little electronic
+trace. Most of them leave nothing behind, nothing at all. Because Foxconn is very thorough.
+They have a sanitation team just to take care of this. They go around with sums of money that
+36
+would seem inconsequential to us, but they are huge there, and they are tied to very binding non-
+disclosure agreements. Sun’s fiancée will be given a MacBook for her trouble and her silence.
+And then he starts the long walk up to the top of one of those buildings.
+And what must it have been like, there at the end?
+Can we even imagine?
+I don’t think we can. I think this is precisely where our imagination fails.
+Because we in this room…we have so many options. We are drunk with options. Look
+around you. Look at us.
+We could do anything.
+We are so free.
+Imagine him standing there, his entire world diminishing down to a line, down to a point.
+Imagine in one day, coming to a place where this is truly his last, best option. His best choice.
+To take that last step off—
+37
+5—CHANGE THE WORLD
+Xerox PARC is a think tank, and as a think tank, it’s a place where ideas go to die.
+Because for an idea to thrive, it needs to be transmitted from person to person—you keep ideas
+locked up, it’s like fish in a fish tank—they don’t fucking like it.
+And at Xerox PARC, they had some amazing ideas, they just didn’t know what the fuck
+to do with them. They’d be like, “Oh my god, that’s amazing, this thing you’ve made! You know
+what you should do with this? You should take this thing and you should put it IN THAT
+CLOSET OVER THERE.”
+And before long, they filled up all their closets and they still didn’t know what the fuck to
+do. So they started having open houses and they would invite everyone in Silicon Valley and be
+like,
+“Hey, open house at our place this weekend! We got some crazy shit up in here!
+Also…there will be Doritos!”
+And people came, and people from Apple came, and they saw something in one of those
+closets that blew their minds, and they went back to Steve Jobs and they said, “Steve, Steve. You
+gotta go to Xerox PARC, you gotta see this thing we saw,” and Steve Jobs said, “No.”
+Because one of the ways Steve Jobs organized the universe is he divided everyone in the
+universe into Geniuses and Bozos—and there are only a few Geniuses and there’s a
+FUCKLOAD of Bozos. And everyone who’s making this suggestion was, currently, a Bozo.
+38
+So it takes a while until someone who is currently a Genius says, “Seriously, Steve. You
+really need to go to Xerox PARC, you really need to see this thing.” At which point Steve Jobs
+says,
+“I’ve had an idea.
+I think we should go to Xerox PARC.
+I think something may be happening there.”
+And what they saw in that room will not seem amazing to you because you live in the
+world that came after. But I would ask you tonight to try—try to see it the way they saw it, try to
+see it with fresh eyes.
+They walk into a room, there’s a computer there, it looks normal, it’s off. There is one
+new thing: there’s this box there with a cord coming out of it? They call it a mouse.
+That’s not the crazy part.
+The crazy part is when they turn that computer on—because before this moment, the
+dominant metaphor in computing was that a computer was, fundamentally, an electronic
+typewriter.
+People didn’t think about that very often because sometimes it’s hard to see the metaphor
+you’re embedded in from inside of it, but fundamentally, every computer was a typewriter that
+happened to be electronic. Until now.
+They turn on this computer and…ahhhh,
+It’s not a fucking typewriter.
+Instead, on the screen, there are windows…and a cursor…
+And it is an amazing thing, to be there at the moment when the metaphor shifts.
+Those of you out there in the darkness who love technology the way that I do, you know what
+39
+I’m talking about: that moment when you can feel the ground going out beneath your feet, when
+you know you will never see things the same way again.
+And Steve Jobs leaves that room a changed man, and he goes back to Apple and he starts
+putting together a team, Ocean’s Eleven-style.
+He starts stealing people from all these different groups, all the freaks and weirdos and
+misfits, all the very best people from all these different groups—he steals them and he puts all
+the weirdos together in a secret base. He rents this building away from the rest of Apple’s
+campus—no one knows what the fuck is going on in there—he puts the weirdos in the secret
+base and then he decides secrecy is overrated and he puts a pirate flag ON TOP of the secret
+base, as if to say,
+<<in the manner of a serious pirate>>
+“ARRRRRRRRRR!, fuck all y’all, ARRRRRRRRR!”
+And he tells them, “Your job is to destroy Apple. Your job is to destroy the Apple that
+exists today.”
+And he is serious.
+Because Steve Jobs was always the enemy of nostalgia. He understood that the future
+requires sacrifice. Steve Jobs was never afraid to knife the baby.
+I’ll give you an example. A couple years ago, Apple’s best-selling product—best-
+selling!—was the iPod Mini. It was awesome—it was an iPod, but it was mini! Everybody loved
+the iPod Mini.
+And one day, Steve Jobs is making one of his fabulous keynotes and he’s saying,
+“Today…the iPod Mini…is…no more.”
+40
+And it was like, <<in the pleading manner of a bereft, Gollum-esque consumer>>
+“NOOOO! Don’t hurts us, Steve! Don’t takes it away, we’ll be good…”
+<<back as Steve again>> “Instead…we give you…the iPod Nano.”
+<<Gollum doesn’t know what to think, looks back and forth between the Mini and the
+Nano, then suddenly bursts into crazy-delighted applause>> “YAYYYY! Nano is smaller than
+Mini! YAYYYY! It’s exactly what I wanted! I’m going to lose it even faster now!”
+Everyone’s delighted, and Steve flies away in his black helicopter, and the tech press is
+jizzing on themselves…it’s a magical day.
+And later, people are talking to the Apple reps, and they’re saying, “My god, the iPod
+Nano is smaller, and it’s thinner, and it holds even more songs than the iPod Mini!” And the
+Apple people say, “Errrrrr—actually…it doesn’t hold more songs.”
+And they say, “Oh. Well, you know, it’s smaller, and it’s thinner, and it holds just as
+many songs as the iPod Mini!”
+And the Apple reps say, “Errrrr…actually…it’s a lot less.”
+And people said, “Oh. Well that sucks.
+…hey, can I still get an iPod Mini?”
+NO! They’ve been pulled from the stores that very day, you cannot have one for love or
+money—you will have an iPod Nano, and you will fucking like it!
+Now, I ask you: Can you think of any other company, in the world, that behaves anything
+like this?
+That would take their best-selling product, pull it from the stores overnight, replacing it
+with a new product that is more technically advanced but does half as much…and when people
+complain about this, they are told, vigorously, to fuck themselves.
+41
+I’m saying it’s kind of radical.
+And so Steve Jobs is serious when he’s telling them he wants them to destroy Apple—the
+Apple of that time is built on the Apple II platform, their entire empire is built on that, and he’s
+saying,
+“No, don’t be compatible with that, fuck that shit! Shove it off the table!, MAKE
+something NEW.”
+And these are the people that create the Macintosh.
+And in 1984, the Mac is born. It goes on to be the dominant computer of its generation.
+Never in market share—the Mac never dominates in market share—instead, the Mac dominates
+in mind share.
+Over time, every computer that is not a Mac evolves until it looks and thinks and works
+like a Mac. It’s a mind virus that spreads absolutely everywhere.
+My favorite Mac was the Macintosh SE/30. I never owned one, but they had one at the
+security office where I did work-study in college and I would sign up for overnight shifts so I
+could spend more time with the SE/30.
+It was a wonderful machine. It had the form factor of the original Macintosh, so if you
+were seated at it, if you squinted, it looked like a little anthropomorphic human face staring back
+at you. And I would type into its tiny gray-scale screen…it was the first computer I used
+regularly that had real networking and I would telnet out from it to repositories of information
+around the world; I would post to bulletin boards and people in other cities—other countries!—
+would post back, and we would talk about the future…and how in the future, this “web” that was
+just starting now, it would grow and grow until one day…it would touch everyone, everywhere
+and when that happened…information would be free. And people everywhere would be free.
+42
+We were very young.
+But we could have been right.
+<<pause>>
+And Steve Jobs was many things, but he was two things above all others, inextractably
+welded together: He was a
+<<left hand>> visionary
+<<right hand>> asshole.
+And you cannot have one without the other: the two things speak to one another. He was
+an impossible manager. I would not wish on my worst enemy to be personally managed by Steve
+Jobs. He was not a micro-manager, he was a nano-manager—he would climb into the bodies of
+his subordinates and try to move them around with his mind.
+The head of the Macintosh project, when asked for public comment on Steve Jobs’
+management style, the only thing he would ever say publicly was this:
+“He would make a most excellent King of France.”
+But you have to admit it’s working for him. It is! The only people who are just a little
+tired of this bullshit is Apple’s board of directors; they’re just a little tired of it. They’re like, “Oh
+my god. I KNOW he’s a fucking genius, I just wish sometimes at meetings that he would stop
+cursing at us, and I just wish sometimes at those meetings that he would wear shoes.”
+And so they came up with an idea, they thought, You know, what if we had someone next
+to Steve, you know, someone who’s a little older, someone who doesn’t freak the investors out
+so much, somebody who looks good in a suit…somebody who wears shoes.
+And so they convince Steve to do this, and so Steve and the board go out looking for
+someone, and who they find is Scully.
+43
+And Scully was at Pepsi, and Scully didn’t know fuck-all about computers, but he did
+look great in a suit.
+And so Jobs goes to Scully and says, “Come. Join me at Apple.”
+And Scully says,
+<<in the manner of a recalcitrant Scully>>
+“Errrr, I don’t know…I don’t know about the clicky-clicky-clicky, I don’t know…”
+And Jobs says, “What? Do you want to sell fucking sugar water for the rest of your life,
+or do you want to CHANGE THE WORLD?!” and he looks at him with Steve Jobs’ Laser Death
+Vision—DA-DA-DDD-DA! DA-DA-DDD-DA! And Scully goes, “ACK! Change-the-world,
+change-the-WORLD—!” and he goes and he joins Jobs at Apple.
+And everything is great.
+For a while.
+And you’ll find this a lot, in Steve Jobs stories. Things are always great!...for a while.
+And then Scully makes the inevitable slide…from Genius to Bozo.
+And Jobs realizes he needs to throw him out of the company, and Jobs stages a coup
+d’etat.
+And the thing about staging a coup d’etat is that you really want to win.
+Because if you don’t win, it is so…awkward. At the office the next day.
+And the board backs Scully, and in short order, Jobs is thrown out of his own company.
+He’s a laughingstock in Silicon Valley—the metaphor had shifted right out from underneath him.
+44
+6 — WHERE ALL OUR SHIT IS MADE
+Emboldened by my success at Foxconn, I decide to embark on a new plan. But I’m going
+to need Cathy’s help if it’s going to work, so I meet with her in the lobby of my hotel and I say to
+her,
+“Cathy, now you work with a lot of American businessmen, don’t you?” And she says,
+“Yes, I do.” And I say, “Great. Here’s what I want you to do: I want you to call all of the
+factories you have connections with, I want you to call them, and I want you to tell them that I
+am an American businessman, and that I want to buy whatever they are selling.”
+And she listens to this, and she says, “But you…are not a businessman?”
+And I say, “That’s true, I am not a businessman.”
+And she says, “And you…aren’t going to buy their products?”
+And I say, “That’s true. I am not going to buy their products.”
+She says, “You…will lie to them.”
+And I say, “Yes, Cathy. I’m going to lie to lots of people.”
+And for a moment, I think it isn’t going to work.
+And then you can actually see the idea leap the synaptic gap from a Problem to a
+Problem-To-Be-Solved.
+She says:
+<<very slowly, carefully, clearly, and quietly>>
+“You…are going to need a lot…of business cards.”
+45
+And two days later we head out into the factory zone. As we come to each factory, Cathy
+briefs me on what it is they make and what it is I have said I am going to buy.
+The factories are all different, but really, they’re more similar than different—there’s
+always gates and guards, you get past those there’s always a lawn, big and green and plush—no
+one walks on it, no one uses it. You go into the lobbies—the lobbies are these huge, empty
+Kubrickian spaces, totally empty except for a tiny little desk for the receptionist. You cross the
+HUGE empty lobby to the tiny little desk, introduce yourself, and then the executives always
+come down in a gaggle loolololo all together loololoololo they pick you up loololoololo and you
+go up together loololoololooloolooloolo to a conference room. For the exchanging of the
+business cards.
+And Cathy had told me this would be very important, that when we got in that room it’d
+be very formal, and each person would come up to me in turn and they would offer me their
+business card with two hands, and it was very important that I accept it with two hands, and that
+I then examine it:
+“Mmmmmmm…Lucida Grande. Excellent font choice. Mmmmmmmm…”
+And after each and every one of them have done this, they are all staring at me. Because
+it’s my turn. And I reach into my pocket and I pull out…some grimy slips of fucked-up paper.
+Because it’s hard to find a Kinko’s in Shenzhen!
+And the business office at my hotel, it’s like it’s from before the fucking revolution, and
+the woman there is totally scary, and the keyboard doesn’t make any fucking sense, and the
+paper is slimy and gray, and they don’t have scissors, they’re like child safety—it’s so fucked up.
+I don’t even know how to tell you how fucked up it is.
+It’s really fucked up.
+46
+And so I take…my fucked-up piece of paper, and I go…
+<< holds out card with two hands while turning face away in embarrassed grimace >>
+Thank God for the protocol of the Chinese! They do not even blink. They take
+my fucked-up piece of paper and they go, “Mmmmmmm…interesting made-up business name
+with fake address. Mmmmmmm…” And then, it’s time for the PowerPoint.
+And one of the reasons I have lived my life in the manner that I have is so that I do not
+have to go to PowerPoint presentations.
+That was sort of the fucking point of all this.
+But life has its little ironies sometimes, doesn’t it?
+And I made up for it in Shenzhen…oh, yes I did. Because I went to all the PowerPoint
+presentations. Every last fucking one of them, because PowerPoint is a tool designed by
+Microsoft.
+Microsoft, whose motto should be, “Building Tools That Do Shit We Can Already Do.”
+Because the point of PowerPoint is that it enables people who are in the same room to
+communicate with one another.
+<<a gesture indicating this process>>
+As you can tell from the form of my theatrical presentation, I believe we have a tool that
+does that already: it’s called the human voice. It’s built-in and it hardly ever crashes.
+But why would we want to talk to one another when instead we can use PowerPoint with
+all its fucking features—like the clip art? AARRRGH…the clip art makes my eyes bleed!
+And the fonts! Ohhhhhh, they use all the fonts! Comic Sans?
+There’s nothing comic about Comic Sans.
+47
+They put up the first slide, and it’s got a big jpeg that’s all pixilated, like someone’s
+smacking me in the retina with a ball-peen hammer. And then the person running the PowerPoint
+goes <<slowly and deliberately hitting a mouse button>> …clllliiiiick. And a single line of text
+appears, in English, and the text says,
+“The plant uses thirty thousand gallons of water every day.”
+There’s a pause.
+And then the click-er says:
+<<pause>>
+“The plant uses thirty thousand gallons of water every day.”
+!!! And then nothing happens! Until and unless—I manually nod. I have to literally go,
+<<big, exaggerated nod>>
+“Mmmmmm . . . ”
+And only then will they…clllliiiiick, and another line of text appears.
+It’s fucking interminable! It goes on and on—I swear to God there are nights I wake up in
+the middle of the night, even now, thinking,
+“Is it still going on? Am I still at the presentation?”
+It goes on for so long I seriously start thinking about the fact that I am an “actor” playing
+the “role” of an American businessman…
+There are actual businesspeople out there! For whom this is their actual life!
+How does that happen to someone?!
+You go to school, you fall in love, and this, this, THIS is what you’re spending your one
+precious life on?
+What the fuck happened to you?!
+48
+They must have a penknife in their pockets, you know, just for luck, just for something to
+hold onto, just so they can rub it as the slides are going by, just so they can know that if it ever
+gets to be too much, if it ever gets to be too fucking much, then they can STAB themselves in the
+FUCKING neck, and it will be over.
+Worst job in the fucking world.
+After the PowerPoint, we head down to the factory floor. And I retract my previous
+assertion because this is the worst job in the fucking world.
+Industrial spaces with twenty, twenty-five, thirty thousand workers in a single enormous
+space, they can exert a kind of eerie fascination—there’s a beauty to industrialization on such a
+massive scale. You don’t have to deny it—there’s a wonder to seeing so much order laid out in
+front of you, and people are walking around whispering statistics in your ear, it’s easy to slip into
+a kind of Stalinist wet dream. I try to subvert that by locking onto actual faces as they take me up
+and down the aisles. And the first thing I notice is the silence.
+It’s so quiet.
+At Foxconn, you’re demerited if you ever speak on the line, at no factory that I went to
+did anyone ever speak on the line—but this is deeper than that.
+As a creature of the First World, I expect a factory making complex electronics will have
+the sounds of machinery, but in a place where the cost of labor is effectively zero, anything that
+can be made by hand is made by hand.
+Rest assured, no matter how complex your electronics are they are assembled by
+thousands and thousands of tiny little fingers working in concert, and in those vast spaces the
+only sound is the sound of bodies in constant, unending motion.
+And it is constant. They work a Chinese hour, and a Chinese hour has sixty Chinese
+49
+minutes, and a Chinese minute has sixty Chinese seconds—it’s not like our hour.
+What’s our hour now? Forty-six minutes? You have a bathroom break, and a smoke
+break, and if you don’t smoke, there’s a yoga break…
+This doesn’t look anything like that. This looks like nothing we’ve seen in a century.
+They work on the lines and a line only moves as fast as its slowest member, so each person
+learns how to move perfectly, as quickly as possible—if they can’t do it, there are people behind
+them, watching them, and there are cameras watching both sets of people, and people watching
+the cameras—they lock it down. They sharpen it to a fine, sharp edge, every hour, and those
+hours are long.
+The official workday in China is eight hours long. That’s a joke. I never met anyone
+who’d even heard of an eight-hour shift. Everyone I talked to worked twelve-hour shifts,
+standard. And often much longer than that: fourteen hours a day, fifteen hours a day, sometimes
+when there’s a hot new gadget coming out—you know what the fuck I’m talking about—
+sometimes it pegs up at sixteen hours a day and it just sits there for weeks and months at a time,
+month after month of straight sixteens—sometimes longer than that.
+While I’m in country, a worker at Foxconn dies after working a thirty-four-hour shift. I
+wish I could say that was unusual, but it’s happened before. I only mention it because it actually
+happened while I was there.
+And many of them live in dormitories, right at the factories. They’re often cement cubes,
+twelve foot by twelve foot—and in that space, there are beds stacked up like Jenga puzzle pieces
+all the way up to the ceiling. The space between them so narrow, none of us would actually fit—
+they have to slide into them like coffins. There are cameras in the hallways, there are cameras
+everywhere.
+50
+And why wouldn’t there be? You know when we dream of a future when the regulations
+are washed away and the corporations are finally free to sail above us, you don’t have to dream
+about some sci-fi-dystopian-Blade-Runner-1984-bullshit. You can go to Shenzhen tomorrow—
+they’re making your shit that way today.
+And you need to know that these people are among the best and brightest of their
+generation. You need to know that when I interview them outside the factories, they are, each of
+them, as bright and individual as you are out there in the darkness. You need to know these are
+exactly the people who fought their way out of their villages, to make a new life for themselves
+in these cities. These are exactly the people who could have the spirit to think about democracy.
+But, fortunately for Beijing, they have a heat sink in the south of the country, they have
+an economic honey trap that soaks up all those people and keeps them busy, too busy to think
+about freedom, too busy making all our shit.
+When I leave the factories I can feel the metaphor shifting underneath me. I can feel
+myself being rewritten from the inside out; the way I see everything is starting to change.
+I keep thinking, how often do we talk about how we wish more things were handmade?
+Oh, we talk about that all the time, don’t we?
+“I wish it was like the old days, I wish things had that human touch.”
+But that’s not true. There are more handmade things now than there have ever been in the
+history of the world. Everything is handmade. I know. I have been there. I have seen the workers
+laying in parts thinner than human hair, one, after another, after another.
+Everything is handmade. If you have the eyes to see it.
+51
+7 — THE SECOND COMING
+At this point, people at Apple are excited about Scully. They feel like maybe it’s time for
+Apple to be a grown-up company.
+What they don’t understand is that while Steve Jobs is kind of a megalomaniacal asshole
+and a little bit of a brutal tyrant, he’s also the glue that’s been holding the company together—
+and as soon as he leaves, it’s only then that people realize that Apple is filled with mad geniuses.
+Thousands and thousands of mad geniuses! And as soon as Steve Jobs is out the door,
+they’re all going,
+“MWAHAHAHAHAHAHAHA! Finally! My plan will come to fruition! I will finally
+mate a monkey and a pony! MWAHAHAHAHAHAHAHA!”
+And Scully? What’s Scully doing? Scully’s walking up and down the halls going,
+<<in an excessively low-key Scully voice>>
+“Hey…does anybody want to ship anything? Okay, well…let me know if you want to
+ship anything. I’ll be in my office, drinking a Pepsi.”
+And all the rigor goes out of the place and things start getting real weird, real fast. And
+pet projects that should stay small start getting bigger and bigger and bigger because there’s no
+one there to knife the baby. Like the time that Apple tried to create its own version of the
+internet…yeah, that didn’t go very well.
+Or, most famously, the Newton.
+52
+And the Newton is a tale of heartbreak for the ages because the Newton was a fantastic
+machine. The Newton was a personal electronic organizer—and when you tell people that they
+say, “Oh, like the Palm Pilot?”
+Noooooo. Fuck the Palm Pilot—the Palm Pilot was made of Legos and bullshit.
+The Newton was amazing. The Newton could understand your fucking handwriting;
+you’d just write whatever you wanted, it’d automatically put it in the address book, in the
+calendar…
+It was the future! In your hand!
+Except…it didn’t work.
+And they tried, oh my GOD, they tried, and they delayed it and delayed it and they finally
+ship it, and all the Apple faithful run out and buy it and they’re like, “My precious!,” and they
+take it home, “Honey, honey, come see this! I’ve got the future, in my hand! Watch this:
+<<mimes writing onto the Newton>> Doctor’s appointment at 2pm tomorrow.”
+And the Newton says…
+HEMORRHOID FISHSTICK.
+<<studying the Newton with great consternation and a palpable sense of loss>>
+“That isn’t what I wrote…
+…it’s embarrassing…
+…I don’t know why the future isn’t working… Maybe it’s me.”
+Because in this, Apple users are a little bit like battered wives.
+They blame themselves: “I can change! I can change my handwriting so that the Newton
+likes it! I know that we can have a relationship, I have to make it work!”
+<<now writing the same script, but grotesquely exaggerated >>
+53
+DOCTOR’S APPOINTMENT AT 2 PM TOMORROW!
+And the Newton says…
+LUSCIOUS ASSMUNCH.
+This is the era of the PowerBook 5300—the flaming PowerBook. I don’t mean that your
+laptop gets warm or it gets hot—I mean actual fucking fire comes out of the keyboard! Your
+laptop bursts into flames! They recall them all, they replace the batteries…now, they do not burst
+into flames, but they only get seventeen minutes of battery life.
+This is the era when on Apple’s early internet website, they have an actual, approved
+troubleshooting tech note telling users to take the affected machine, hold it six inches over the
+surface of the table…and drop it.
+Doesn’t. Inspire. Confidence.
+At this point, Apple is fucked. No tech company has ever come back from a deficit like
+this. WIRED magazine actually does an entire issue called “The Death of Apple” and it’s filled
+with obituaries written by prominent tech pundits mourning the fact that Apple is gone. And
+Apple is in the humiliating position of having to issue a press release in response saying,
+“Ha-ha-ha, actually, it’s ok, everything is really ok, ha-ha-ha.”
+It’s like a Viking funeral where the Viking is saying,
+“Oh! Actually, I’m okay! I think I’m okay!”
+And everyone else says, “No, you’re not,” and they push the barge out onto the lake and
+they set it on fire.
+And at this point, the unlikeliest savior appears:
+Apple asks Steve Jobs to come back.
+And if you’re like me…
+54
+…don’t you wish we could’ve heard that phone call?
+<<in the manner of Bob Newhart’s famous one-sided phone calls>>
+“Hey, Steve! Long time no see!...Yeah, it’s been about twelve years <<listening>> since
+we threw you out the company, that’s right, that’s right. But you’ve been busy! Yes, we’ve been
+busy, too <<listening>> running the company into the ground, that’s right, that’s right.
+Listen, Steve. The board has asked me to call you to ascertain if you’d be interested in the
+possibility of…
+<<puts hand over receiver and gesticulates wildly to other board members, miming a
+silent argument with them, begging them to talk to this asshole in the crassest terms. After a
+standoff, returning to the phone>>
+—the board has asked me to call you to ascertain if you would be interested in the
+possibility of—
+<<as before, but even more animatedly, with weeping and agitas, until being dragged
+back to the phone to say through gritted teeth>>
+—WILLYOUPLEASECOMEBACKANDSAVETHECOMPANY?”
+<<hangs up>>
+Because each side has exactly what the other side needs.
+Apple…needs Jesus Fucking Christ.
+But He is not available…
+…so Steve Jobs will have to do.
+They also need a working next-generation operating system, because while they were
+busy pissing away hundreds of millions of dollars trying to mate a manatee and a walrus, they
+forgot to make a working next-generation operating system.
+55
+Meanwhile, Steve Jobs in his years in exile has actually created his own computer
+company in his own image: NeXT Computers.
+And NeXT Computers sort of embodies everything that is both fabulous and frustrating
+about Steve Jobs. It’s sort of like a narcissism supernova of Jobsian id.
+On the fabulous side, the operating system is amazing: it’s the world’s first object-
+oriented operating system. It’s literally ten years ahead of its time. The thing about things that
+are ten years ahead of their time? Is that they are ten years ahead of their time.
+So they’re not compatible with fuck-all that you are using today.
+On the frustrating side, this is Steven P. Jobs, a man who does not know the meaning of
+the word “compromise.”
+His idea of a reasonable computer to break into the crowded computer market of the late
+80s is the NeXT Cube.
+Which is a solid black cube of milled magnesium.
+It is a TRIUMPH of industrial design.
+It is compatible with NONE of your peripherals!
+It can run NONE of your software!
+And it costs FOURTEEN THOUSAND DOLLARS!
+It doesn’t do very well. It really doesn’t do very well, and at this point, NeXT has no
+assets to speak of except for a kick-ass next-generation operating system. And so Apple acquires
+NeXT—but in reality, it feels a little bit more like tiny little NeXT somehow swallows up Apple.
+Steve Jobs comes back and in one of his first orders of business, he makes some subtle
+changes to the board of directors so that this shit will never happen again. Then he installs his
+lieutenants to take control, and he interviews everyone at Apple, looking for diamonds in the
+56
+rough—this is how he finds Jonathan Ive, a junior industrial designer. He promotes him up and a
+new order begins to take hold.
+The Mac OS with its smiling Mac face and its friendly error messages…they take it out
+behind the barn and they shoot it in the back of the head, and they throw its body in a ditch.
+And they take the NeXT operating system, which, as I told you, was ten years ahead of
+its time, well…it’s ten years later. So it’s right on schedule.
+They transplant it into the heart of the Mac and it becomes Mac OS X—it becomes the
+system that runs all of Apple’s devices today.
+And a new Apple begins to rise. An Apple that’s more design-driven, more focused,
+more ruthless, more elegant, more…secretive. The old Apple was practically an open shop, you
+could just ask people what was going on and they would tell you. Now, the gates are closed, the
+doors are shut, no one knows what the fuck is going on in there in Cupertino. It’s like Willy
+Wonka after Slugworth.
+And then devices start coming out that the old Apple never would have thought of—
+lifestyle devices, like little boxes that play all your music, and they’re compatible with Macs and
+PCs, and they spread out like a halo around the world, changing people’s ideas about what Apple
+is as a company.
+And then, when Jobs showed us the iPhone…those of us who follow technology could
+feel here was the metaphor, shifting again. Here was the new new thing. Gone is the cursor, gone
+is the windowing interface—it’s so simple, even a child could use it. But the changes go much
+deeper than that. Every device that runs that touch interface is locked down. You will never
+touch that operating system, that belongs to Apple and Apple alone. You will never install your
+own programs on those machines, instead you will download them from Apple’s servers, and
+57
+Apple will choose what is available and take a healthy cut of each and every proceeding. Unless
+you jailbreak those devices, you will never truly own them.
+And a walled garden begins to rise up around all the Apple users who frolic and
+play…and a new deal is struck between Apple and its users and the terms of the new deal are:
+<<In the voice of Apple—Zeus meets Charlton Heston>>
+WE ARE APPLE. Have we not always given you the very finest devices? Have we not
+given you the best user experience?
+We did that because we have exquisite taste.
+We have exquisite taste.
+And you…do not.
+We are going to protect you from your taste.
+We are going to lock this shit down once and for all. And let’s be clear—you’re going
+love what’s coming next, but this is the end of the garage, this is the end of hacking your own
+shit, this is the end of Wozniak—this is the rise of the consumer.
+And that will be your role. You will consume.
+You will drink from Apple’s servers—it will be a new virtuous circle between each of
+you and the corporate entity that is Apple, you will be tied together, and with each app you
+download you will be bound even more tightly.
+But you will not mind…because you will never leave. Why would you leave? They’re
+the very best devices in the world, are they not?
+You will use them, and you will love them.
+You will love them, and they will own you.
+58
+8 — THE SECRET UNION
+I’m at a restaurant in the factory zone, seated at a table with Cathy, and this aphorism is
+running through my head over and over again—I can’t remember who said it originally—that
+paranoia is not paranoia when they’re actually out to get you.
+And I go through my checklist again: I’ve gone through my pockets and found every slip
+of paper with an email address or a phone number and I’ve destroyed all of those. I’ve hidden all
+my paper notes off of my person, and I’ve erased everything on my laptop, and anything I can’t
+erase is on an encrypted partition that I hope is encrypted enough. I have done all of these things
+because I am at this restaurant to meet with a union.
+Because there are unions in China. There are the ones that are fronts for the Communist
+Party, and then there are actual unions, interested in labor reform. They’re called “secret unions”
+because in China, if you are caught being a member of or affiliating with a union like that, you
+go to prison. You go to prison for many years, and that’s why I’ve had to take these precautions.
+And getting this meeting involved climbing a ladder of associations, going to meeting
+after meeting, and each step of way just making good my intentions, just being clear that I am a
+storyteller, that I just want to hear people’s stories, I just want to hear what they have to say.
+And the union organizers come in and sit down, and it’s awkward at first. They tell me
+about the two Honda plants that have gone on strike in the north of the province, and I think
+about what it would mean to go on strike in a country where even being a member of a union can
+get you thrown in prison, what it would take to be pushed to that point.
+And I say to them, “How do you know who’s right to work with you? How do you find
+59
+people to help you organize, to do what you do?”
+And this sort of breaks the narrative, and they look at each other bashfully, and they say,
+“Well, we talk a lot, we have a lot of meetings—we meet at coffeehouses, we exchange papers,
+sometimes there are books…”
+And it’s so clear, in this moment, that they are making this up as they go along.
+The way so many of us do.
+The way pirates do. The way rebels do.
+The way the crazy ones who change the world do—they all make it up as they go along.
+Then the workers start coming in. They come in, one after another.
+And we talk. We talk about the things I’ve been talking about my entire time in Hong
+Kong and Shenzhen, like hexane.
+Hexane is an iPhone screen cleaner; it’s great because it evaporates a little bit faster than
+alcohol does, which means then you can run the production line even faster and try to keep up
+with those quotas. The only problem is that hexane is a potent neurotoxin, and in the north
+hundreds have been exposed. Their hands shake uncontrollably, most of them can’t even pick up
+a glass.
+We talk about people who work on the line doing the same motion hundreds and
+hundreds of thousands of times. It’s like carpal tunnel on a scale we can scarcely imagine. And
+people want me to know that this is eminently avoidable: if these people were rotated monthly on
+their jobs this would not happen—but that would require someone to care. And so, when you
+start working at fifteen or sixteen, by the time you are twenty-six, twenty-seven—your hands are
+ruined.
+And when they are truly ruined, once they will not do anything further—you know what
+60
+you do with a defective part in a machine that makes machines.
+You throw it away.
+And the thing that unites all these people is that they are all the kind of people who would
+join a union in a place where joining a union can ruin your life.
+I talk with one woman—bird-like, very nervous—and she just wants to explain to me
+how it is she came to be in a union. Because she never thought she would be in a union, it’s just
+that she couldn’t get her company to pay her overtime. And she complained and complained, this
+went on for weeks and for months—and Cathy says to her, kind of sharply, “Why didn’t you go
+to the Labor Board? That’s what they’re there for. You should have complained to the Labor
+Board.”
+And the woman says, “I did. I went to the Labor Board, and I told them about my
+problem, and they took down my name and my address and my company, and they took my
+name and they put it on the blacklist. And they fired me.”
+And then she shows me a copy of the blacklist—a friend of hers in accounting
+photocopied it and snuck it out to her. She gives it to me, I hand it to Cathy to translate. You
+know, in a fascist country run by thugs, you don’t have to be subtle. You can say exactly what
+you fucking mean. The sheet is very clear, it says, right across the top, “The following is a list of
+troublemakers. If any of them are found in your employ dismiss them immediately.”
+And then there’s column after column after column of names, page after page after page
+of them.
+Cathy’s hand trembles as she translates it.
+61
+I talk to an older worker with leathery skin. His right hand is twisted up, it was maimed in
+some machinery. He says he didn’t receive any medical attention and it healed this way, and then
+when he went back to work, he was too slow, and they fired him.
+Today he works at a wood-working plant. He says he likes it better. He says the people
+are nicer and the hours are more reasonable. He works about seventy hours a week.
+And I hear these stories all day long.
+But…why believe me?
+I am, after all, a noted fabulist. Perhaps none of this is true.
+Wouldn’t that be comforting?
+Perhaps your electronics are made by Ooompa-Loompas.
+A benighted tribe of Oompa-Loompas, saved by saintly Steve Jobs, they work in a
+beautifully apportioned factory. And these Oompa-Loompas all have a severe OCD disorder, so
+they actually love assembling little tiny electronics the same exact way over and over and over,
+it’s working out wonderfully.
+You don’t have to believe me.
+You could believe the New York Times. Two years after I’m there, they find things I
+never could have dreamed of. They find workers at Foxconn regularly working double shifts—
+that’s twenty-four continuous hours—until they drop on the line.
+They find Apple’s quotas so unbelievably tight that iPad factories are pressed into
+production before the factory is even finished being built—they’re rushing to get them into
+Apple stores for launch day. That’s how the first iPad factory explodes, killing some workers and
+maiming others. Apple apologizes, Foxconn apologizes, this will never happen again…until it
+happens again, three months later, at another iPad factory the exact same way.
+62
+When NPR investigates that explosion they discover that Apple inspected that factory the
+morning it exploded…an official inspection that lasted all of ten minutes.
+You don’t have to believe me.
+In fact, let me tell you about a lie woven into the fabric of this monologue. I told you
+earlier about the pictures that made me want to learn more about Shenzhen. That’s true, but
+there’s a lie of omission just after that—as you will come to discover, the most dangerous kind of
+lie—I didn’t just suddenly go immediately to China.
+What am I, crazy? What do you think I did next?
+I’m a red-blooded first worlder—I googled.
+Remember Google? Our second brain, the one that confirms all our biases?
+I googled…and what do you think I found?
+I found prominent, reputable, verified NGO reports going back a decade detailing far
+more hideous shit than we’ve been talking about tonight. At Foxconn, throughout the Special
+Economic Zone.
+I mean, when are we going to grow up? We do know that every year most of the
+Christmas lights we buy for our trees were made by Chinese prison labor—we know that, right?
+And I don’t need to tell you how much worse Chinese prison labor is, do I?
+<<pause>>
+None of this is news.
+It never was.
+The only thing that’s news is why we don’t care.
+63
+Because I assure you we do not care. In fact, we will do anything not to care, we will do
+anything to make a world, to shape the metaphor so that we will not see these things. We do not
+want to see them.
+And it isn’t ignorance. Ignorance is a gift you only get to give yourself—once.
+And there is no one out there in the darkness in the reach of my voice, no one watching
+me now, who came to this room tonight thinking,
+“China…is a workers paradise.”
+You knew.
+You always knew. Just like I knew, before I went, before I read the reports lit up in the
+glass of my laptop. We’ve always known.
+And that’s the lie.
+That’s the lie that binds us, the lie that compels us to shape the metaphor, to erase
+whatever we must, take whatever excuses we can find and bend them to excuse ourselves,
+anything so that we don’t have to see it.
+Because we don’t like what it says about us.
+We don’t want to see how everything we touch, everything we own and wear and use has
+had hundreds of hands on it, touching it, touching us, and those hands are tied to us by a coin
+whose currency we refuse to recognize.
+Until we see it, we will never know ourselves. Until we know it, we’ll never be free.
+<<silence>>
+Eight months after I leave China, I’m at another restaurant on the other side of the world.
+I’m in Berkeley, California, sitting across the table from Steve Wozniak.
+64
+And they say to never meet your heroes, and I can understand that, because Mr. Wozniak
+had seen this monologue that you are watching now a few nights earlier…and it had occurred to
+me that it might be potentially libelous, the way in which I was portraying him as an autistic
+bear.
+Fortunately, the laws of libel are very clear in this country, and they require falsehood.
+And Steve Wozniak is…an autistic bear.
+A bright, bold, brilliant, geekish…autistic bear.
+And he is seated across the table from me, wearing the ceremonial vestments of the
+geek—he is wearing a utilivest. There are so many pockets on this fucking vest—there are fifty
+pockets, and that’s not hyperbole! And he is taking a cellphone out of every motherfucking
+pocket! He has, I shit you not, SEVEN CELL PHONES!
+And he’s laying them out in front of me, one after another, and he’s explaining very
+earnestly why if we all had the resources he has, the only logical way to go through life is with
+SEVEN CELL PHONES.
+He has two iPhones, one Verizon and one AT&T—and you know, I can understand that.
+Because, I have an AT&T iPhone—and it is almost like not having and iPhone at all.
+Sometimes when I want to make certain someone gets a text message from me, I’ll type
+in the text…and then I’ll just throw the phone at the person who needs to receive it.
+It’s the only way to be sure.
+He has the latest Droid, a Nokia number...he lays them all out next to each other, and they
+look like the backs of the cards of the Tarot, because Apple has won this viral war of ideas as
+well: each is a black rectangle of mysterious glass.
+And they are all made at the same way, and the same factories, by the same hands.
+65
+And I was concerned because Mr. Wozniak was supposed to meet me, after the show,
+and instead he ran away…and generally, that’s a bad sign.
+But as we sat down at that table he explained to me that he was overwhelmed after the
+show, and he found himself weeping, and he left the theater and he drove. He drove up into the
+high hills of Berkeley, where those plants flower all year long and make their strange smells in
+the night, he drove around the old campus, he drove around the landscape of his youth—of all
+our youths. Because this is where it happened—this is where men and women in garages and
+computer clubs created the architecture of the world we live inside of today.
+And he is so emotionally open; as he is sitting in front me at this table there are tears
+welling up in his eyes, and he says,
+“It was never supposed to be this way. It never was. We should do something. Someone
+should do something.”
+He says it like no one has ever thought of it before.
+He says it almost naively. He says it like it’s actually a new idea.
+And maybe it is.
+Maybe we never have made that synaptic leap…gone from a Problem, to a Problem-To-
+Be-Solved.
+Maybe we have never taken the terrible weight of it into our hands, truly felt what we’ve
+made and then, finally, begun to lift.
+He’s a wonderful conversationalist.
+He converses in the way that geeks do—in branching patterns with multiple strands going
+that he leaps back and forth between. I can barely keep up. He is making a specific point about
+66
+the nature of programming that I can’t possibly understand, and I’m listening to him, and I find
+myself thinking that in a sense, he is my father.
+Because he’s the last one. He’s the last one who really designed a computer whole and
+entire—the Apple II was his design. And I was introduced to these mysteries by that machine.
+He gave me a tool, and with that tool I discovered an entire world.
+That tool brought me to this table, talking to him.
+It brought me here, talking to you.
+His hands move as he speaks. They are large and ursine and incredibly expressive. He
+outlines and indicates everything he’s saying precisely, shaping each and every point. Everything
+has a place, and everything is in its place.
+They are the kinds of hands you don’t see around here much anymore.
+They are the hands of a maker.
+67
+9 — A VIRUS OF THE MIND
+I used to hear from Steve Jobs.
+Never directly.
+I don’t even think he knew I would hear from him.
+Instead people who have sat in the seats you are sitting in right now, in theaters all over
+the world, sometimes, after they would hear the words you have been hearing, sometimes, they
+would write to him.
+And sometimes they would cc: me and bcc: me, and I would see hundreds of messages
+flooding out to a single fixed point, filled with questions. And every once in a while, an answer
+would come back.
+And sometimes, they would forward his answers to me.
+And there were all kinds. Sometimes a short, sharp word, sometimes a link, sometimes a
+simple line of text:
+“Mike doesn’t appreciate the complexities of the situation.”
+And I looked on every message that came back with hope.
+And I would keep my head down.
+And I would tell my story, night after night. In city after city.
+And tonight—we know the truth.
+Tonight it is far larger than this piece of theater could ever have contained. You can read
+it in the papers, you can see it on the web, you can hear it in the radio—it is a story spreading
+everywhere that will not hide and it is so much more.
+68
+We now know the people at Apple turned their backs on their workers a long time ago.
+And they squeezed their margins so tightly that they made much of what you have heard tonight
+worse.
+And they made themselves the most profitable company in the history of the world.
+And Steve Jobs—this genius of design and form—blinded himself to the most essential
+law of design: that the way in which a thing is made is a part of the design itself.
+He forgot that. And so did I.
+But you won’t.
+You won’t forget that…because tonight is a virus.
+It started in the first scene but you couldn’t feel it.
+And by the third scene, it had jumped your firewalls and it’s been leaping from protected
+memory to protected memory all night long.
+It’s been re-writing your code from the inside out and I’m letting you know now, you will
+never be rid of it.
+It is inside of you, just like it’s inside of me, twisting and wriggling. And when these
+lights come up, when this theatrical construct falls away, it will still be in you.
+You will carry it out these doors, you will be vectors for it. You will carry it to your
+homes, and when you sit down in front of your laptops, when you open them up, you will see the
+blood welling up between the keys. You will know that those were made by human hands. You
+will always know that.
+When you take your phones out outside to check the time, and the light falls across your
+face, you will know how it was made. You will know that.
+69
+And you will live with it. Just as I live with it. Just as we’re all going to have to start
+seeing it if we’re going to make the shift.
+Tonight, the door is open if you want to walk through it.
+Tonight we are jailbroken.
+Tonight we are free.
+END
+70
+CHANGE IS POSSIBLE
+If you feel moved to take action from what you’ve heard tonight, there are concrete steps you can
+choose to take.
+You Can Speak To Apple
+Tim Cook is Apple’s CEO, and the man responsible for creating Apple’s supply chain as it exists
+today. His email is tcook@apple.com. Ask him if he will step up and do the right thing today for
+his workers. Ask that he pay a dividend for change, and put 1% of Apple’s massive $100 billion
+dollar reserve up to prove his commitment. Ask him to work with labor rights organizations that
+aren’t suborned to corporate interests. Ask him to put Apple to work transforming how they treat
+workers, and begin paying a living wage so we can be proud of them again.
+You Can Speak To The Industry
+Apple is hardly alone—every major electronics manufacturer uses the same inhumane labor
+practices in the creation of their products. We are advocating for pressuring Apple specifically
+because they are industry leaders, but many may wish to contact Nokia, Dell, Samsung, LG,
+Motorola and many others. There are no ethical alternatives today, but that does not mean that is
+where the story has to end—we hope Apple will be a leader and spark the beginnings of change
+across the industry.
+You Can Think Different About Upgrading
+When Apple releases their next amazing device, you can ask yourself if you really need to
+upgrade immediately. Choosing not to participate is not only ethically defensible, but
+economically sensible—instead of a boycott, simply opting for a more sane upgrade cycle can
+take some of the energy out of electronics mania, and put pressure back on the companies. These
+are tools for us to use, not to be used by them. We can push back.
+You Can Connect and Educate Yourself
+Like the beginnings of many movements, awareness counts. China Labor Watch and SACOM
+are organizations that work to track and hold accountable our largest corporations which
+routinely abuse, poison, and exploit China’s people to make electronics. On Twitter the hashtag
+#agonyecstasy can be used to connect with others as well, and the transcript to this monologue is
+available, royalty free, for anyone to perform anywhere at http://mikedaisey.com.
+You Can Tell Others
+This is a monologue—a single voice telling a story of a single experience. But if I have opened a
+door for you, consider opening a door for others. We do not like to think about China and its
+implications, but that silence only exists if we are complicit with it. Talking about it, thinking
+about it when making purchasing decisions, and understanding is not just symbolic. In a world of
+silence, speaking is action. It can be the first seeds of change. Do not be afraid to plant them.
+Spread the virus,
+md

@@ -1,0 +1,6 @@
+ACT I
+ALICE
+The opening section.
+---
+BOB
+The next section.

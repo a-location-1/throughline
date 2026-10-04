@@ -1,0 +1,6 @@
+{
+    "status": "rejected",
+    "error": {
+        "code": "NOT_PLAYTEXT"
+    }
+}
