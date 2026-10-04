@@ -175,6 +175,60 @@ def test_parser_excludes_front_matter_before_first_scene(submission):
     assert result.appearances[0].line_count == 1
 
 
+def test_parser_starts_after_gutenberg_contents_and_cast_list(submission):
+    text = """Title and author information.
+
+Contents
+ACT I
+SCENE I
+
+Dramatis Personae
+MARIAN, heroine
+PROFESSOR, mentor
+
+ACT I
+SCENE I
+MARIAN.
+The actual play begins here.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [(act.label, len(act.scenes)) for act in result.acts] == [("Act I", 1)]
+    assert [character.display_name for character in result.characters] == ["MARIAN."]
+
+
+def test_parser_handles_front_matter_and_act_only_play(submission):
+    text = """A Night of Waiting
+Anonymized Playwright
+
+Contents
+ACT I
+ACT II
+
+ACT I
+A road. Evening.
+ALPHA:
+The opening act begins.
+
+ACT II
+The same road. Morning.
+BETA:
+The second act begins.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [(act.label, len(act.scenes)) for act in result.acts] == [
+        ("Act I", 1),
+        ("Act II", 1),
+    ]
+    assert [character.display_name for character in result.characters] == [
+        "ALPHA",
+        "BETA",
+    ]
+
+
 def test_parser_excludes_front_matter_before_one_act_play(submission):
     text = """THE MERCHANT OF VENICE
     A play in one act
@@ -392,6 +446,30 @@ END OF PLAY
         "QUI",
     }
     assert all(appearance.line_count == 1 for appearance in result.appearances)
+
+
+def test_parser_does_not_promote_prose_entrances_to_characters(submission):
+    text = """ACT ONE
+SCENE 1 - An airport.
+ALPHA
+Beta enters her apartment and crosses the room.
+BETA
+Gamma enters carrying a bag.
+SCENE 2 - A home.
+Enter Gamma.
+GAMMA
+The scene continues.
+END OF PLAY
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == ["Scene 1", "Scene 2"]
+    assert [character.display_name for character in result.characters] == [
+        "ALPHA",
+        "BETA",
+        "Gamma",
+    ]
 
 
 def test_parser_returns_disclaimer_for_unconventional_unheaded_script(submission):

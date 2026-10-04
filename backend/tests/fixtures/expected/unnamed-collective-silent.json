@@ -6,8 +6,8 @@
         "source_kind": "url",
         "source_name": "unnamed-collective-silent.txt",
         "page_count": null,
-        "byte_count": 69,
-        "state": "ready",
+        "byte_count": 0,
+        "state": "queued",
         "failure": null
     },
     "acts": [
@@ -48,24 +48,12 @@
             "display_name": "Unnamed speaker",
             "kind": "unnamed",
             "first_appearance_scene_id": "scene-01",
-            "ambiguity": {
-                "evidence": "formatting or naming variation",
-                "alternatives": [
-                    "UNKNOWN"
-                ]
-            }
+            "ambiguity": null
         },
         {
             "id": "character-02",
             "display_name": "CROWD",
             "kind": "collective",
-            "first_appearance_scene_id": "scene-01",
-            "ambiguity": null
-        },
-        {
-            "id": "character-03",
-            "display_name": "WATCHMAN",
-            "kind": "silent",
             "first_appearance_scene_id": "scene-01",
             "ambiguity": null
         }
@@ -84,26 +72,18 @@
             "character_id": "character-02",
             "presence": "speaking",
             "line_count": 1,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-01",
-            "character_id": "character-03",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
+            "confidence": "ambiguous",
+            "explanation": "Source attribution is ambiguous."
         }
     ],
+    "notices": [],
     "ordering": {
         "scene_ids": [
             "scene-01"
         ],
         "character_ids": [
             "character-01",
-            "character-02",
-            "character-03"
+            "character-02"
         ],
         "scene_line_count_desc": {
             "scene-01": [
@@ -118,13 +98,11 @@
         ],
         "character_ids": [
             "character-01",
-            "character-02",
-            "character-03"
+            "character-02"
         ],
         "colors": {
             "character-01": "#177254",
-            "character-02": "#b44336",
-            "character-03": "#b8860b"
+            "character-02": "#b44336"
         },
         "paths": {
             "character-01": [
@@ -137,12 +115,6 @@
                 [
                     0,
                     1
-                ]
-            ],
-            "character-03": [
-                [
-                    0,
-                    2
                 ]
             ]
         }

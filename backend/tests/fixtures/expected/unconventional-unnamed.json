@@ -21,97 +21,87 @@
                     "id": "scene-01",
                     "ordinal": 1,
                     "act_id": "act-01",
-                    "label": "Scene MD",
-                    "source_span": [
-                        4255,
-                        14077
-                    ]
-                },
-                {
-                    "id": "scene-02",
-                    "ordinal": 2,
-                    "act_id": "act-01",
-                    "label": "Scene 1 — MIDNIGHT IN THE CHUNGKING MANSIONS",
+                    "label": "Scene 1",
                     "source_span": [
                         14077,
                         19630
                     ]
                 },
                 {
-                    "id": "scene-03",
-                    "ordinal": 3,
+                    "id": "scene-02",
+                    "ordinal": 2,
                     "act_id": "act-01",
-                    "label": "Scene 2 — THE WORLD BEFORE",
+                    "label": "Scene 2",
                     "source_span": [
                         19630,
                         30166
                     ]
                 },
                 {
-                    "id": "scene-04",
-                    "ordinal": 4,
+                    "id": "scene-03",
+                    "ordinal": 3,
                     "act_id": "act-01",
-                    "label": "Scene 3 — FRUIT OF EARLY PIRATES",
+                    "label": "Scene 3",
                     "source_span": [
                         30166,
                         39383
                     ]
                 },
                 {
-                    "id": "scene-05",
-                    "ordinal": 5,
+                    "id": "scene-04",
+                    "ordinal": 4,
                     "act_id": "act-01",
-                    "label": "Scene 4 — THE GATES OF FOXCONN",
+                    "label": "Scene 4",
                     "source_span": [
                         39383,
                         53836
                     ]
                 },
                 {
-                    "id": "scene-06",
-                    "ordinal": 6,
+                    "id": "scene-05",
+                    "ordinal": 5,
                     "act_id": "act-01",
-                    "label": "Scene 5 — CHANGE THE WORLD",
+                    "label": "Scene 5",
                     "source_span": [
                         53836,
                         64058
                     ]
                 },
                 {
-                    "id": "scene-07",
-                    "ordinal": 7,
+                    "id": "scene-06",
+                    "ordinal": 6,
                     "act_id": "act-01",
-                    "label": "Scene 6 — WHERE ALL OUR SHIT IS MADE",
+                    "label": "Scene 6",
                     "source_span": [
                         64058,
                         75066
                     ]
                 },
                 {
-                    "id": "scene-08",
-                    "ordinal": 8,
+                    "id": "scene-07",
+                    "ordinal": 7,
                     "act_id": "act-01",
-                    "label": "Scene 7 — THE SECOND COMING",
+                    "label": "Scene 7",
                     "source_span": [
                         75066,
                         85338
                     ]
                 },
                 {
-                    "id": "scene-09",
-                    "ordinal": 9,
+                    "id": "scene-08",
+                    "ordinal": 8,
                     "act_id": "act-01",
-                    "label": "Scene 8 — THE SECRET UNION",
+                    "label": "Scene 8",
                     "source_span": [
                         85338,
                         98530
                     ]
                 },
                 {
-                    "id": "scene-10",
-                    "ordinal": 10,
+                    "id": "scene-09",
+                    "ordinal": 9,
                     "act_id": "act-01",
-                    "label": "Scene 9 — A VIRUS OF THE MIND",
+                    "label": "Scene 9",
                     "source_span": [
                         98530,
                         101399
@@ -125,97 +115,87 @@
             "id": "scene-01",
             "ordinal": 1,
             "act_id": "act-01",
-            "label": "Scene MD",
-            "source_span": [
-                4255,
-                14077
-            ]
-        },
-        {
-            "id": "scene-02",
-            "ordinal": 2,
-            "act_id": "act-01",
-            "label": "Scene 1 — MIDNIGHT IN THE CHUNGKING MANSIONS",
+            "label": "Scene 1",
             "source_span": [
                 14077,
                 19630
             ]
         },
         {
-            "id": "scene-03",
-            "ordinal": 3,
+            "id": "scene-02",
+            "ordinal": 2,
             "act_id": "act-01",
-            "label": "Scene 2 — THE WORLD BEFORE",
+            "label": "Scene 2",
             "source_span": [
                 19630,
                 30166
             ]
         },
         {
-            "id": "scene-04",
-            "ordinal": 4,
+            "id": "scene-03",
+            "ordinal": 3,
             "act_id": "act-01",
-            "label": "Scene 3 — FRUIT OF EARLY PIRATES",
+            "label": "Scene 3",
             "source_span": [
                 30166,
                 39383
             ]
         },
         {
-            "id": "scene-05",
-            "ordinal": 5,
+            "id": "scene-04",
+            "ordinal": 4,
             "act_id": "act-01",
-            "label": "Scene 4 — THE GATES OF FOXCONN",
+            "label": "Scene 4",
             "source_span": [
                 39383,
                 53836
             ]
         },
         {
-            "id": "scene-06",
-            "ordinal": 6,
+            "id": "scene-05",
+            "ordinal": 5,
             "act_id": "act-01",
-            "label": "Scene 5 — CHANGE THE WORLD",
+            "label": "Scene 5",
             "source_span": [
                 53836,
                 64058
             ]
         },
         {
-            "id": "scene-07",
-            "ordinal": 7,
+            "id": "scene-06",
+            "ordinal": 6,
             "act_id": "act-01",
-            "label": "Scene 6 — WHERE ALL OUR SHIT IS MADE",
+            "label": "Scene 6",
             "source_span": [
                 64058,
                 75066
             ]
         },
         {
-            "id": "scene-08",
-            "ordinal": 8,
+            "id": "scene-07",
+            "ordinal": 7,
             "act_id": "act-01",
-            "label": "Scene 7 — THE SECOND COMING",
+            "label": "Scene 7",
             "source_span": [
                 75066,
                 85338
             ]
         },
         {
-            "id": "scene-09",
-            "ordinal": 9,
+            "id": "scene-08",
+            "ordinal": 8,
             "act_id": "act-01",
-            "label": "Scene 8 — THE SECRET UNION",
+            "label": "Scene 8",
             "source_span": [
                 85338,
                 98530
             ]
         },
         {
-            "id": "scene-10",
-            "ordinal": 10,
+            "id": "scene-09",
+            "ordinal": 9,
             "act_id": "act-01",
-            "label": "Scene 9 — A VIRUS OF THE MIND",
+            "label": "Scene 9",
             "source_span": [
                 98530,
                 101399
@@ -236,7 +216,7 @@
             "scene_id": "scene-01",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 146,
+            "line_count": 72,
             "confidence": "supported",
             "explanation": null
         },
@@ -244,7 +224,7 @@
             "scene_id": "scene-02",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 72,
+            "line_count": 143,
             "confidence": "supported",
             "explanation": null
         },
@@ -252,7 +232,7 @@
             "scene_id": "scene-03",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 143,
+            "line_count": 121,
             "confidence": "supported",
             "explanation": null
         },
@@ -260,7 +240,7 @@
             "scene_id": "scene-04",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 121,
+            "line_count": 209,
             "confidence": "supported",
             "explanation": null
         },
@@ -268,7 +248,7 @@
             "scene_id": "scene-05",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 209,
+            "line_count": 145,
             "confidence": "supported",
             "explanation": null
         },
@@ -276,7 +256,7 @@
             "scene_id": "scene-06",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 145,
+            "line_count": 149,
             "confidence": "supported",
             "explanation": null
         },
@@ -284,7 +264,7 @@
             "scene_id": "scene-07",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 149,
+            "line_count": 146,
             "confidence": "supported",
             "explanation": null
         },
@@ -292,7 +272,7 @@
             "scene_id": "scene-08",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 146,
+            "line_count": 185,
             "confidence": "supported",
             "explanation": null
         },
@@ -300,25 +280,12 @@
             "scene_id": "scene-09",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 185,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-10",
-            "character_id": "character-01",
-            "presence": "speaking",
             "line_count": 47,
             "confidence": "supported",
             "explanation": null
         }
     ],
-    "notices": [
-        {
-            "code": "MULTIPLE_PLAYS",
-            "message": "Multiple plays were found; only the first play was analyzed."
-        }
-    ],
+    "notices": [],
     "ordering": {
         "scene_ids": [
             "scene-01",
@@ -329,8 +296,7 @@
             "scene-06",
             "scene-07",
             "scene-08",
-            "scene-09",
-            "scene-10"
+            "scene-09"
         ],
         "character_ids": [
             "character-01"
@@ -362,9 +328,6 @@
             ],
             "scene-09": [
                 "character-01"
-            ],
-            "scene-10": [
-                "character-01"
             ]
         }
     },
@@ -378,8 +341,7 @@
             "scene-06",
             "scene-07",
             "scene-08",
-            "scene-09",
-            "scene-10"
+            "scene-09"
         ],
         "character_ids": [
             "character-01"
@@ -423,10 +385,6 @@
                 ],
                 [
                     8,
-                    0
-                ],
-                [
-                    9,
                     0
                 ]
             ]

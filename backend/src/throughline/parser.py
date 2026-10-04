@@ -29,7 +29,7 @@ SCENE_RE = re.compile(
 )
 SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
 NUMBERED_SCENE_RE = re.compile(r"^\s*(\d+)\s*[-–—]\s*(.+?)\s*$")
-ROMAN_SCENE_RE = re.compile(r"^\s*([IVXLCDM]+)\.?\s*$", re.I)
+ROMAN_SCENE_RE = re.compile(r"^\s*([IVXLCDM]+)\.?\s*$")
 SEPARATOR_SCENE_RE = re.compile(r"^\s*(?:-{3,}|_{3,}|={3,})\s*$")
 SPECIAL_ACT_RE = re.compile(
     r"^\s*(?:THE\s+)?(PROLOGUE|EPILOGUE|ENTR['’]?ACTE|ENTRACTE|INTERLUDE)\.?\s*:?[ \t]*$",
@@ -60,7 +60,9 @@ PLAY_TITLE_RE = re.compile(
     r"(?im)^\s*[A-Z][A-Z0-9 &'’\-]{2,}\s*\n\s*by\s*(?:[A-Z].*)?$"
 )
 ENTER_RE = re.compile(
-    r"\b(?:enter|enters|entrance of)\s+([A-Z][A-Za-zÀ-ÿ'’\- ]+)", re.I
+    r"^\s*(?:re-)?entr(?:y|ance)\s+of\s+(.+?)(?:[.,;:]|$)|"
+    r"^\s*(?:re-)?enter(?:s)?\s+(.+?)(?:[.,;:]|$)",
+    re.I,
 )
 COLLECTIVE_WORDS = {
     "ALL",
@@ -92,6 +94,11 @@ def _play_start(text: str) -> int:
     matches = list(re.finditer(r"(?im)^\s*THE\s+PROLOGUE\.?\s*$", text))
     if matches:
         return matches[-1].start()
+    dramatis = re.search(r"(?im)^\s*Dramatis Person[æa]e?\s*$", text)
+    if dramatis:
+        act_after_cast = re.search(r"(?im)^\s*ACT\s+(?:I|1)\b", text[dramatis.end() :])
+        if act_after_cast:
+            return dramatis.end() + act_after_cast.start()
     dramatic_start = list(re.finditer(r"(?im)^\s*\[The Scene shows\b", text))
     if dramatic_start:
         return dramatic_start[0].start()
@@ -99,12 +106,31 @@ def _play_start(text: str) -> int:
         r"(?im)^\s*[A-Z][A-Z0-9 &'’\-]{2,}\s*$\n\s*(?:_|\[The Scene shows\b)",
         text,
     )
-    return title_start.start() if title_start else 0
+    if title_start:
+        return title_start.start()
+    act_candidates = list(re.finditer(r"(?im)^\s*ACT\s+I\s*$", text))
+    for index, candidate in enumerate(act_candidates):
+        next_act = (
+            act_candidates[index + 1].start()
+            if index + 1 < len(act_candidates)
+            else candidate.end() + 3000
+        )
+        following = text[candidate.end() : next_act]
+        if re.search(
+            r"(?im)^\s*[A-Z][A-ZÀ-ÿ0-9 .,'’\-]{1,48}:\s*$", following
+        ):
+            return candidate.start()
+    return 0
 
 
 def _heading(line: str, pattern: re.Pattern[str]) -> tuple[str, str] | None:
     match = pattern.match(line)
     return (match.group(1), match.group(2).strip()) if match else None
+
+
+def _scene_label(prefix: str, value: str) -> str:
+    identifier = re.match(r"(?:[IVXLCDM]+|\d+|[A-Z]+)", value, re.I)
+    return f"{prefix.title()} {identifier.group(0) if identifier else value}".strip()
 
 
 def _special_act(line: str) -> tuple[str, ActKind] | None:
@@ -134,6 +160,8 @@ def _chunks(text: str) -> list[SceneChunk]:
     current_act = "Act I"
     current_act_kind = ActKind.ACT
     first_act_start: int | None = None
+    act_markers: list[tuple[int, str, ActKind]] = []
+    has_scene_marker = False
     for line in lines:
         clean = line.strip()
         act_heading = _heading(clean, ACT_RE)
@@ -146,8 +174,14 @@ def _chunks(text: str) -> list[SceneChunk]:
             prefix, value = act_heading
             current_act = f"{prefix.title()} {value.rstrip(':').strip()}"
             current_act_kind = ActKind.ACT
+            act_markers.append((offset, current_act, current_act_kind))
         special_act = _special_act(clean)
-        if special_act:
+        is_late_prologue = bool(
+            special_act
+            and special_act[1] == ActKind.PROLOGUE
+            and (first_act_start is not None or markers)
+        )
+        if special_act and not is_late_prologue:
             current_act, current_act_kind = special_act
             markers.append((offset, current_act, current_act_kind, current_act))
         is_stage_description = bool(
@@ -156,20 +190,23 @@ def _chunks(text: str) -> list[SceneChunk]:
             and scene_heading[1].startswith("_")
         )
         if scene_heading and not is_stage_description:
+            has_scene_marker = True
             prefix, value = scene_heading
             markers.append(
-                (offset, current_act, current_act_kind, f"{prefix.title()} {value}")
+                (offset, current_act, current_act_kind, _scene_label(prefix, value))
             )
         elif numbered_scene:
+            has_scene_marker = True
             markers.append(
                 (
                     offset,
                     current_act,
                     current_act_kind,
-                    f"Scene {numbered_scene.group(1)} — {numbered_scene.group(2)}",
+                    f"Scene {numbered_scene.group(1)}",
                 )
             )
         elif roman_scene:
+            has_scene_marker = True
             markers.append(
                 (
                     offset,
@@ -179,6 +216,7 @@ def _chunks(text: str) -> list[SceneChunk]:
                 )
             )
         elif SEPARATOR_SCENE_RE.match(clean):
+            has_scene_marker = True
             if not markers:
                 markers.append(
                     (
@@ -197,9 +235,16 @@ def _chunks(text: str) -> list[SceneChunk]:
                 )
             )
         elif SCENE_STAGE_RE.match(clean):
+            has_scene_marker = True
             markers.append((offset, current_act, current_act_kind, "Scene I"))
         offset += len(line)
     play_end = _play_end(text, 0)
+    if not has_scene_marker and act_markers:
+        markers = [
+            (start, label, kind, "Scene I")
+            for start, label, kind in act_markers
+            if start < play_end
+        ]
     markers = [marker for marker in markers if marker[0] < play_end]
     if not markers:
         start = first_act_start or 0
@@ -330,7 +375,11 @@ def _looks_like_speaker(
     line: str, display: str, allow_terminal_period: bool = False
 ) -> bool:
     normalized = _normalize_speaker_display(display)
-    if normalized.endswith(".") and not allow_terminal_period:
+    if (
+        normalized.endswith(".")
+        and not allow_terminal_period
+        and normalized != normalized.upper()
+    ):
         return False
     if allow_terminal_period:
         normalized = normalized.rstrip(".")
@@ -457,7 +506,8 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 continue
             entrance = ENTER_RE.search(line)
             if entrance:
-                display = _canonical_entrance_display(entrance.group(1), cast_aliases)
+                entrance_display = entrance.group(1) or entrance.group(2) or ""
+                display = _canonical_entrance_display(entrance_display, cast_aliases)
                 entrance_displays = _shared_speaker_parts(
                     display, require_uppercase=False
                 ) or [display]
@@ -577,7 +627,13 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 appearance_counts[(scene.id, character.id)] = len(speech_lines)
 
         if not characters:
-            cast_names = list(dict.fromkeys(cast_aliases.values()))
+            cast_names = list(
+                dict.fromkeys(
+                    name
+                    for name in cast_aliases.values()
+                    if not ACT_RE.match(name) and not SCENE_RE.match(name)
+                )
+            )
             if len(cast_names) == 1:
                 character = CharacterOrSpeaker(
                     id="character-01",

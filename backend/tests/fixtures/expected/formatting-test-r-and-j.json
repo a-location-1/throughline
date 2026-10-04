@@ -39,7 +39,7 @@
                     "id": "scene-02",
                     "ordinal": 2,
                     "act_id": "act-02",
-                    "label": "Scene I. A public place.",
+                    "label": "Scene I",
                     "source_span": [
                         3585,
                         14509
@@ -49,7 +49,7 @@
                     "id": "scene-03",
                     "ordinal": 3,
                     "act_id": "act-02",
-                    "label": "Scene II. A Street.",
+                    "label": "Scene II",
                     "source_span": [
                         14509,
                         19242
@@ -59,7 +59,7 @@
                     "id": "scene-04",
                     "ordinal": 4,
                     "act_id": "act-02",
-                    "label": "Scene III. Room in Capulet’s House.",
+                    "label": "Scene III",
                     "source_span": [
                         19242,
                         24241
@@ -69,7 +69,7 @@
                     "id": "scene-05",
                     "ordinal": 5,
                     "act_id": "act-02",
-                    "label": "Scene IV. A Street.",
+                    "label": "Scene IV",
                     "source_span": [
                         24241,
                         29531
@@ -79,7 +79,7 @@
                     "id": "scene-06",
                     "ordinal": 6,
                     "act_id": "act-02",
-                    "label": "Scene V. A Hall in Capulet’s House.",
+                    "label": "Scene V",
                     "source_span": [
                         29531,
                         37075
@@ -97,7 +97,7 @@
                     "id": "scene-07",
                     "ordinal": 7,
                     "act_id": "act-03",
-                    "label": "Scene I. An open place adjoining Capulet’s Garden.",
+                    "label": "Scene I",
                     "source_span": [
                         37075,
                         39146
@@ -107,7 +107,7 @@
                     "id": "scene-08",
                     "ordinal": 8,
                     "act_id": "act-03",
-                    "label": "Scene II. Capulet’s Garden.",
+                    "label": "Scene II",
                     "source_span": [
                         39146,
                         47985
@@ -117,7 +117,7 @@
                     "id": "scene-09",
                     "ordinal": 9,
                     "act_id": "act-03",
-                    "label": "Scene III. Friar Lawrence’s Cell.",
+                    "label": "Scene III",
                     "source_span": [
                         47985,
                         52403
@@ -127,7 +127,7 @@
                     "id": "scene-10",
                     "ordinal": 10,
                     "act_id": "act-03",
-                    "label": "Scene IV. A Street.",
+                    "label": "Scene IV",
                     "source_span": [
                         52403,
                         61704
@@ -137,7 +137,7 @@
                     "id": "scene-11",
                     "ordinal": 11,
                     "act_id": "act-03",
-                    "label": "Scene V. Capulet’s Garden.",
+                    "label": "Scene V",
                     "source_span": [
                         61704,
                         65362
@@ -147,7 +147,7 @@
                     "id": "scene-12",
                     "ordinal": 12,
                     "act_id": "act-03",
-                    "label": "Scene VI. Friar Lawrence’s Cell.",
+                    "label": "Scene VI",
                     "source_span": [
                         65362,
                         67149
@@ -165,7 +165,7 @@
                     "id": "scene-13",
                     "ordinal": 13,
                     "act_id": "act-04",
-                    "label": "Scene I. A public Place.",
+                    "label": "Scene I",
                     "source_span": [
                         67149,
                         76588
@@ -175,7 +175,7 @@
                     "id": "scene-14",
                     "ordinal": 14,
                     "act_id": "act-04",
-                    "label": "Scene II. A Room in Capulet’s House.",
+                    "label": "Scene II",
                     "source_span": [
                         76588,
                         83059
@@ -185,7 +185,7 @@
                     "id": "scene-15",
                     "ordinal": 15,
                     "act_id": "act-04",
-                    "label": "Scene III. Friar Lawrence’s cell.",
+                    "label": "Scene III",
                     "source_span": [
                         83059,
                         91124
@@ -195,7 +195,7 @@
                     "id": "scene-16",
                     "ordinal": 16,
                     "act_id": "act-04",
-                    "label": "Scene IV. A Room in Capulet’s House.",
+                    "label": "Scene IV",
                     "source_span": [
                         91124,
                         92803
@@ -205,7 +205,7 @@
                     "id": "scene-17",
                     "ordinal": 17,
                     "act_id": "act-04",
-                    "label": "Scene V. An open Gallery to Juliet’s Chamber, overlooking the Garden.",
+                    "label": "Scene V",
                     "source_span": [
                         92803,
                         104057
@@ -223,7 +223,7 @@
                     "id": "scene-18",
                     "ordinal": 18,
                     "act_id": "act-05",
-                    "label": "Scene I. Friar Lawrence’s Cell.",
+                    "label": "Scene I",
                     "source_span": [
                         104057,
                         109890
@@ -233,7 +233,7 @@
                     "id": "scene-19",
                     "ordinal": 19,
                     "act_id": "act-05",
-                    "label": "Scene II. Hall in Capulet’s House.",
+                    "label": "Scene II",
                     "source_span": [
                         109890,
                         112207
@@ -243,7 +243,7 @@
                     "id": "scene-20",
                     "ordinal": 20,
                     "act_id": "act-05",
-                    "label": "Scene III. Juliet’s Chamber.",
+                    "label": "Scene III",
                     "source_span": [
                         112207,
                         114894
@@ -253,7 +253,7 @@
                     "id": "scene-21",
                     "ordinal": 21,
                     "act_id": "act-05",
-                    "label": "Scene IV. Hall in Capulet’s House.",
+                    "label": "Scene IV",
                     "source_span": [
                         114894,
                         116480
@@ -263,7 +263,7 @@
                     "id": "scene-22",
                     "ordinal": 22,
                     "act_id": "act-05",
-                    "label": "Scene V. Juliet’s Chamber; Juliet on the bed.",
+                    "label": "Scene V",
                     "source_span": [
                         116480,
                         123098
@@ -281,7 +281,7 @@
                     "id": "scene-23",
                     "ordinal": 23,
                     "act_id": "act-06",
-                    "label": "Scene I. Mantua. A Street.",
+                    "label": "Scene I",
                     "source_span": [
                         123098,
                         127038
@@ -291,7 +291,7 @@
                     "id": "scene-24",
                     "ordinal": 24,
                     "act_id": "act-06",
-                    "label": "Scene II. Friar Lawrence’s Cell.",
+                    "label": "Scene II",
                     "source_span": [
                         127038,
                         128434
@@ -301,7 +301,7 @@
                     "id": "scene-25",
                     "ordinal": 25,
                     "act_id": "act-06",
-                    "label": "Scene III. A churchyard; in it a Monument belonging to the Capulets.",
+                    "label": "Scene III",
                     "source_span": [
                         128434,
                         161815
@@ -325,7 +325,7 @@
             "id": "scene-02",
             "ordinal": 2,
             "act_id": "act-02",
-            "label": "Scene I. A public place.",
+            "label": "Scene I",
             "source_span": [
                 3585,
                 14509
@@ -335,7 +335,7 @@
             "id": "scene-03",
             "ordinal": 3,
             "act_id": "act-02",
-            "label": "Scene II. A Street.",
+            "label": "Scene II",
             "source_span": [
                 14509,
                 19242
@@ -345,7 +345,7 @@
             "id": "scene-04",
             "ordinal": 4,
             "act_id": "act-02",
-            "label": "Scene III. Room in Capulet’s House.",
+            "label": "Scene III",
             "source_span": [
                 19242,
                 24241
@@ -355,7 +355,7 @@
             "id": "scene-05",
             "ordinal": 5,
             "act_id": "act-02",
-            "label": "Scene IV. A Street.",
+            "label": "Scene IV",
             "source_span": [
                 24241,
                 29531
@@ -365,7 +365,7 @@
             "id": "scene-06",
             "ordinal": 6,
             "act_id": "act-02",
-            "label": "Scene V. A Hall in Capulet’s House.",
+            "label": "Scene V",
             "source_span": [
                 29531,
                 37075
@@ -375,7 +375,7 @@
             "id": "scene-07",
             "ordinal": 7,
             "act_id": "act-03",
-            "label": "Scene I. An open place adjoining Capulet’s Garden.",
+            "label": "Scene I",
             "source_span": [
                 37075,
                 39146
@@ -385,7 +385,7 @@
             "id": "scene-08",
             "ordinal": 8,
             "act_id": "act-03",
-            "label": "Scene II. Capulet’s Garden.",
+            "label": "Scene II",
             "source_span": [
                 39146,
                 47985
@@ -395,7 +395,7 @@
             "id": "scene-09",
             "ordinal": 9,
             "act_id": "act-03",
-            "label": "Scene III. Friar Lawrence’s Cell.",
+            "label": "Scene III",
             "source_span": [
                 47985,
                 52403
@@ -405,7 +405,7 @@
             "id": "scene-10",
             "ordinal": 10,
             "act_id": "act-03",
-            "label": "Scene IV. A Street.",
+            "label": "Scene IV",
             "source_span": [
                 52403,
                 61704
@@ -415,7 +415,7 @@
             "id": "scene-11",
             "ordinal": 11,
             "act_id": "act-03",
-            "label": "Scene V. Capulet’s Garden.",
+            "label": "Scene V",
             "source_span": [
                 61704,
                 65362
@@ -425,7 +425,7 @@
             "id": "scene-12",
             "ordinal": 12,
             "act_id": "act-03",
-            "label": "Scene VI. Friar Lawrence’s Cell.",
+            "label": "Scene VI",
             "source_span": [
                 65362,
                 67149
@@ -435,7 +435,7 @@
             "id": "scene-13",
             "ordinal": 13,
             "act_id": "act-04",
-            "label": "Scene I. A public Place.",
+            "label": "Scene I",
             "source_span": [
                 67149,
                 76588
@@ -445,7 +445,7 @@
             "id": "scene-14",
             "ordinal": 14,
             "act_id": "act-04",
-            "label": "Scene II. A Room in Capulet’s House.",
+            "label": "Scene II",
             "source_span": [
                 76588,
                 83059
@@ -455,7 +455,7 @@
             "id": "scene-15",
             "ordinal": 15,
             "act_id": "act-04",
-            "label": "Scene III. Friar Lawrence’s cell.",
+            "label": "Scene III",
             "source_span": [
                 83059,
                 91124
@@ -465,7 +465,7 @@
             "id": "scene-16",
             "ordinal": 16,
             "act_id": "act-04",
-            "label": "Scene IV. A Room in Capulet’s House.",
+            "label": "Scene IV",
             "source_span": [
                 91124,
                 92803
@@ -475,7 +475,7 @@
             "id": "scene-17",
             "ordinal": 17,
             "act_id": "act-04",
-            "label": "Scene V. An open Gallery to Juliet’s Chamber, overlooking the Garden.",
+            "label": "Scene V",
             "source_span": [
                 92803,
                 104057
@@ -485,7 +485,7 @@
             "id": "scene-18",
             "ordinal": 18,
             "act_id": "act-05",
-            "label": "Scene I. Friar Lawrence’s Cell.",
+            "label": "Scene I",
             "source_span": [
                 104057,
                 109890
@@ -495,7 +495,7 @@
             "id": "scene-19",
             "ordinal": 19,
             "act_id": "act-05",
-            "label": "Scene II. Hall in Capulet’s House.",
+            "label": "Scene II",
             "source_span": [
                 109890,
                 112207
@@ -505,7 +505,7 @@
             "id": "scene-20",
             "ordinal": 20,
             "act_id": "act-05",
-            "label": "Scene III. Juliet’s Chamber.",
+            "label": "Scene III",
             "source_span": [
                 112207,
                 114894
@@ -515,7 +515,7 @@
             "id": "scene-21",
             "ordinal": 21,
             "act_id": "act-05",
-            "label": "Scene IV. Hall in Capulet’s House.",
+            "label": "Scene IV",
             "source_span": [
                 114894,
                 116480
@@ -525,7 +525,7 @@
             "id": "scene-22",
             "ordinal": 22,
             "act_id": "act-05",
-            "label": "Scene V. Juliet’s Chamber; Juliet on the bed.",
+            "label": "Scene V",
             "source_span": [
                 116480,
                 123098
@@ -535,7 +535,7 @@
             "id": "scene-23",
             "ordinal": 23,
             "act_id": "act-06",
-            "label": "Scene I. Mantua. A Street.",
+            "label": "Scene I",
             "source_span": [
                 123098,
                 127038
@@ -545,7 +545,7 @@
             "id": "scene-24",
             "ordinal": 24,
             "act_id": "act-06",
-            "label": "Scene II. Friar Lawrence’s Cell.",
+            "label": "Scene II",
             "source_span": [
                 127038,
                 128434
@@ -555,7 +555,7 @@
             "id": "scene-25",
             "ordinal": 25,
             "act_id": "act-06",
-            "label": "Scene III. A churchyard; in it a Monument belonging to the Capulets.",
+            "label": "Scene III",
             "source_span": [
                 128434,
                 161815
@@ -586,272 +586,349 @@
         },
         {
             "id": "character-04",
+            "display_name": "GREGORY.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        },
+        {
+            "id": "character-05",
             "display_name": "Abram",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-05",
+            "id": "character-06",
             "display_name": "Balthasar",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-06",
+            "id": "character-07",
             "display_name": "Benvolio",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-07",
+            "id": "character-08",
             "display_name": "Tybalt",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-08",
+            "id": "character-09",
             "display_name": "three or four Citizens with clubs",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-09",
+            "id": "character-10",
+            "display_name": "FIRST CITIZEN.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        },
+        {
+            "id": "character-11",
             "display_name": "Capulet in his gown",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-10",
+            "id": "character-12",
+            "display_name": "CAPULET.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        },
+        {
+            "id": "character-13",
+            "display_name": "LADY CAPULET.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        },
+        {
+            "id": "character-14",
             "display_name": "Montague",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-11",
+            "id": "character-15",
             "display_name": "his Lady Montague",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-12",
+            "id": "character-16",
+            "display_name": "LADY MONTAGUE.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        },
+        {
+            "id": "character-17",
             "display_name": "Prince Escalus",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-13",
+            "id": "character-18",
+            "display_name": "PRINCE.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-02",
+            "ambiguity": null
+        },
+        {
+            "id": "character-19",
             "display_name": "Romeo",
             "kind": "silent",
             "first_appearance_scene_id": "scene-02",
             "ambiguity": null
         },
         {
-            "id": "character-14",
-            "display_name": "Capulet",
-            "kind": "silent",
+            "id": "character-20",
+            "display_name": "PARIS.",
+            "kind": "named",
             "first_appearance_scene_id": "scene-03",
             "ambiguity": null
         },
         {
-            "id": "character-15",
-            "display_name": "Lady Capulet",
-            "kind": "silent",
-            "first_appearance_scene_id": "scene-04",
+            "id": "character-21",
+            "display_name": "SERVANT.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-03",
             "ambiguity": null
         },
         {
-            "id": "character-16",
+            "id": "character-22",
             "display_name": "Nurse",
             "kind": "silent",
             "first_appearance_scene_id": "scene-04",
             "ambiguity": null
         },
         {
-            "id": "character-17",
+            "id": "character-23",
             "display_name": "Juliet",
             "kind": "silent",
             "first_appearance_scene_id": "scene-04",
             "ambiguity": null
         },
         {
-            "id": "character-18",
+            "id": "character-24",
             "display_name": "a Servant",
             "kind": "silent",
             "first_appearance_scene_id": "scene-04",
             "ambiguity": null
         },
         {
-            "id": "character-19",
-            "display_name": "Servants",
-            "kind": "silent",
+            "id": "character-25",
+            "display_name": "MERCUTIO.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-05",
+            "ambiguity": null
+        },
+        {
+            "id": "character-26",
+            "display_name": "FIRST SERVANT.",
+            "kind": "named",
             "first_appearance_scene_id": "scene-06",
             "ambiguity": null
         },
         {
-            "id": "character-20",
-            "display_name": "Mercutio",
-            "kind": "silent",
-            "first_appearance_scene_id": "scene-07",
+            "id": "character-27",
+            "display_name": "SECOND SERVANT.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-06",
             "ambiguity": null
         },
         {
-            "id": "character-21",
+            "id": "character-28",
+            "display_name": "CAPULET’S COUSIN.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-06",
+            "ambiguity": null
+        },
+        {
+            "id": "character-29",
             "display_name": "Juliet above",
             "kind": "silent",
             "first_appearance_scene_id": "scene-08",
             "ambiguity": null
         },
         {
-            "id": "character-22",
+            "id": "character-30",
             "display_name": "Friar Lawrence with a basket",
             "kind": "silent",
             "first_appearance_scene_id": "scene-09",
             "ambiguity": null
         },
         {
-            "id": "character-23",
+            "id": "character-31",
+            "display_name": "FRIAR LAWRENCE.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-09",
+            "ambiguity": null
+        },
+        {
+            "id": "character-32",
             "display_name": "Peter",
             "kind": "silent",
             "first_appearance_scene_id": "scene-10",
             "ambiguity": null
         },
         {
-            "id": "character-24",
-            "display_name": "Friar Lawrence",
-            "kind": "silent",
-            "first_appearance_scene_id": "scene-12",
-            "ambiguity": null
-        },
-        {
-            "id": "character-25",
-            "display_name": "the confines of",
-            "kind": "silent",
-            "first_appearance_scene_id": "scene-13",
-            "ambiguity": null
-        },
-        {
-            "id": "character-26",
+            "id": "character-33",
             "display_name": "others",
             "kind": "silent",
             "first_appearance_scene_id": "scene-13",
             "ambiguity": null
         },
         {
-            "id": "character-27",
+            "id": "character-34",
             "display_name": "Citizens",
             "kind": "silent",
             "first_appearance_scene_id": "scene-13",
             "ambiguity": null
         },
         {
-            "id": "character-28",
-            "display_name": "Prince",
+            "id": "character-35",
+            "display_name": "Servants",
             "kind": "silent",
-            "first_appearance_scene_id": "scene-13",
+            "first_appearance_scene_id": "scene-21",
             "ambiguity": null
         },
         {
-            "id": "character-29",
-            "display_name": "Paris",
-            "kind": "silent",
-            "first_appearance_scene_id": "scene-18",
-            "ambiguity": null
-        },
-        {
-            "id": "character-30",
+            "id": "character-36",
             "display_name": "Paris with Musicians",
             "kind": "silent",
             "first_appearance_scene_id": "scene-22",
             "ambiguity": null
         },
         {
-            "id": "character-31",
-            "display_name": "ACT I",
-            "kind": "silent",
-            "first_appearance_scene_id": "scene-23",
+            "id": "character-37",
+            "display_name": "FIRST MUSICIAN.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-22",
             "ambiguity": null
         },
         {
-            "id": "character-32",
+            "id": "character-38",
+            "display_name": "SECOND MUSICIAN.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-22",
+            "ambiguity": null
+        },
+        {
+            "id": "character-39",
+            "display_name": "THIRD MUSICIAN.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-22",
+            "ambiguity": null
+        },
+        {
+            "id": "character-40",
             "display_name": "Apothecary",
             "kind": "silent",
             "first_appearance_scene_id": "scene-23",
             "ambiguity": null
         },
         {
-            "id": "character-33",
+            "id": "character-41",
             "display_name": "Friar John",
             "kind": "silent",
             "first_appearance_scene_id": "scene-24",
             "ambiguity": null
         },
         {
-            "id": "character-34",
+            "id": "character-42",
+            "display_name": "PAGE.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-25",
+            "ambiguity": null
+        },
+        {
+            "id": "character-43",
             "display_name": "Balthasar with a torch",
             "kind": "silent",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-35",
-            "display_name": "this sepulchre",
-            "kind": "silent",
+            "id": "character-44",
+            "display_name": "FIRST WATCH.",
+            "kind": "named",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-36",
+            "id": "character-45",
             "display_name": "Watch with the Page of Paris",
             "kind": "silent",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-37",
+            "id": "character-46",
             "display_name": "some of the Watch with Balthasar",
             "kind": "silent",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-38",
+            "id": "character-47",
+            "display_name": "SECOND WATCH.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-25",
+            "ambiguity": null
+        },
+        {
+            "id": "character-48",
             "display_name": "others of the Watch with Friar Lawrence",
             "kind": "silent",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-39",
+            "id": "character-49",
             "display_name": "the Prince",
             "kind": "silent",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-40",
+            "id": "character-50",
             "display_name": "Attendants",
             "kind": "silent",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-41",
+            "id": "character-51",
             "display_name": "START",
             "kind": "named",
             "first_appearance_scene_id": "scene-25",
             "ambiguity": null
         },
         {
-            "id": "character-42",
+            "id": "character-52",
+            "display_name": "DAMAGE.",
+            "kind": "named",
+            "first_appearance_scene_id": "scene-25",
+            "ambiguity": null
+        },
+        {
+            "id": "character-53",
             "display_name": "Literary Archive Foundation",
             "kind": "named",
             "first_appearance_scene_id": "scene-25",
@@ -863,15 +940,15 @@
             "scene_id": "scene-01",
             "character_id": "character-01",
             "presence": "speaking",
-            "line_count": 17,
+            "line_count": 16,
             "confidence": "supported",
             "explanation": null
         },
         {
             "scene_id": "scene-02",
             "character_id": "character-02",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 28,
             "confidence": "supported",
             "explanation": null
         },
@@ -886,16 +963,16 @@
         {
             "scene_id": "scene-02",
             "character_id": "character-04",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 17,
             "confidence": "supported",
             "explanation": null
         },
         {
             "scene_id": "scene-02",
             "character_id": "character-05",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 5,
             "confidence": "supported",
             "explanation": null
         },
@@ -910,16 +987,16 @@
         {
             "scene_id": "scene-02",
             "character_id": "character-07",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 52,
             "confidence": "supported",
             "explanation": null
         },
         {
             "scene_id": "scene-02",
             "character_id": "character-08",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 6,
             "confidence": "supported",
             "explanation": null
         },
@@ -934,8 +1011,8 @@
         {
             "scene_id": "scene-02",
             "character_id": "character-10",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 2,
             "confidence": "supported",
             "explanation": null
         },
@@ -950,6 +1027,30 @@
         {
             "scene_id": "scene-02",
             "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 3,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-02",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-02",
+            "character_id": "character-14",
+            "presence": "speaking",
+            "line_count": 29,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-02",
+            "character_id": "character-15",
             "presence": "non_speaking",
             "line_count": 0,
             "confidence": "supported",
@@ -957,54 +1058,14 @@
         },
         {
             "scene_id": "scene-02",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-03",
-            "character_id": "character-06",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-03",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-03",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-04",
-            "character_id": "character-15",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-04",
             "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 3,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-04",
+            "scene_id": "scene-02",
             "character_id": "character-17",
             "presence": "non_speaking",
             "line_count": 0,
@@ -1012,8 +1073,96 @@
             "explanation": null
         },
         {
-            "scene_id": "scene-04",
+            "scene_id": "scene-02",
             "character_id": "character-18",
+            "presence": "speaking",
+            "line_count": 25,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-02",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 66,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-03",
+            "character_id": "character-07",
+            "presence": "speaking",
+            "line_count": 20,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-03",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 34,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-03",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 31,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-03",
+            "character_id": "character-20",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-03",
+            "character_id": "character-21",
+            "presence": "speaking",
+            "line_count": 17,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 38,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-21",
+            "presence": "speaking",
+            "line_count": 3,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 61,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 7,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-04",
+            "character_id": "character-24",
             "presence": "non_speaking",
             "line_count": 0,
             "confidence": "supported",
@@ -1021,358 +1170,166 @@
         },
         {
             "scene_id": "scene-05",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "character_id": "character-07",
+            "presence": "speaking",
+            "line_count": 14,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-05",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 34,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-05",
+            "character_id": "character-25",
+            "presence": "speaking",
+            "line_count": 73,
             "confidence": "supported",
             "explanation": null
         },
         {
             "scene_id": "scene-06",
             "character_id": "character-01",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 15,
             "confidence": "supported",
             "explanation": null
         },
         {
             "scene_id": "scene-06",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "character_id": "character-07",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-06",
+            "character_id": "character-08",
+            "presence": "speaking",
+            "line_count": 18,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-06",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 59,
             "confidence": "supported",
             "explanation": null
         },
         {
             "scene_id": "scene-06",
             "character_id": "character-19",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 28,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-07",
-            "character_id": "character-06",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-07",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-07",
-            "character_id": "character-20",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-08",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-08",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-08",
+            "scene_id": "scene-06",
             "character_id": "character-21",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 1,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-09",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-09",
+            "scene_id": "scene-06",
             "character_id": "character-22",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 17,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-10",
-            "character_id": "character-06",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-10",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-10",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-10",
-            "character_id": "character-20",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-10",
+            "scene_id": "scene-06",
             "character_id": "character-23",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 20,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-11",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-11",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-11",
-            "character_id": "character-23",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-12",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-12",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-12",
-            "character_id": "character-24",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-13",
-            "character_id": "character-06",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-13",
-            "character_id": "character-07",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-13",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-13",
-            "character_id": "character-20",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-13",
-            "character_id": "character-25",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-13",
+            "scene_id": "scene-06",
             "character_id": "character-26",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 7,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-13",
+            "scene_id": "scene-06",
             "character_id": "character-27",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 6,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-13",
+            "scene_id": "scene-06",
             "character_id": "character-28",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 3,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-14",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "scene_id": "scene-07",
+            "character_id": "character-07",
+            "presence": "speaking",
+            "line_count": 10,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-14",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "scene_id": "scene-07",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 3,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-15",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "scene_id": "scene-07",
+            "character_id": "character-25",
+            "presence": "speaking",
+            "line_count": 34,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-15",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "scene_id": "scene-08",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 89,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-15",
-            "character_id": "character-24",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "scene_id": "scene-08",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 2,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-16",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "scene_id": "scene-08",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 118,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-17",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-17",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-17",
-            "character_id": "character-15",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-17",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-17",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-18",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-18",
-            "character_id": "character-24",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-18",
+            "scene_id": "scene-08",
             "character_id": "character-29",
             "presence": "non_speaking",
             "line_count": 0,
@@ -1380,119 +1337,15 @@
             "explanation": null
         },
         {
-            "scene_id": "scene-19",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-19",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-20",
-            "character_id": "character-15",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-20",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-20",
-            "character_id": "character-17",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-21",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-21",
-            "character_id": "character-15",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-21",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-21",
+            "scene_id": "scene-09",
             "character_id": "character-19",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 25,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-22",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-22",
-            "character_id": "character-15",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-22",
-            "character_id": "character-16",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-22",
-            "character_id": "character-23",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-22",
-            "character_id": "character-24",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-22",
+            "scene_id": "scene-09",
             "character_id": "character-30",
             "presence": "non_speaking",
             "line_count": 0,
@@ -1500,31 +1353,71 @@
             "explanation": null
         },
         {
-            "scene_id": "scene-23",
-            "character_id": "character-05",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-23",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-23",
+            "scene_id": "scene-09",
             "character_id": "character-31",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 73,
             "confidence": "supported",
             "explanation": null
         },
         {
-            "scene_id": "scene-23",
+            "scene_id": "scene-10",
+            "character_id": "character-07",
+            "presence": "speaking",
+            "line_count": 11,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-10",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 42,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-10",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 49,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-10",
+            "character_id": "character-25",
+            "presence": "speaking",
+            "line_count": 72,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-10",
+            "character_id": "character-32",
+            "presence": "speaking",
+            "line_count": 5,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-11",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 35,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-11",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 44,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-11",
             "character_id": "character-32",
             "presence": "non_speaking",
             "line_count": 0,
@@ -1532,15 +1425,543 @@
             "explanation": null
         },
         {
-            "scene_id": "scene-24",
-            "character_id": "character-24",
+            "scene_id": "scene-12",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 12,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-12",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 7,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-12",
+            "character_id": "character-31",
+            "presence": "speaking",
+            "line_count": 20,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-07",
+            "presence": "speaking",
+            "line_count": 53,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-08",
+            "presence": "speaking",
+            "line_count": 14,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-10",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 11,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-14",
+            "presence": "speaking",
+            "line_count": 3,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-18",
+            "presence": "speaking",
+            "line_count": 17,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 38,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-25",
+            "presence": "speaking",
+            "line_count": 58,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-13",
+            "character_id": "character-33",
             "presence": "non_speaking",
             "line_count": 0,
             "confidence": "supported",
             "explanation": null
         },
         {
+            "scene_id": "scene-13",
+            "character_id": "character-34",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-14",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 32,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-14",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 117,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-15",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 75,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-15",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 22,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-15",
+            "character_id": "character-31",
+            "presence": "speaking",
+            "line_count": 89,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-16",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 31,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-16",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 2,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-16",
+            "character_id": "character-20",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-17",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 64,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-17",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 38,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-17",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 26,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-17",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 27,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-17",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 107,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-18",
+            "character_id": "character-20",
+            "presence": "speaking",
+            "line_count": 24,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-18",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 49,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-18",
+            "character_id": "character-31",
+            "presence": "speaking",
+            "line_count": 56,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-19",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 30,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-19",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 3,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-19",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 2,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-19",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 12,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-19",
+            "character_id": "character-27",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-20",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-20",
+            "character_id": "character-22",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-20",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 58,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-21",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 23,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-21",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-21",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 4,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-21",
+            "character_id": "character-26",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-21",
+            "character_id": "character-27",
+            "presence": "speaking",
+            "line_count": 3,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-21",
+            "character_id": "character-35",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 28,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 13,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-20",
+            "presence": "speaking",
+            "line_count": 6,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-22",
+            "presence": "speaking",
+            "line_count": 28,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-31",
+            "presence": "speaking",
+            "line_count": 26,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-32",
+            "presence": "speaking",
+            "line_count": 24,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-36",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-37",
+            "presence": "speaking",
+            "line_count": 11,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-38",
+            "presence": "speaking",
+            "line_count": 6,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-22",
+            "character_id": "character-39",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-23",
+            "character_id": "character-06",
+            "presence": "speaking",
+            "line_count": 11,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-23",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 73,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-23",
+            "character_id": "character-40",
+            "presence": "speaking",
+            "line_count": 7,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
             "scene_id": "scene-24",
+            "character_id": "character-31",
+            "presence": "speaking",
+            "line_count": 18,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-24",
+            "character_id": "character-41",
+            "presence": "speaking",
+            "line_count": 14,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-06",
+            "presence": "speaking",
+            "line_count": 22,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-12",
+            "presence": "speaking",
+            "line_count": 10,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-13",
+            "presence": "speaking",
+            "line_count": 5,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-14",
+            "presence": "speaking",
+            "line_count": 10,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-18",
+            "presence": "speaking",
+            "line_count": 58,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-19",
+            "presence": "speaking",
+            "line_count": 88,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-20",
+            "presence": "speaking",
+            "line_count": 36,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-23",
+            "presence": "speaking",
+            "line_count": 18,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-31",
+            "presence": "speaking",
+            "line_count": 78,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
             "character_id": "character-33",
             "presence": "non_speaking",
             "line_count": 0,
@@ -1549,111 +1970,95 @@
         },
         {
             "scene_id": "scene-25",
-            "character_id": "character-10",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-13",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-14",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-26",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-29",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-34",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-35",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-36",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-37",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-38",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-39",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-40",
-            "presence": "non_speaking",
-            "line_count": 0,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
-            "character_id": "character-41",
-            "presence": "speaking",
-            "line_count": 229,
-            "confidence": "supported",
-            "explanation": null
-        },
-        {
-            "scene_id": "scene-25",
             "character_id": "character-42",
+            "presence": "speaking",
+            "line_count": 11,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-43",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-44",
+            "presence": "speaking",
+            "line_count": 24,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-45",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-46",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-47",
+            "presence": "speaking",
+            "line_count": 1,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-48",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-49",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-50",
+            "presence": "non_speaking",
+            "line_count": 0,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-51",
+            "presence": "speaking",
+            "line_count": 165,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-52",
+            "presence": "speaking",
+            "line_count": 63,
+            "confidence": "supported",
+            "explanation": null
+        },
+        {
+            "scene_id": "scene-25",
+            "character_id": "character-53",
             "presence": "speaking",
             "line_count": 43,
             "confidence": "supported",
@@ -1731,38 +2136,188 @@
             "character-39",
             "character-40",
             "character-41",
-            "character-42"
+            "character-42",
+            "character-43",
+            "character-44",
+            "character-45",
+            "character-46",
+            "character-47",
+            "character-48",
+            "character-49",
+            "character-50",
+            "character-51",
+            "character-52",
+            "character-53"
         ],
         "scene_line_count_desc": {
             "scene-01": [
                 "character-01"
             ],
-            "scene-02": [],
-            "scene-03": [],
-            "scene-04": [],
-            "scene-05": [],
-            "scene-06": [],
-            "scene-07": [],
-            "scene-08": [],
-            "scene-09": [],
-            "scene-10": [],
-            "scene-11": [],
-            "scene-12": [],
-            "scene-13": [],
-            "scene-14": [],
-            "scene-15": [],
-            "scene-16": [],
-            "scene-17": [],
-            "scene-18": [],
-            "scene-19": [],
-            "scene-20": [],
-            "scene-21": [],
-            "scene-22": [],
-            "scene-23": [],
-            "scene-24": [],
+            "scene-02": [
+                "character-19",
+                "character-07",
+                "character-14",
+                "character-02",
+                "character-18",
+                "character-04",
+                "character-08",
+                "character-05",
+                "character-12",
+                "character-16",
+                "character-10",
+                "character-13"
+            ],
+            "scene-03": [
+                "character-12",
+                "character-19",
+                "character-07",
+                "character-21",
+                "character-20"
+            ],
+            "scene-04": [
+                "character-22",
+                "character-13",
+                "character-23",
+                "character-21"
+            ],
+            "scene-05": [
+                "character-25",
+                "character-19",
+                "character-07"
+            ],
+            "scene-06": [
+                "character-12",
+                "character-19",
+                "character-23",
+                "character-08",
+                "character-22",
+                "character-01",
+                "character-26",
+                "character-27",
+                "character-28",
+                "character-07",
+                "character-21"
+            ],
+            "scene-07": [
+                "character-25",
+                "character-07",
+                "character-19"
+            ],
+            "scene-08": [
+                "character-23",
+                "character-19",
+                "character-22"
+            ],
+            "scene-09": [
+                "character-31",
+                "character-19"
+            ],
+            "scene-10": [
+                "character-25",
+                "character-22",
+                "character-19",
+                "character-07",
+                "character-32"
+            ],
+            "scene-11": [
+                "character-23",
+                "character-22"
+            ],
+            "scene-12": [
+                "character-31",
+                "character-19",
+                "character-23"
+            ],
+            "scene-13": [
+                "character-25",
+                "character-07",
+                "character-19",
+                "character-18",
+                "character-08",
+                "character-13",
+                "character-10",
+                "character-14"
+            ],
+            "scene-14": [
+                "character-23",
+                "character-22"
+            ],
+            "scene-15": [
+                "character-31",
+                "character-19",
+                "character-22"
+            ],
+            "scene-16": [
+                "character-12",
+                "character-20",
+                "character-13"
+            ],
+            "scene-17": [
+                "character-23",
+                "character-12",
+                "character-13",
+                "character-22",
+                "character-19"
+            ],
+            "scene-18": [
+                "character-31",
+                "character-23",
+                "character-20"
+            ],
+            "scene-19": [
+                "character-12",
+                "character-23",
+                "character-27",
+                "character-13",
+                "character-22"
+            ],
+            "scene-20": [
+                "character-23",
+                "character-13"
+            ],
+            "scene-21": [
+                "character-12",
+                "character-13",
+                "character-22",
+                "character-27",
+                "character-26"
+            ],
+            "scene-22": [
+                "character-12",
+                "character-22",
+                "character-31",
+                "character-32",
+                "character-13",
+                "character-37",
+                "character-20",
+                "character-38",
+                "character-39"
+            ],
+            "scene-23": [
+                "character-19",
+                "character-06",
+                "character-40"
+            ],
+            "scene-24": [
+                "character-31",
+                "character-41"
+            ],
             "scene-25": [
-                "character-41",
-                "character-42"
+                "character-51",
+                "character-19",
+                "character-31",
+                "character-52",
+                "character-18",
+                "character-53",
+                "character-20",
+                "character-44",
+                "character-06",
+                "character-23",
+                "character-42",
+                "character-12",
+                "character-14",
+                "character-13",
+                "character-47"
             ]
         }
     },
@@ -1836,7 +2391,18 @@
             "character-39",
             "character-40",
             "character-41",
-            "character-42"
+            "character-42",
+            "character-43",
+            "character-44",
+            "character-45",
+            "character-46",
+            "character-47",
+            "character-48",
+            "character-49",
+            "character-50",
+            "character-51",
+            "character-52",
+            "character-53"
         ],
         "colors": {
             "character-01": "#177254",
@@ -1880,7 +2446,18 @@
             "character-39": "#236b8e",
             "character-40": "#4c7a34",
             "character-41": "#177254",
-            "character-42": "#b44336"
+            "character-42": "#b44336",
+            "character-43": "#b8860b",
+            "character-44": "#375a7f",
+            "character-45": "#7b4b94",
+            "character-46": "#8b5e3c",
+            "character-47": "#236b8e",
+            "character-48": "#4c7a34",
+            "character-49": "#177254",
+            "character-50": "#b44336",
+            "character-51": "#b8860b",
+            "character-52": "#375a7f",
+            "character-53": "#7b4b94"
         },
         "paths": {
             "character-01": [
@@ -1915,10 +2492,6 @@
                 [
                     1,
                     4
-                ],
-                [
-                    22,
-                    4
                 ]
             ],
             "character-06": [
@@ -1927,25 +2500,37 @@
                     5
                 ],
                 [
-                    2,
+                    22,
                     5
                 ],
                 [
-                    6,
-                    5
-                ],
-                [
-                    9,
-                    5
-                ],
-                [
-                    12,
+                    24,
                     5
                 ]
             ],
             "character-07": [
                 [
                     1,
+                    6
+                ],
+                [
+                    2,
+                    6
+                ],
+                [
+                    4,
+                    6
+                ],
+                [
+                    5,
+                    6
+                ],
+                [
+                    6,
+                    6
+                ],
+                [
+                    9,
                     6
                 ],
                 [
@@ -1956,6 +2541,14 @@
             "character-08": [
                 [
                     1,
+                    7
+                ],
+                [
+                    5,
+                    7
+                ],
+                [
+                    12,
                     7
                 ]
             ],
@@ -1971,7 +2564,7 @@
                     9
                 ],
                 [
-                    24,
+                    12,
                     9
                 ]
             ],
@@ -1985,6 +2578,38 @@
                 [
                     1,
                     11
+                ],
+                [
+                    2,
+                    11
+                ],
+                [
+                    5,
+                    11
+                ],
+                [
+                    15,
+                    11
+                ],
+                [
+                    16,
+                    11
+                ],
+                [
+                    18,
+                    11
+                ],
+                [
+                    20,
+                    11
+                ],
+                [
+                    21,
+                    11
+                ],
+                [
+                    24,
+                    11
                 ]
             ],
             "character-13": [
@@ -1993,31 +2618,7 @@
                     12
                 ],
                 [
-                    2,
-                    12
-                ],
-                [
-                    4,
-                    12
-                ],
-                [
-                    6,
-                    12
-                ],
-                [
-                    7,
-                    12
-                ],
-                [
-                    8,
-                    12
-                ],
-                [
-                    9,
-                    12
-                ],
-                [
-                    11,
+                    3,
                     12
                 ],
                 [
@@ -2025,7 +2626,7 @@
                     12
                 ],
                 [
-                    14,
+                    15,
                     12
                 ],
                 [
@@ -2033,7 +2634,19 @@
                     12
                 ],
                 [
-                    22,
+                    18,
+                    12
+                ],
+                [
+                    19,
+                    12
+                ],
+                [
+                    20,
+                    12
+                ],
+                [
+                    21,
                     12
                 ],
                 [
@@ -2043,31 +2656,11 @@
             ],
             "character-14": [
                 [
-                    2,
+                    1,
                     13
                 ],
                 [
-                    5,
-                    13
-                ],
-                [
-                    15,
-                    13
-                ],
-                [
-                    16,
-                    13
-                ],
-                [
-                    18,
-                    13
-                ],
-                [
-                    20,
-                    13
-                ],
-                [
-                    21,
+                    12,
                     13
                 ],
                 [
@@ -2077,147 +2670,191 @@
             ],
             "character-15": [
                 [
-                    3,
-                    14
-                ],
-                [
-                    16,
-                    14
-                ],
-                [
-                    19,
-                    14
-                ],
-                [
-                    20,
-                    14
-                ],
-                [
-                    21,
+                    1,
                     14
                 ]
             ],
             "character-16": [
                 [
-                    3,
-                    15
-                ],
-                [
-                    9,
-                    15
-                ],
-                [
-                    10,
-                    15
-                ],
-                [
-                    13,
-                    15
-                ],
-                [
-                    14,
-                    15
-                ],
-                [
-                    16,
-                    15
-                ],
-                [
-                    19,
-                    15
-                ],
-                [
-                    20,
-                    15
-                ],
-                [
-                    21,
+                    1,
                     15
                 ]
             ],
             "character-17": [
                 [
-                    3,
-                    16
-                ],
-                [
-                    7,
-                    16
-                ],
-                [
-                    10,
-                    16
-                ],
-                [
-                    11,
-                    16
-                ],
-                [
-                    13,
-                    16
-                ],
-                [
-                    16,
-                    16
-                ],
-                [
-                    17,
-                    16
-                ],
-                [
-                    18,
-                    16
-                ],
-                [
-                    19,
+                    1,
                     16
                 ]
             ],
             "character-18": [
                 [
-                    3,
+                    1,
+                    17
+                ],
+                [
+                    12,
+                    17
+                ],
+                [
+                    24,
                     17
                 ]
             ],
             "character-19": [
                 [
+                    1,
+                    18
+                ],
+                [
+                    2,
+                    18
+                ],
+                [
+                    4,
+                    18
+                ],
+                [
                     5,
                     18
                 ],
                 [
-                    20,
+                    6,
+                    18
+                ],
+                [
+                    7,
+                    18
+                ],
+                [
+                    8,
+                    18
+                ],
+                [
+                    9,
+                    18
+                ],
+                [
+                    11,
+                    18
+                ],
+                [
+                    12,
+                    18
+                ],
+                [
+                    14,
+                    18
+                ],
+                [
+                    16,
+                    18
+                ],
+                [
+                    22,
+                    18
+                ],
+                [
+                    24,
                     18
                 ]
             ],
             "character-20": [
                 [
-                    6,
+                    2,
                     19
                 ],
                 [
-                    9,
+                    15,
                     19
                 ],
                 [
-                    12,
+                    17,
+                    19
+                ],
+                [
+                    21,
+                    19
+                ],
+                [
+                    24,
                     19
                 ]
             ],
             "character-21": [
                 [
-                    7,
+                    2,
+                    20
+                ],
+                [
+                    3,
+                    20
+                ],
+                [
+                    5,
                     20
                 ]
             ],
             "character-22": [
                 [
-                    8,
+                    3,
+                    21
+                ],
+                [
+                    5,
+                    21
+                ],
+                [
+                    7,
+                    21
+                ],
+                [
+                    9,
+                    21
+                ],
+                [
+                    10,
+                    21
+                ],
+                [
+                    13,
+                    21
+                ],
+                [
+                    14,
+                    21
+                ],
+                [
+                    16,
+                    21
+                ],
+                [
+                    18,
+                    21
+                ],
+                [
+                    19,
+                    21
+                ],
+                [
+                    20,
+                    21
+                ],
+                [
+                    21,
                     21
                 ]
             ],
             "character-23": [
                 [
-                    9,
+                    3,
+                    22
+                ],
+                [
+                    5,
+                    22
+                ],
+                [
+                    7,
                     22
                 ],
                 [
@@ -2225,33 +2862,53 @@
                     22
                 ],
                 [
-                    21,
+                    11,
+                    22
+                ],
+                [
+                    13,
+                    22
+                ],
+                [
+                    16,
+                    22
+                ],
+                [
+                    17,
+                    22
+                ],
+                [
+                    18,
+                    22
+                ],
+                [
+                    19,
+                    22
+                ],
+                [
+                    24,
                     22
                 ]
             ],
             "character-24": [
                 [
-                    11,
-                    23
-                ],
-                [
-                    14,
-                    23
-                ],
-                [
-                    17,
-                    23
-                ],
-                [
-                    21,
-                    23
-                ],
-                [
-                    23,
+                    3,
                     23
                 ]
             ],
             "character-25": [
+                [
+                    4,
+                    24
+                ],
+                [
+                    6,
+                    24
+                ],
+                [
+                    9,
+                    24
+                ],
                 [
                     12,
                     24
@@ -2259,105 +2916,145 @@
             ],
             "character-26": [
                 [
-                    12,
+                    5,
                     25
                 ],
                 [
-                    24,
+                    20,
                     25
                 ]
             ],
             "character-27": [
                 [
-                    12,
+                    5,
+                    26
+                ],
+                [
+                    18,
+                    26
+                ],
+                [
+                    20,
                     26
                 ]
             ],
             "character-28": [
                 [
-                    12,
+                    5,
                     27
                 ]
             ],
             "character-29": [
                 [
-                    17,
-                    28
-                ],
-                [
-                    24,
+                    7,
                     28
                 ]
             ],
             "character-30": [
                 [
-                    21,
+                    8,
                     29
                 ]
             ],
             "character-31": [
                 [
-                    22,
+                    8,
+                    30
+                ],
+                [
+                    11,
+                    30
+                ],
+                [
+                    14,
+                    30
+                ],
+                [
+                    17,
+                    30
+                ],
+                [
+                    21,
+                    30
+                ],
+                [
+                    23,
+                    30
+                ],
+                [
+                    24,
                     30
                 ]
             ],
             "character-32": [
                 [
-                    22,
+                    9,
+                    31
+                ],
+                [
+                    10,
+                    31
+                ],
+                [
+                    21,
                     31
                 ]
             ],
             "character-33": [
                 [
-                    23,
+                    12,
+                    32
+                ],
+                [
+                    24,
                     32
                 ]
             ],
             "character-34": [
                 [
-                    24,
+                    12,
                     33
                 ]
             ],
             "character-35": [
                 [
-                    24,
+                    20,
                     34
                 ]
             ],
             "character-36": [
                 [
-                    24,
+                    21,
                     35
                 ]
             ],
             "character-37": [
                 [
-                    24,
+                    21,
                     36
                 ]
             ],
             "character-38": [
                 [
-                    24,
+                    21,
                     37
                 ]
             ],
             "character-39": [
                 [
-                    24,
+                    21,
                     38
                 ]
             ],
             "character-40": [
                 [
-                    24,
+                    22,
                     39
                 ]
             ],
             "character-41": [
                 [
-                    24,
+                    23,
                     40
                 ]
             ],
@@ -2365,6 +3062,72 @@
                 [
                     24,
                     41
+                ]
+            ],
+            "character-43": [
+                [
+                    24,
+                    42
+                ]
+            ],
+            "character-44": [
+                [
+                    24,
+                    43
+                ]
+            ],
+            "character-45": [
+                [
+                    24,
+                    44
+                ]
+            ],
+            "character-46": [
+                [
+                    24,
+                    45
+                ]
+            ],
+            "character-47": [
+                [
+                    24,
+                    46
+                ]
+            ],
+            "character-48": [
+                [
+                    24,
+                    47
+                ]
+            ],
+            "character-49": [
+                [
+                    24,
+                    48
+                ]
+            ],
+            "character-50": [
+                [
+                    24,
+                    49
+                ]
+            ],
+            "character-51": [
+                [
+                    24,
+                    50
+                ]
+            ],
+            "character-52": [
+                [
+                    24,
+                    51
+                ]
+            ],
+            "character-53": [
+                [
+                    24,
+                    52
                 ]
             ]
         }
