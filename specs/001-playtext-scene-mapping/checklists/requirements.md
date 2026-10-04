@@ -33,4 +33,5 @@
 
 - Reviewed against the local constitution and feature brief on 2026-09-20.
 - Deterministic output, ambiguity handling, session-only behavior, progress feedback, and export behavior are stated as testable requirements.
+- Contextual formatting detection, dialogue false-positive avoidance, best-effort parsing for unconventional plays, first-play-only anthology handling, and ordinary non-play rejection are stated as testable requirements.
 - The specification is ready for `/speckit-plan` or `/speckit-clarify` if stakeholders want to revisit assumptions.

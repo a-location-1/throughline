@@ -118,6 +118,10 @@ Create at least one small, hand-verifiable fixture for each category below. Pref
 - `one-act-no-scene-breaks`: one act with no explicit scene headings; verify no fabricated scenes.
 - `scene-breaks-no-acts`: scene headings without act headings; verify one default act.
 - `no-breaks-recognizable-play`: no act or scene headings but recognizable play structure; verify one act and one scene.
+- `unconventional-formatting`: consistent `Scene`, `SCENE`, `Scene:`, `Chapter`, separator, and act-marker variants; verify contextual detection and no dialogue false positives.
+- `unconventional-recognizable-play`: playtext without conventional act, scene, or character labels; verify best-effort output with unidentified-attribute notices.
+- `multiple-plays`: anthology source containing at least two plays; verify a warning and first-play-only analysis.
+- `non-play`: ordinary non-play source containing incidental words such as "scene"; verify rejection.
 - `single-speaker`: one character throughout, including valid first-appearance ordering.
 - `unnamed-speaker`: speech that cannot be assigned a supported name; verify an explicit unnamed entry.
 - `collective-speaker`: crowd/group attribution with preserved line counts and collective kind.
@@ -158,7 +162,8 @@ tests/fixtures/
 
 - Use FastAPI/Pydantic for typed HTTP boundaries and a standalone Python parser library.
 - Use guarded `httpx` retrieval, BeautifulSoup HTML extraction, and `pypdf` selectable-text extraction.
-- Use explicit rule-based parsing with ambiguity metadata, not probabilistic inference.
+- Use explicit, context-aware rule-based parsing with ambiguity metadata, not keyword-only matching or probabilistic inference. Structural markers may vary in case, punctuation, label, or separator, but one consistent convention is assumed within each submission; isolated words in dialogue are not structural evidence.
+- Treat play recognition as a combined-evidence decision. Produce a best-effort result with notices when playtext is recognizable but conventional acts, scenes, or speaker labels are absent; reject ordinary non-play content; and warn plus scope to the first play when multiple plays are detected.
 - Use vanilla TypeScript/Vite and adapt the existing mockup; import only the mockup 2 draw animation.
 - Build the golden fixture corpus before parser completion, with manifest-backed expected JSON, canonical comparison, invariants, and regression additions for every discovered parser defect.
 - Keep the initial corpus within the documented English/Latin-script Western-format scope while deliberately varying names, Unicode, formatting, source quality, accessibility conditions, and resource constraints; record out-of-scope cases as explicit rejection/limitation fixtures.

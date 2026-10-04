@@ -34,10 +34,12 @@ Processing response:
 {"analysis_id":"a_opaque_id","state":"parsing","progress":{"stage":"Identifying scenes and speakers","percent":70}}
 ```
 
-Ready response returns `AnalysisResult` as defined in [data-model.md](../data-model.md). Rejected response:
+Ready response returns `AnalysisResult` as defined in [data-model.md](../data-model.md). A ready response may include notices when the parser produced a best-effort result or found additional plays. Rejected response:
 
 ```json
-{"analysis_id":"a_opaque_id","state":"rejected","error":{"code":"NO_PLAYTEXT_STRUCTURE","message":"We could not identify scenes or speakers in this source.","next_action":"Try a text-based play PDF or another public URL."}}
+{"analysis_id":"a_opaque_id","state":"rejected","error":{"code":"NOT_PLAYTEXT","message":"We could not establish that this source contains a playtext.","next_action":"Submit a playtext URL or a text-based play PDF."}}
+
+The parser MUST reserve rejection for sources with insufficient combined evidence of playtext or no usable character/speaker. Missing conventional act, scene, or character labels MUST be represented as notices in a ready best-effort result when the source otherwise supports playtext analysis. When multiple plays are detected, the ready result MUST contain a notice and data for only the first play.
 ```
 
 The API must use stable ordering and explicit schema/parser versions. Unknown analysis IDs return `404` without disclosing source details.

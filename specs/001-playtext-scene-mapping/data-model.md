@@ -9,8 +9,11 @@
 - `byte_count`: source size.
 - `state`: `queued`, `retrieving`, `extracting`, `parsing`, `ready`, or `rejected`.
 - `failure`: structured code and user-facing message when rejected.
+- `notices`: ordered user-visible warnings or uncertainty statements that do not prevent a best-effort result.
 
 Validation: exactly one source method; URL must be public and retrievable; PDF must be `application/pdf` or `.pdf`; size <= 10 MB and pages <= 200.
+
+An analysis may be `ready` with notices when conventional act, scene, or speaker attributes are unidentified, when structural evidence is unconventional, or when additional plays were found. A source is rejected only when there is insufficient combined evidence of playtext or no usable character/speaker can be identified.
 
 ## Act
 
@@ -28,6 +31,7 @@ A play without explicit act breaks uses one act when the text is otherwise recog
 - `act_id`: owning act.
 - `label`: source heading or deterministic fallback.
 - `source_span`: normalized text offsets for diagnostics, not source retention.
+- `detection`: `supported`, `uncertain`, or `unidentified`, with a reason when the source does not provide a conventional marker.
 
 Repeated headings do not create duplicate scenes unless their normalized source spans contain distinct scene content.
 
@@ -57,6 +61,7 @@ Collective and unnamed speakers retain line counts and remain distinct from name
 - `schema_version` and `parser_version`.
 - `submission` metadata without source contents.
 - ordered `acts`, `scenes`, `characters`, and `appearances`.
+- ordered `notices` describing multiple-play detection and unidentified or uncertain conventional attributes.
 - `ordering`: scene order, first-appearance character order, and supported scene line-count sort.
 - `visualization`: ordered IDs, deterministic color assignments, and layout inputs derived from the same appearances.
 
