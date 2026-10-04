@@ -911,8 +911,8 @@
         {
             "scene_id": "scene-01",
             "character_id": "character-01",
-            "presence": "non_speaking",
-            "line_count": 0,
+            "presence": "speaking",
+            "line_count": 17,
             "confidence": "supported",
             "explanation": null
         },
@@ -1654,7 +1654,9 @@
             "character-49"
         ],
         "scene_line_count_desc": {
-            "scene-01": [],
+            "scene-01": [
+                "character-01"
+            ],
             "scene-02": [],
             "scene-03": [],
             "scene-04": [],

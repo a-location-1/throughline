@@ -283,6 +283,111 @@ P. 3, 1. 1. Explanatory notes begin here.
     assert result.scenes[0].label == "Scene I"
     assert "NOTES TO IPHIGENIA IN TAURIS" not in result.scenes[0].label
     assert {character.display_name for character in result.characters} >= {
-        "IPHIGENIA.",
-        "CHORUS.",
+        "IPHIGENIA",
+        "CHORUS",
+    }
+
+
+def test_parser_scopes_three_play_pdf_text_and_carries_single_speaker(submission):
+    text = """WINNER
+by Playwright Lastname
+
+I.
+JULIET
+The opening speech.
+
+II.
+The speaker label is omitted here.
+
+III.
+Another unlabeled scene.
+
+[The End]
+
+GATES OPEN
+by Playwright Lastname
+I.
+ROY
+The second play must not be analyzed.
+
+[The End]
+
+GATES CLOSE
+by Playwright Lastname
+I.
+JULIET
+The third play must not be analyzed.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == [
+        "Scene I",
+        "Scene II",
+        "Scene III",
+    ]
+    assert [character.display_name for character in result.characters] == ["EVA"]
+    assert [appearance.line_count for appearance in result.appearances] == [
+        1,
+        1,
+        1,
+    ]
+    assert [notice.code for notice in result.notices] == ["MULTIPLE_PLAYS"]
+
+
+def test_parser_handles_pdf_script_scene_variants_and_page_numbers(submission):
+    text = """HER LUGGAGE
+by Jane Doe
+
+Cast of Characters
+ABASIAMA FALL 60s. A description.
+GRAHAM TWICE 36. A description.
+QUI FALL 30. A description.
+
+ACT ONE
+SCENE ONE
+2
+INIABASI
+The opening speech.
+
+SCENE 2
+QUI
+The second scene.
+
+END OF PLAY
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == ["Scene ONE", "Scene 2"]
+    assert {character.display_name for character in result.characters} == {
+        "INIABASI",
+        "GRAHAM",
+    }
+    assert all(appearance.line_count == 1 for appearance in result.appearances)
+
+
+def test_parser_returns_disclaimer_for_unconventional_unheaded_script(submission):
+    text = """NOPAL
+Storytellers in the Country
+SHOW RUNDOWN: acts, scenes, video, and music.
+
+A) Office of the Police.
+JOHNSON
+Welcome to the office of the police.
+
+B) Border crossing.
+EL GUIA
+The desert is the border.
+
+BLACK OUT. END
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert len(result.scenes) == 1
+    assert [notice.code for notice in result.notices] == ["UNCONVENTIONAL_STRUCTURE"]
+    assert {character.display_name for character in result.characters} >= {
+        "JOHNSON",
+        "EL GUIA",
     }

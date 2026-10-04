@@ -84,6 +84,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - A source contains multiple plays, such as an anthology page or document; the application identifies the first play, warns that additional plays were found, and does not combine them into one result.
 - A source uses one consistent structural formatting convention throughout, even when that convention is unconventional; the parser applies that convention consistently and does not treat alternate casing or punctuation as a second convention within the same source.
 - A play begins with dramatic text but no act or scene headings, uses lyric labels such as strophe and antistrophe within the action, and transitions directly to a notes section; the parser reports one best-effort scene, does not split on lyric labels, and excludes the notes and later back matter.
+- A source contains an anthology of multiple plays, where the first play uses Roman-numeral scene markers such as `I.` and later scenes omit the repeated single-speaker label; the parser analyzes only the first play, treats each Roman marker as a scene break, and carries the sole supported speaker into unlabeled scenes.
 - A play contains repeated or unusually formatted scene headings; the output remains deterministic and does not duplicate scenes solely because of formatting noise.
 - A play contains a single speaker throughout; the output still includes a valid one-character result.
 - A source uses Unicode characters, diacritics, punctuation, capitalization, or non-English names; the output preserves the source display form and does not silently strip meaningful characters.
@@ -126,6 +127,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **FR-031**: Scene-detection and character-identification evaluation MUST report results by fixture category, including formatting, source type, ambiguity, multiple-play, non-play, accessibility, and invalid-input categories, so systematic failures are not hidden by an aggregate percentage.
 - **FR-032**: The application MUST remain usable on slow connections and modest mobile devices within the supported input limits, including visible progress, bounded client memory, responsive narrow-screen output, and no requirement for hover or high-bandwidth media.
 - **FR-033**: For an otherwise recognizable play that has no act or scene headings, the parser MUST use one default act and one default scene, MUST NOT treat internal lyric labels such as strophe or antistrophe as scene boundaries, and MUST stop the play analysis at an explicit notes or equivalent back-matter heading.
+- **FR-034**: The parser MUST recognize standalone Roman-numeral scene markers such as `I.` when they are used consistently within a play, MUST preserve a single supported speaker across later scenes that omit that speaker label, and MUST scope a multi-play source to the first play with a user-visible multiple-play warning.
 
 ### Key Entities *(include if feature involves data)*
 

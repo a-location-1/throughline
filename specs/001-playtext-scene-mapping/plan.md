@@ -121,6 +121,7 @@ Create at least one small, hand-verifiable fixture for each category below. Pref
 - `unconventional-formatting`: consistent `Scene`, `SCENE`, `Scene:`, `Chapter`, separator, and act-marker variants; verify contextual detection and no dialogue false positives.
 - `unconventional-recognizable-play`: playtext without conventional act, scene, or character labels; verify best-effort output with unidentified-attribute notices.
 - `unheaded-lyric-play`: recognizable play beginning without act/scene headings, containing strophe/antistrophe labels, and ending at a notes heading; verify one scene, no lyric-label splits, and no notes contamination.
+- `roman-scenes-multi-play-pdf`: first play in a multi-play PDF with standalone Roman scene markers and omitted repeated single-speaker labels; verify first-play-only scope and speaker carry-forward.
 - `multiple-plays`: anthology source containing at least two plays; verify a warning and first-play-only analysis.
 - `non-play`: ordinary non-play source containing incidental words such as "scene"; verify rejection.
 - `single-speaker`: one character throughout, including valid first-appearance ordering.
