@@ -416,3 +416,40 @@ P. 3, 1. 1. Explanatory notes begin here.
         "IPHIGENIA.",
         "CHORUS.",
     }
+
+
+def test_parser_accepts_an_excerpt_beginning_with_act_one(submission):
+    text = """THE JEWELER'S SHOP
+    I.
+    TERESA
+    Andrew has chosen me.
+
+    ANDREW
+    I have come to speak.
+
+    CHORUS
+    We observe them.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert len(result.acts) == 1
+    assert len(result.scenes) == 1
+    assert [character.display_name for character in result.characters] == [
+        "TERESA",
+        "ANDREW",
+        "CHORUS",
+    ]
+
+
+def test_parser_rejects_an_excerpt_beginning_after_act_one(submission):
+    for text in (
+        "ACT II\nSCENE I\nALICE\nA later-act excerpt.\n",
+        "SCENE II\nALICE\nA later-scene excerpt.\n",
+    ):
+        try:
+            parse_playtext(text, submission)
+        except ValueError as exc:
+            assert str(exc) == "non-initial excerpt"
+        else:
+            raise AssertionError("later excerpts must not be accepted")

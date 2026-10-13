@@ -172,6 +172,19 @@ def _play_end(text: str, minimum: int) -> int:
     return len(text)
 
 
+def _rejects_noninitial_excerpt(text: str) -> bool:
+    first_act = re.search(r"(?im)^\s*(?:ACT|ACTO|AKT)\s+([IVXLCDM]+|\d+)\b", text)
+    if first_act and first_act.group(1).upper() not in {"I", "1"}:
+        return True
+    first_scene = re.search(
+        r"(?im)^\s*(?:SCENE|SCÈNE|SZENE)\s*[:.]?\s+([IVXLCDM]+|\d+)\b",
+        text,
+    )
+    if first_scene and first_scene.group(1).upper() not in {"I", "1"}:
+        return True
+    return False
+
+
 def _chunks(text: str) -> list[SceneChunk]:
     lines = text.splitlines(keepends=True)
     markers: list[tuple[int, str, ActKind, str]] = []
@@ -587,6 +600,8 @@ def _is_unrecognized_midline_label(
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     play_start = _play_start(text)
     playtext = text[play_start:]
+    if _rejects_noninitial_excerpt(playtext):
+        raise ValueError("non-initial excerpt")
     if not _has_play_evidence(playtext):
         raise ValueError("not playtext")
     chunks = _chunks(playtext)

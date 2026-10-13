@@ -27,7 +27,7 @@ Start the API with `uvicorn throughline.api:app --reload` and the frontend with 
 
 1. Submit a representative public URL. Progress moves from queued through extraction/parsing to ready; acts, scenes, characters, table, and plot are visible.
 2. Upload the equivalent selectable-text PDF. The structured result matches the URL fixture.
-3. Submit one-act/no-scene, scene-only, single-speaker, unnamed-speaker, silent-presence, collective-speaker, and ambiguous-identity fixtures. Verify each expected distinction and deterministic ordering.
+3. Submit one-act/no-scene, Act I or Scene I opening excerpts, scene-only, single-speaker, unnamed-speaker, silent-presence, collective-speaker, and ambiguous-identity fixtures. Verify opening excerpts produce best-effort results with notices, while later-act or later-scene excerpts are rejected.
 4. Submit empty, inaccessible, oversized, image-only, malformed, and non-playtext inputs. Verify an explanatory error and a retry/replace-source action.
 5. Toggle plot/table, sort a scene by speaking line count, copy the result, and download CSV. Verify the table and plot use the same appearances and the CSV is parseable.
 6. Repeat the same input twice and compare serialized result JSON, SVG geometry, IDs, colors, and ordering byte-for-byte.
