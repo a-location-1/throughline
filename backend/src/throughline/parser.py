@@ -24,7 +24,7 @@ from .visualization import build_visualization
 
 ACT_RE = re.compile(r"^\s*(ACT|ACTO|AKT)\s*[:.]?\s+(.+?)\s*:?[ \t]*$", re.I)
 SCENE_RE = re.compile(
-    r"^\s*(SCENE|SCÈNE|SZENE|CHAPTER)\s*[:.]?\s+(.+?)\s*:?[ \t]*$",
+    r"^\s*(SCENE|SCÈNE|SZENE|CHAPTER)\s*(?::\s+|\s+)(.+?)\s*:?[ \t]*$",
     re.I,
 )
 SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
@@ -46,6 +46,9 @@ SPEAKER_RE = re.compile(
 SPEAKER_PREFIX_RE = re.compile(
     r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48})"
     r"(?:\s*(?:\([^()]*\)|\[[^\[\]]*\]))?\s*:\s*(.*)$"
+)
+PERIOD_SPEAKER_PREFIX_RE = re.compile(
+    r"^\s*([A-ZÀ-Ý][A-ZÀ-Ý0-9 .,'’\-]{1,48})\.\s+(.+)$"
 )
 BRACKET_SPEAKER_PREFIX_RE = re.compile(
     r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48})" r"\s*\[[^\[\]]*\]\s*\.\s*(.*)$"
@@ -178,12 +181,31 @@ def _chunks(text: str) -> list[SceneChunk]:
     first_act_start: int | None = None
     act_markers: list[tuple[int, str, ActKind]] = []
     has_scene_marker = False
-    for line in lines:
+    for line_index, line in enumerate(lines):
         clean = line.strip()
         act_heading = _heading(clean, ACT_RE)
+        if act_heading and act_heading[1][:1].islower():
+            act_heading = None
+        previous_clean = lines[line_index - 1].strip() if line_index else ""
+        next_clean = (
+            lines[line_index + 1].strip() if line_index + 1 < len(lines) else ""
+        )
+        if (
+            act_heading
+            and markers
+            and previous_clean
+            and not re.match(r"^(?:CURTAIN|THE END)\.?\s*$", previous_clean, re.I)
+            and not SCENE_RE.match(next_clean)
+        ):
+            act_heading = None
         scene_heading = _heading(clean, SCENE_RE)
         numbered_scene = NUMBERED_SCENE_RE.match(clean)
         roman_scene = ROMAN_SCENE_RE.match(clean)
+        if roman_scene and markers and not re.match(
+            r"^(?:[A-ZÀ-Ý][A-ZÀ-Ý0-9 .,'’\-]{1,48})\.?(?:\s|$)",
+            next_clean,
+        ):
+            roman_scene = None
         if act_heading:
             if first_act_start is None:
                 first_act_start = offset
@@ -354,6 +376,33 @@ def _cast_aliases(text: str) -> dict[str, str]:
         if play_start:
             preamble = preamble[: play_start.start()]
     aliases: dict[str, str] = {}
+    characters_start = re.search(r"(?im)^\s*CHARACTERS\s*$", preamble)
+    if characters_start:
+        characters_section = preamble[characters_start.end() :]
+        act_start = re.search(r"(?im)^\s*(?:ACT|ACTO|AKT)\s+", characters_section)
+        if act_start:
+            characters_section = characters_section[: act_start.start()]
+        character_line = re.compile(
+            r"^([A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ0-9 .,'’\-]*?)"
+            r"(?:\s*\(([^()]*)\))?\.?\s*$"
+        )
+        for raw_line in characters_section.splitlines():
+            match = character_line.match(raw_line.strip())
+            if not match:
+                continue
+            canonical = match.group(1).strip()
+            aliases[_identity_key(canonical)] = canonical
+            words = canonical.split()
+            if len(words) > 1:
+                aliases.setdefault(_identity_key(words[0]), canonical)
+                aliases.setdefault(_identity_key(" ".join(words[:2])), canonical)
+                aliases.setdefault(_identity_key(words[-1]), canonical)
+                aliases.setdefault(_identity_key(" ".join(words[-2:])), canonical)
+                aliases.setdefault(
+                    _identity_key(f"{words[0]} {words[-1]}"), canonical
+                )
+            if match.group(2):
+                aliases[_identity_key(match.group(2))] = canonical
     dramatis_start = re.search(r"(?im)^\s*DRAMATIS PERSONAE\s*$", preamble)
     if dramatis_start:
         for raw_line in preamble[dramatis_start.end() :].splitlines():
@@ -514,6 +563,8 @@ def _is_unrecognized_midline_label(
     key = _identity_key(_normalize_speaker_display(display))
     if key in aliases:
         return False
+    if display.casefold().startswith(("to ", "towards ")):
+        return True
     words = re.findall(r"[A-Za-zÀ-ÿ]+", display)
     if len(words) >= 3:
         return False
@@ -539,7 +590,9 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     if not _has_play_evidence(playtext):
         raise ValueError("not playtext")
     chunks = _chunks(playtext)
-    cast_aliases = _cast_aliases(playtext)
+    cast_aliases = _cast_aliases(text) if re.search(
+        r"(?im)^\s*CHARACTERS\s*$", text
+    ) else _cast_aliases(playtext)
     if re.search(
         r"(?im)^\s*[A-Z][A-Za-zÀ-ÿ'’\-]+\s{2,}",
         text[:play_start],
@@ -636,6 +689,16 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 else SPEAKER_PREFIX_RE.match(line)
                 or BRACKET_SPEAKER_PREFIX_RE.match(line)
             )
+            if speaker_prefix is None and not monologue_mode:
+                period_prefix = PERIOD_SPEAKER_PREFIX_RE.match(line)
+                if period_prefix:
+                    period_key = _identity_key(period_prefix.group(1))
+                    remainder = period_prefix.group(2).lstrip()
+                    if (
+                        period_key in cast_aliases
+                        and not remainder.startswith(("_", "("))
+                    ):
+                        speaker_prefix = period_prefix
             speaker = (
                 None if monologue_mode else speaker_prefix or SPEAKER_RE.match(line)
             )

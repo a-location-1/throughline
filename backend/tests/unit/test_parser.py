@@ -292,6 +292,51 @@ def test_parser_uses_dramatis_personae_to_normalize_shortened_names(submission):
     ]
 
 
+def test_parser_uses_parenthetical_character_aliases(submission):
+    text = """THE LIVE CORPSE
+    CHARACTERS
+    THEODORE VASÍLYEVICH PROTÁSOV (FÉDYA).
+    ELISABETH ANDRÉYEVNA PROTÁSOVA (LISA).
+    PRINCE SERGIUS DMÍTRIEVICH ABRÉZKOV.
+
+    ACT I
+    Scene 1
+    FÉDYA.
+    I am here.
+    LISA.
+    So am I.
+    PRINCE ABRÉZKOV.
+    Welcome.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "THEODORE VASÍLYEVICH PROTÁSOV",
+        "ELISABETH ANDRÉYEVNA PROTÁSOVA",
+        "PRINCE SERGIUS DMÍTRIEVICH ABRÉZKOV",
+    ]
+
+
+def test_parser_accepts_period_delimited_inline_speakers(submission):
+    text = """CHARACTERS
+    ABRAHAM.
+    EPHREM.
+
+    SCENE I
+    ABRAHAM. Brother Ephrem, may I speak to you?
+    EPHREM. Speak at once.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "ABRAHAM.",
+        "EPHREM.",
+    ]
+    assert [appearance.line_count for appearance in result.appearances] == [1, 1]
+
+
 def test_parser_accepts_separator_scene_markers(submission):
     text = """ACT I
 ALICE

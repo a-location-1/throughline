@@ -24,7 +24,11 @@ class ExtractedText:
 
 
 def extract_html(data: bytes, source_name: str) -> ExtractedText:
-    text = BeautifulSoup(data, "html.parser").get_text("\n", strip=True)
+    soup = BeautifulSoup(data, "html.parser")
+    for selector in (".footnotes", ".fnanchor", ".pagenum"):
+        for element in soup.select(selector):
+            element.decompose()
+    text = soup.get_text("\n", strip=True)
     if not text.strip():
         raise ValueError("empty source")
     return ExtractedText(text, source_name, byte_count=len(data))
