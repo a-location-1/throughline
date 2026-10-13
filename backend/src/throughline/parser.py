@@ -33,7 +33,8 @@ FIRST_SCENE_RE = re.compile(
     r"^\s*(?:SCENE|SCÈNE|SZENE)\s+(?:I|1)\b", re.I
 )
 NUMBERED_SCENE_RE = re.compile(r"^\s*(\d+)\s*[-–—]\s*(.+?)\s*$")
-ROMAN_SCENE_RE = re.compile(r"^\s*([IVXLCDM]+)\.?\s*$")
+ROMAN_SCENE_RE = re.compile(r"^\s*([IVX]{1,8})\.?\s*$")
+SECTION_RE = re.compile(r"^\s*([IVXLCDM]{1,8})\.\s+(.{2,80}?)\s*$", re.I)
 SEPARATOR_SCENE_RE = re.compile(r"^\s*(?:-{3,}|_{3,}|={3,})\s*$")
 SPECIAL_ACT_RE = re.compile(
     r"^\s*(?:THE\s+)?(PROLOGUE|EPILOGUE|ENTR['’]?ACTE|ENTRACTE|INTERLUDE)\.?\s*:?[ \t]*$",
@@ -213,6 +214,7 @@ def _chunks(text: str) -> list[SceneChunk]:
             act_heading = None
         scene_heading = _heading(clean, SCENE_RE)
         numbered_scene = NUMBERED_SCENE_RE.match(clean)
+        section_heading = SECTION_RE.match(clean)
         roman_scene = ROMAN_SCENE_RE.match(clean)
         if roman_scene and markers and not re.match(
             r"^(?:[A-ZÀ-Ý][A-ZÀ-Ý0-9 .,'’\-]{1,48})\.?(?:\s|$)",
@@ -264,6 +266,16 @@ def _chunks(text: str) -> list[SceneChunk]:
                     current_act,
                     current_act_kind,
                     f"Scene {roman_scene.group(1).upper()}",
+                )
+            )
+        elif section_heading:
+            has_scene_marker = True
+            markers.append(
+                (
+                    offset,
+                    current_act,
+                    current_act_kind,
+                    f"Section {section_heading.group(1).upper()}",
                 )
             )
         elif SEPARATOR_SCENE_RE.match(clean):
@@ -337,6 +349,7 @@ def _roman(number: int) -> str:
 
 
 def _has_play_evidence(text: str) -> bool:
+    known_speakers = _known_speakers(text)
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if (
@@ -350,7 +363,9 @@ def _has_play_evidence(text: str) -> bool:
         ):
             return True
         speaker = SPEAKER_PREFIX_RE.match(line) or SPEAKER_RE.match(line)
-        if speaker and _looks_like_speaker(line, speaker.group(1), True):
+        if speaker and _looks_like_speaker(
+            line, speaker.group(1), True, known_speakers
+        ):
             return True
     return False
 
@@ -446,6 +461,10 @@ def _cast_aliases(text: str) -> dict[str, str]:
     return aliases
 
 
+def _known_speakers(text: str) -> set[str]:
+    return set(_inferred_speaker_aliases(text))
+
+
 def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
     normalized = display.strip(" _.,;:")
     normalized_key = _identity_key(normalized)
@@ -477,9 +496,14 @@ def _normalize_speaker_display(display: str) -> str:
 
 
 def _looks_like_speaker(
-    line: str, display: str, allow_terminal_period: bool = False
+    line: str,
+    display: str,
+    allow_terminal_period: bool = False,
+    known_speakers: set[str] | None = None,
 ) -> bool:
     normalized = _normalize_speaker_display(display)
+    if known_speakers and _identity_key(normalized) in known_speakers:
+        return True
     if (
         normalized.endswith(".")
         and not allow_terminal_period
@@ -516,6 +540,41 @@ def _looks_like_speaker(
     return len(words) > 1 and all(
         word[0].isupper() and word[1:] == word[1:].lower() for word in words
     )
+
+
+def _inferred_speaker_aliases(text: str) -> dict[str, str]:
+    labels: list[str] = []
+    for line in text.splitlines():
+        match = SPEAKER_PREFIX_RE.match(line.strip())
+        if not match or not match.group(2).strip():
+            continue
+        display = _normalize_speaker_display(match.group(1))
+        words = re.findall(r"[A-Za-zÀ-ÿ]+", display)
+        if 1 <= len(words) <= 3:
+            labels.append(display)
+
+    counts: dict[str, int] = {}
+    for label in labels:
+        key = _identity_key(label)
+        counts[key] = counts.get(key, 0) + 1
+
+    aliases: dict[str, str] = {}
+    full_names = {
+        _identity_key(label): label.title()
+        for label in labels
+        if len(re.findall(r"[A-Za-zÀ-ÿ]+", label)) >= 2
+    }
+    for key, label in full_names.items():
+        initials = "".join(word[0] for word in re.findall(r"[A-Za-zÀ-ÿ]+", label))
+        short_keys = {
+            candidate
+            for candidate, count in counts.items()
+            if count > 1 and candidate == initials.casefold()
+        }
+        for short_key in short_keys:
+            aliases[key] = label
+            aliases[short_key] = label
+    return aliases
 
 
 def _qualified_base(display: str) -> str | None:
@@ -605,6 +664,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     if not _has_play_evidence(playtext):
         raise ValueError("not playtext")
     chunks = _chunks(playtext)
+    inferred_speaker_aliases = _inferred_speaker_aliases(playtext)
     cast_aliases = _cast_aliases(text) if re.search(
         r"(?im)^\s*CHARACTERS\s*$", text
     ) else _cast_aliases(playtext)
@@ -613,6 +673,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         text[:play_start],
     ) and not re.search(r"(?im)^\s*THE PROLOGUE\.?\s*$", text[:play_start]):
         cast_aliases.update(_cast_aliases(text))
+    speaker_aliases = {**inferred_speaker_aliases, **cast_aliases}
     unheaded_play = not any(
         ACT_RE.match(line.strip())
         or SCENE_RE.match(line.strip())
@@ -721,11 +782,18 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 speaker = None
                 speaker_prefix = None
             if _is_inline_colon_label(
-                line, speaker.group(1) if speaker else "", current, by_key, cast_aliases
+                line,
+                speaker.group(1) if speaker else "",
+                current,
+                by_key,
+                speaker_aliases,
             ) or _is_inline_abbreviation(
                 line, speaker.group(1) if speaker else "", current
             ) or _is_unrecognized_midline_label(
-                line, speaker.group(1) if speaker else "", current, cast_aliases
+                line,
+                speaker.group(1) if speaker else "",
+                current,
+                speaker_aliases,
             ):
                 speaker = None
                 speaker_prefix = None
@@ -738,7 +806,10 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 )
                 and (
                     _looks_like_speaker(
-                        line, speaker.group(1), allow_terminal_period=unheaded_play
+                    line,
+                    speaker.group(1),
+                    allow_terminal_period=unheaded_play,
+                    known_speakers=set(inferred_speaker_aliases),
                     )
                     or _shared_speaker_parts(speaker.group(1))
                 )
@@ -751,7 +822,10 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                     qualified_base = _qualified_base(speaker_display)
                     source_key = _identity_key(qualified_base or speaker_display)
                     canonical_display = cast_aliases.get(
-                        source_key, qualified_base or speaker_display
+                        source_key,
+                        inferred_speaker_aliases.get(
+                            source_key, qualified_base or speaker_display
+                        ),
                     )
                     kind = _classify(canonical_display)
                     key = _identity_key(canonical_display) or f"unnamed-{scene.id}"

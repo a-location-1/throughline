@@ -38,6 +38,36 @@ def test_parser_accepts_mixed_case_headers_and_speaker_labels(submission):
     ]
 
 
+def test_parser_handles_numbered_interview_sections_and_aliases(submission):
+    text = """i. First topic
+    christian hawkey: The opening question.
+    DaviD Levine: The opening answer.
+    ii. Second topic
+    ch: The next question.
+    DL: The next answer.
+    iii. Final topic
+    ch: One last question.
+    DL: One last answer.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == [
+        "Section I",
+        "Section II",
+        "Section III",
+    ]
+    assert [character.display_name for character in result.characters] == [
+        "Christian Hawkey",
+        "David Levine",
+    ]
+    assert [notice.code for notice in result.notices] == ["UNCONVENTIONAL_STRUCTURE"]
+    assert all(
+        appearance.presence == Presence.SPEAKING
+        for appearance in result.appearances
+    )
+
+
 def test_parser_strips_parenthetical_delivery_notes_from_speaker_names(submission):
     text = """SCENE I
     CAPULET (Angrily):
