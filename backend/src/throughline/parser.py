@@ -68,6 +68,7 @@ ENTER_RE = re.compile(
     r"^\s*\(?\s*(?:re-)?enter(?:s)?\s+(.+?)(?:[.,;:]|\)?$)",
     re.I,
 )
+STAGE_LABEL_RE = re.compile(r"^\s*MUSIC\s*:", re.I)
 COLLECTIVE_WORDS = {
     "ALL",
     "CHORUS",
@@ -353,6 +354,16 @@ def _cast_aliases(text: str) -> dict[str, str]:
         if play_start:
             preamble = preamble[: play_start.start()]
     aliases: dict[str, str] = {}
+    dramatis_start = re.search(r"(?im)^\s*DRAMATIS PERSONAE\s*$", preamble)
+    if dramatis_start:
+        for raw_line in preamble[dramatis_start.end() :].splitlines():
+            match = re.match(r"\s*([A-ZÀ-ÿ][A-Za-zÀ-ÿ'’\-]+)\s{2,}", raw_line)
+            if not match:
+                continue
+            canonical = match.group(1).strip()
+            aliases[_identity_key(canonical)] = canonical
+            if len(canonical) > 3:
+                aliases.setdefault(_identity_key(canonical[:3]), canonical)
     cast_line = re.compile(
         r"^([A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ0-9 .,'’\-]{1,48}?)(?:\s*\(([^()]*)\)|,\s*.+)?$"
     )
@@ -380,6 +391,21 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
         if normalized_key.startswith(alias_key):
             return canonical
     return normalized
+
+
+def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
+    normalized = display.strip(" _.,;:")
+    matches = list(
+        dict.fromkeys(
+            canonical
+            for canonical in aliases.values()
+            if re.search(rf"\b{re.escape(canonical)}\b", normalized, re.I)
+        )
+    )
+    if matches:
+        return matches
+    canonical = _canonical_entrance_display(normalized, aliases)
+    return _shared_speaker_parts(canonical, require_uppercase=False) or [canonical]
 
 
 def _normalize_speaker_display(display: str) -> str:
@@ -454,7 +480,7 @@ def _is_inline_colon_label(
     by_key: dict[str, CharacterOrSpeaker],
     cast_aliases: dict[str, str],
 ) -> bool:
-    if ":" not in line:
+    if ":" not in line or STAGE_LABEL_RE.match(line):
         return False
     inline_text = line.split(":", 1)[1].strip()
     if not current and not inline_text:
@@ -477,6 +503,36 @@ def _is_inline_abbreviation(
     )
 
 
+def _is_unrecognized_midline_label(
+    line: str,
+    display: str,
+    current: list[CharacterOrSpeaker],
+    aliases: dict[str, str],
+) -> bool:
+    if not current or ":" in line or display == display.upper():
+        return False
+    key = _identity_key(_normalize_speaker_display(display))
+    if key in aliases:
+        return False
+    words = re.findall(r"[A-Za-zÀ-ÿ]+", display)
+    if len(words) >= 3:
+        return False
+    return not words or words[0].casefold() not in {
+        "captain",
+        "doctor",
+        "father",
+        "king",
+        "lady",
+        "lord",
+        "miss",
+        "mr",
+        "mrs",
+        "prince",
+        "queen",
+        "sir",
+    }
+
+
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     play_start = _play_start(text)
     playtext = text[play_start:]
@@ -484,6 +540,11 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         raise ValueError("not playtext")
     chunks = _chunks(playtext)
     cast_aliases = _cast_aliases(playtext)
+    if re.search(
+        r"(?im)^\s*[A-Z][A-Za-zÀ-ÿ'’\-]+\s{2,}",
+        text[:play_start],
+    ) and not re.search(r"(?im)^\s*THE PROLOGUE\.?\s*$", text[:play_start]):
+        cast_aliases.update(_cast_aliases(text))
     unheaded_play = not any(
         ACT_RE.match(line.strip())
         or SCENE_RE.match(line.strip())
@@ -554,10 +615,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             entrance = ENTER_RE.search(line)
             if entrance:
                 entrance_display = entrance.group(1) or entrance.group(2) or ""
-                display = _canonical_entrance_display(entrance_display, cast_aliases)
-                entrance_displays = _shared_speaker_parts(
-                    display, require_uppercase=False
-                ) or [display]
+                entrance_displays = _entrance_displays(entrance_display, cast_aliases)
                 for entrance_display in entrance_displays:
                     key = _identity_key(entrance_display)
                     if key and key not in by_key:
@@ -581,10 +639,15 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             speaker = (
                 None if monologue_mode else speaker_prefix or SPEAKER_RE.match(line)
             )
+            if STAGE_LABEL_RE.match(line):
+                speaker = None
+                speaker_prefix = None
             if _is_inline_colon_label(
                 line, speaker.group(1) if speaker else "", current, by_key, cast_aliases
             ) or _is_inline_abbreviation(
                 line, speaker.group(1) if speaker else "", current
+            ) or _is_unrecognized_midline_label(
+                line, speaker.group(1) if speaker else "", current, cast_aliases
             ):
                 speaker = None
                 speaker_prefix = None

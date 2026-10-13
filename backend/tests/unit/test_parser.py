@@ -266,6 +266,32 @@ def test_parser_keeps_inline_labels_in_the_current_speaker_line(submission):
     assert [appearance.line_count for appearance in result.appearances] == [7, 1]
 
 
+def test_parser_uses_dramatis_personae_to_normalize_shortened_names(submission):
+    text = """DRAMATIS PERSONAE
+    Rosaura           a lady
+    Segismund         the prince
+    Clotaldo          a general
+
+    ACT I
+    SCENE I
+    (Enter Rosaura and Segismund.)
+    ROS.
+    We have arrived.
+    SEG.
+    So we have.
+    Music: A brief flourish.
+    Never Ape
+    This continues the speech.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "Rosaura",
+        "Segismund",
+    ]
+
+
 def test_parser_accepts_separator_scene_markers(submission):
     text = """ACT I
 ALICE
