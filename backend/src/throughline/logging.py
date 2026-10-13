@@ -15,12 +15,22 @@ LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 
-class IsoFormatter(logging.Formatter):
-    def formatTime(self, record: logging.LogRecord, datefmt: str | None = None) -> str:
-        return (
+class JsonFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        timestamp = (
             datetime.fromtimestamp(record.created, timezone.utc)
             .isoformat(timespec="milliseconds")
             .replace("+00:00", "Z")
+        )
+        return json.dumps(
+            {
+                "timestamp": timestamp,
+                "level": record.levelname,
+                "logger": record.name,
+                "message": record.getMessage(),
+            },
+            ensure_ascii=True,
+            sort_keys=True,
         )
 
 
@@ -36,7 +46,7 @@ def _configure_logger(name: str, filename: str, *, propagate: bool) -> logging.L
         for handler in configured_logger.handlers
     ):
         file_handler = RotatingFileHandler(log_path, maxBytes=1_000_000, backupCount=3)
-        file_handler.setFormatter(IsoFormatter("%(asctime)s %(levelname)s %(message)s"))
+        file_handler.setFormatter(JsonFormatter())
         configured_logger.addHandler(file_handler)
 
     if (not logging.getLogger().handlers or not propagate) and not any(
@@ -45,9 +55,7 @@ def _configure_logger(name: str, filename: str, *, propagate: bool) -> logging.L
         for handler in configured_logger.handlers
     ):
         terminal_handler = logging.StreamHandler()
-        terminal_handler.setFormatter(
-            IsoFormatter("%(asctime)s %(levelname)s %(name)s %(message)s")
-        )
+        terminal_handler.setFormatter(JsonFormatter())
         configured_logger.addHandler(terminal_handler)
     return configured_logger
 
