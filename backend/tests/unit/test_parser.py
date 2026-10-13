@@ -222,6 +222,44 @@ def test_parser_strips_scene_location_descriptions_from_labels(submission):
     assert [scene.label for scene in result.scenes] == ["Scene I", "Scene 2"]
 
 
+def test_parser_ignores_scene_references_in_production_notes(submission):
+    text = """CHARACTERS
+    ANNA
+    CARL
+    PRODUCTION NOTES
+    The rabbit appears after Scene VI.
+
+    Scene 1
+    ANNA
+    We begin.
+    Scene 2
+    CARL
+    We continue.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == ["Scene 1", "Scene 2"]
+
+
+def test_parser_normalizes_voice_of_speaker_and_ignores_lesson_labels(submission):
+    text = """Scene 1
+    THE THIRD MAN
+    Lesson Five:
+    Basic dialogue.
+    VOICE OF ANNA
+    I am here.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "THE THIRD MAN",
+        "ANNA",
+    ]
+    assert [appearance.line_count for appearance in result.appearances] == [2, 1]
+
+
 def test_parser_accepts_separator_scene_markers(submission):
     text = """ACT I
 ALICE

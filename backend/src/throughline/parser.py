@@ -28,6 +28,10 @@ SCENE_RE = re.compile(
     re.I,
 )
 SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
+PRODUCTION_NOTES_RE = re.compile(r"^\s*PRODUCTION NOTES\s*:?[ \t]*$", re.I)
+FIRST_SCENE_RE = re.compile(
+    r"^\s*(?:SCENE|SCÈNE|SZENE)\s+(?:I|1)\b", re.I
+)
 NUMBERED_SCENE_RE = re.compile(r"^\s*(\d+)\s*[-–—]\s*(.+?)\s*$")
 ROMAN_SCENE_RE = re.compile(r"^\s*([IVXLCDM]+)\.?\s*$")
 SEPARATOR_SCENE_RE = re.compile(r"^\s*(?:-{3,}|_{3,}|={3,})\s*$")
@@ -78,6 +82,10 @@ UNNAMED_WORDS = {"UNKNOWN", "UNNAMED", "A VOICE", "VOICE", "SOMEONE"}
 PAGE_NUMBER_RE = re.compile(r"^\d+$")
 DELIVERY_NOTE_RE = re.compile(r"\s+\([^()]*\)\s*$")
 QUALIFIED_SPEAKER_RE = re.compile(r"^(?P<base>.+?)\s+WITH\s+(?:A|AN|THE)\s+.+$", re.I)
+VOICE_OF_RE = re.compile(r"^\s*VOICE\s+OF\s+(.+?)\s*$", re.I)
+FORMATTING_LABEL_RE = re.compile(
+    r"^\s*LESSON(?:\s+NUMBER)?\s+(?:[A-Z]+|\d+)\s*:\s*.*$", re.I
+)
 
 
 @dataclass
@@ -94,6 +102,16 @@ def _play_start(text: str) -> int:
     matches = list(re.finditer(r"(?im)^\s*THE\s+PROLOGUE\.?\s*$", text))
     if matches:
         return matches[-1].start()
+    production_notes = list(
+        re.finditer(r"(?im)^\s*PRODUCTION NOTES\s*:?[ \t]*$", text)
+    )
+    if production_notes:
+        first_scene = re.search(
+            r"(?im)^\s*(?:SCENE|SCÈNE|SZENE)\s+(?:I|1)\b.*$",
+            text[production_notes[-1].end() :],
+        )
+        if first_scene:
+            return production_notes[-1].end() + first_scene.start()
     dramatis = re.search(r"(?im)^\s*Dramatis Person[æa]e?\s*$", text)
     if dramatis:
         act_after_cast = re.search(r"(?im)^\s*ACT\s+(?:I|1)\b", text[dramatis.end() :])
@@ -368,7 +386,9 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
 
 
 def _normalize_speaker_display(display: str) -> str:
-    return DELIVERY_NOTE_RE.sub("", display).strip()
+    normalized = DELIVERY_NOTE_RE.sub("", display).strip()
+    voice_of = VOICE_OF_RE.match(normalized)
+    return voice_of.group(1).strip() if voice_of else normalized
 
 
 def _looks_like_speaker(
@@ -534,6 +554,9 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             speaker = (
                 None if monologue_mode else speaker_prefix or SPEAKER_RE.match(line)
             )
+            if current and FORMATTING_LABEL_RE.match(line):
+                speaker = None
+                speaker_prefix = None
             if (
                 speaker
                 and not (
