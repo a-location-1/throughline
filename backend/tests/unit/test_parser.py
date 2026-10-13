@@ -207,6 +207,21 @@ The second section begins.
     ]
 
 
+def test_parser_strips_scene_location_descriptions_from_labels(submission):
+    text = """ACT I
+    SCENE I. A public place.
+    ALICE
+    Welcome.
+    2 — A street.
+    BOB
+    Reply.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == ["Scene I", "Scene 2"]
+
+
 def test_parser_accepts_separator_scene_markers(submission):
     text = """ACT I
 ALICE
