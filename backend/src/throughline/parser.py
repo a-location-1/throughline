@@ -83,9 +83,6 @@ PAGE_NUMBER_RE = re.compile(r"^\d+$")
 DELIVERY_NOTE_RE = re.compile(r"\s+\([^()]*\)\s*$")
 QUALIFIED_SPEAKER_RE = re.compile(r"^(?P<base>.+?)\s+WITH\s+(?:A|AN|THE)\s+.+$", re.I)
 VOICE_OF_RE = re.compile(r"^\s*VOICE\s+OF\s+(.+?)\s*$", re.I)
-FORMATTING_LABEL_RE = re.compile(
-    r"^\s*LESSON(?:\s+NUMBER)?\s+(?:[A-Z]+|\d+)\s*:\s*.*$", re.I
-)
 
 
 @dataclass
@@ -450,6 +447,36 @@ def _shared_speaker_parts(display: str, require_uppercase: bool = True) -> list[
     return [part.strip() for part in parts]
 
 
+def _is_inline_colon_label(
+    line: str,
+    display: str,
+    current: list[CharacterOrSpeaker],
+    by_key: dict[str, CharacterOrSpeaker],
+    cast_aliases: dict[str, str],
+) -> bool:
+    if ":" not in line:
+        return False
+    inline_text = line.split(":", 1)[1].strip()
+    if not current and not inline_text:
+        return False
+    key = _identity_key(_normalize_speaker_display(display))
+    if key in by_key or key in cast_aliases:
+        return False
+    words = re.findall(r"[A-Za-zÀ-ÿ]+", display)
+    return bool(words) and any(word != word.upper() for word in words)
+
+
+def _is_inline_abbreviation(
+    line: str, display: str, current: list[CharacterOrSpeaker]
+) -> bool:
+    normalized = line.strip()
+    return bool(
+        current
+        and         re.fullmatch(r"[A-Z]{2,4}\.", normalized)
+        and not re.search(r"[EIOU]", normalized)
+    )
+
+
 def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     play_start = _play_start(text)
     playtext = text[play_start:]
@@ -554,7 +581,11 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             speaker = (
                 None if monologue_mode else speaker_prefix or SPEAKER_RE.match(line)
             )
-            if current and FORMATTING_LABEL_RE.match(line):
+            if _is_inline_colon_label(
+                line, speaker.group(1) if speaker else "", current, by_key, cast_aliases
+            ) or _is_inline_abbreviation(
+                line, speaker.group(1) if speaker else "", current
+            ):
                 speaker = None
                 speaker_prefix = None
             if (

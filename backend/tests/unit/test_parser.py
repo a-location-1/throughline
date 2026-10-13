@@ -242,11 +242,17 @@ def test_parser_ignores_scene_references_in_production_notes(submission):
     assert [scene.label for scene in result.scenes] == ["Scene 1", "Scene 2"]
 
 
-def test_parser_normalizes_voice_of_speaker_and_ignores_lesson_labels(submission):
+def test_parser_keeps_inline_labels_in_the_current_speaker_line(submission):
     text = """Scene 1
     THE THIRD MAN
     Lesson Five:
     Basic dialogue.
+    Do: Use the facilities.
+    Music: Violins swell.
+    Exercise: La carte.
+    Sixieme Leçon: Pronoms directs.
+    (Music: Violins swell.)
+    ATD.
     VOICE OF ANNA
     I am here.
     """
@@ -257,7 +263,7 @@ def test_parser_normalizes_voice_of_speaker_and_ignores_lesson_labels(submission
         "THE THIRD MAN",
         "ANNA",
     ]
-    assert [appearance.line_count for appearance in result.appearances] == [2, 1]
+    assert [appearance.line_count for appearance in result.appearances] == [7, 1]
 
 
 def test_parser_accepts_separator_scene_markers(submission):
