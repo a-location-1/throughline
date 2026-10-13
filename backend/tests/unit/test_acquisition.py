@@ -1,6 +1,11 @@
 import pytest
 
-from throughline.acquisition import _PinnedNetworkBackend, fetch_url, validate_url
+from throughline.acquisition import (
+    _PinnedNetworkBackend,
+    _PinnedTransport,
+    fetch_url,
+    validate_url,
+)
 
 
 def test_url_requires_public_http_scheme():
@@ -86,3 +91,13 @@ async def test_pinned_backend_uses_validated_address_without_resolving_again():
     backend._backend = Backend()
     await backend.connect_tcp("example.org", 443)
     assert calls == ["93.184.216.34"]
+
+
+def test_pinned_transport_uses_platform_trust_store():
+    transport = _PinnedTransport(("93.184.216.34",))
+    try:
+        assert transport._pool._ssl_context.__class__.__module__ == "truststore._api"
+    finally:
+        import asyncio
+
+        asyncio.run(transport.aclose())

@@ -9,3 +9,4 @@ uvicorn throughline.api:app --reload
 ```
 
 The parser is deterministic and session-only. It supports public HTTP(S) playtext URLs and selectable-text PDFs up to 10 MB and 200 pages.
+URL retrieval uses the host platform's certificate trust store so publicly hosted PDFs with valid platform-trusted certificates can be read directly.

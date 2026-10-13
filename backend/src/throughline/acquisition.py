@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import asyncio
 import ipaddress
+import ssl
 import socket
 from dataclasses import dataclass
 from urllib.parse import urlparse
 
 import httpx
 import httpcore
+import truststore
 from httpcore._backends.auto import AutoBackend
 
 MAX_BYTES = 10 * 1024 * 1024
@@ -134,7 +136,7 @@ class _PinnedResponseStream(httpx.AsyncByteStream):
 class _PinnedTransport(httpx.AsyncBaseTransport):
     def __init__(self, addresses: tuple[str, ...]) -> None:
         self._pool = httpcore.AsyncConnectionPool(
-            ssl_context=httpx.create_ssl_context(),
+            ssl_context=truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT),
             network_backend=_PinnedNetworkBackend(addresses),
         )
 
