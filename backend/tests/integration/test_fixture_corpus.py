@@ -102,6 +102,6 @@ def test_rejected_fixtures_match_stable_error_keys(rejected_fixture, submission)
     with pytest.raises(ValueError) as error:
         parse_playtext(rejected_fixture["source_text"], submission)
 
-    assert str(error.value) == rejected_fixture["expected"]["error"][
-        "code"
-    ].lower().replace("_", " ")
+    assert str(error.value) == rejected_fixture["expected"]["error"]["code"].lower().replace(
+        "_", " "
+    )

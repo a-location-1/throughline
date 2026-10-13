@@ -7,12 +7,12 @@ import csv
 import io
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, HttpUrl, ValidationError
+from pydantic import BaseModel, Field, HttpUrl, ValidationError
 
 from .acquisition import fetch_url
 from .errors import failure
 from .extraction import extract_html, extract_pdf, extract_plain
-from .logging import log_event
+from .logging import log_event, log_frontend_event
 from .models import (
     AnalysisStatus,
     CreateAnalysisResponse,
@@ -54,6 +54,12 @@ def _processing_error_code(error: Exception) -> str:
 
 class UrlRequest(BaseModel):
     url: HttpUrl
+
+
+class FrontendLogRequest(BaseModel):
+    level: str
+    message: str
+    context: dict[str, object] = Field(default_factory=dict)
 
 
 def _status(item) -> AnalysisStatus:
@@ -179,6 +185,14 @@ async def _finish_parse(analysis_id: str, extracted, kind: SourceKind) -> None:
 @app.get("/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.post("/api/logs", status_code=204)
+async def create_frontend_log(entry: FrontendLogRequest) -> None:
+    level = entry.level.lower()
+    if level not in {"info", "warn", "error"}:
+        raise HTTPException(status_code=400, detail="Unsupported log level")
+    log_frontend_event(level, entry.message, entry.context)
 
 
 @app.post("/api/analyses", status_code=202, response_model=CreateAnalysisResponse)
