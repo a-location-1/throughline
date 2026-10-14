@@ -29,8 +29,8 @@ def test_parser_accepts_mixed_case_headers_and_speaker_labels(submission):
     assert [act.label for act in result.acts] == ["Act I"]
     assert [scene.label for scene in result.scenes] == ["Scene I"]
     assert [character.display_name for character in result.characters] == [
-        "Capulet",
-        "Lady Capulet",
+        "CAPULET",
+        "LADY CAPULET",
     ]
     assert [appearance.line_count for appearance in result.appearances] == [
         1,
@@ -58,8 +58,8 @@ def test_parser_handles_numbered_interview_sections_and_aliases(submission):
         "Section III",
     ]
     assert [character.display_name for character in result.characters] == [
-        "Christian Hawkey",
-        "David Levine",
+        "CHRISTIAN HAWKEY",
+        "DAVID LEVINE",
     ]
     assert [notice.code for notice in result.notices] == ["UNCONVENTIONAL_STRUCTURE"]
     assert all(
@@ -317,8 +317,67 @@ def test_parser_uses_dramatis_personae_to_normalize_shortened_names(submission):
     result = parse_playtext(text, submission)
 
     assert [character.display_name for character in result.characters] == [
-        "Rosaura",
-        "Segismund",
+        "ROSAURA",
+        "SEGISMUND",
+    ]
+
+
+def test_parser_normalizes_grouped_roles_and_gutenberg_end_marker(submission):
+    text = """Dramatis Personæ
+An English Doctor.
+A Porter.
+An Old Man.
+ACT I
+SCENE I
+a Porter
+Hello.
+an Old man
+Good day.
+PORTER.
+Again.
+OLD MAN.
+Again.
+MACBETH, LENNOX.
+Together.
+Enter Servant with two Murderers.
+Servant.
+Wait.
+BOTH MURDERERS.
+Speak.
+Enter three Murderers.
+FIRST MURDERER.
+One.
+SECOND MURDERER.
+Two.
+THIRD MURDERER.
+Three.
+Enter first Murderer to the door.
+FIRST MURDERER.
+Again.
+Enter a Doctor of Physic and a Waiting-Gentlewoman.
+DOCTOR.
+Report.
+GENTLEWOMAN.
+Report.
+*** END OF THE PROJECT GUTENBERG EBOOK MACBETH ***
+START: FULL LICENSE
+DAMAGE.
+This is not play text.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "PORTER",
+        "OLD MAN",
+        "MACBETH",
+        "LENNOX",
+        "SERVANT",
+        "FIRST MURDERER",
+        "SECOND MURDERER",
+        "THIRD MURDERER",
+        "DOCTOR",
+        "GENTLEWOMAN",
     ]
 
 
@@ -361,8 +420,8 @@ def test_parser_accepts_period_delimited_inline_speakers(submission):
     result = parse_playtext(text, submission)
 
     assert [character.display_name for character in result.characters] == [
-        "ABRAHAM.",
-        "EPHREM.",
+        "ABRAHAM",
+        "EPHREM",
     ]
     assert [appearance.line_count for appearance in result.appearances] == [1, 1]
 
@@ -443,8 +502,8 @@ P. 3, 1. 1. Explanatory notes begin here.
     assert result.scenes[0].label == "Scene I"
     assert "NOTES TO IPHIGENIA IN TAURIS" not in result.scenes[0].label
     assert {character.display_name for character in result.characters} >= {
-        "IPHIGENIA.",
-        "CHORUS.",
+        "IPHIGENIA",
+        "CHORUS",
     }
 
 

@@ -56,6 +56,7 @@ BRACKET_SPEAKER_PREFIX_RE = re.compile(
 )
 PLAY_END_RE = re.compile(
     r"^\s*\[?(?:END|THE END|END OF PLAY|THE END OF PLAY|END OF THE PLAY|END OF THE PROJECT GUTENBERG EBOOK.*|THE CURTAIN|BLACK\s+OUT.*END|BLACKOUT.*END)\.?\]?\.?\s*$|"
+    r"^\s*\*+\s*END OF THE PROJECT GUTENBERG EBOOK.*\*+\s*$|"
     r"^\s*(?:FINIS|CURTAIN|"
     r"PROJECT GUTENBERG(?: LICENSE)?|GUTENBERG LICENSE|"
     r"NOTES TO .+|"
@@ -476,6 +477,33 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
 
 def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     normalized = display.strip(" _.,;:")
+    if _identity_key(normalized) in {"withdrum", "colours", "colors"}:
+        return []
+    parts = re.split(r"\s+and\s+", normalized, maxsplit=1, flags=re.I)
+    if len(parts) == 2:
+        result: list[str] = []
+        for part in parts:
+            part_expanded = _expanded_role_displays(part, strip_descriptors=True)
+            if part_expanded:
+                result.extend(part_expanded)
+                continue
+            if _identity_key(part) in {"withdrum", "colours", "colors"}:
+                continue
+            exact_alias = aliases.get(_identity_key(part.strip(" .")))
+            if exact_alias:
+                result.append(exact_alias)
+                continue
+            part_matches = [
+                canonical
+                for canonical in aliases.values()
+                if re.search(rf"\b{re.escape(canonical)}\b", part, re.I)
+            ]
+            result.extend(part_matches or [_canonical_entrance_display(part, aliases)])
+        if result:
+            return list(dict.fromkeys(result))
+    expanded = _expanded_role_displays(normalized, strip_descriptors=True)
+    if expanded:
+        return expanded
     matches = list(
         dict.fromkeys(
             canonical
@@ -493,6 +521,68 @@ def _normalize_speaker_display(display: str) -> str:
     normalized = DELIVERY_NOTE_RE.sub("", display).strip()
     voice_of = VOICE_OF_RE.match(normalized)
     return voice_of.group(1).strip() if voice_of else normalized
+
+
+def _expanded_role_displays(
+    display: str, strip_descriptors: bool = False
+) -> list[str]:
+    normalized = _normalize_speaker_display(display).strip(" _.,;:")
+    key = _identity_key(normalized)
+    if key in {"withdrum", "colours", "colors"} or normalized.casefold().startswith(
+        "with drum"
+    ):
+        return []
+    if key in {"bothmurderers", "murderers"}:
+        return ["FIRST MURDERER", "SECOND MURDERER", "THIRD MURDERER"]
+    if key == "murderer":
+        return ["FIRST MURDERER"]
+    if re.fullmatch(r"(?:three|3)\s+murderers?", normalized, re.I):
+        return ["FIRST MURDERER", "SECOND MURDERER", "THIRD MURDERER"]
+    if re.fullmatch(r"(?:servant\s+with\s+)?(?:two|2)\s+murderers?", normalized, re.I):
+        return ["SERVANT", "FIRST MURDERER", "SECOND MURDERER"]
+    if re.fullmatch(r"first\s+murderer(?:\s+to\s+the\s+door)?", normalized, re.I):
+        return ["FIRST MURDERER"]
+    if re.fullmatch(r"(?:a\s+)?doctor(?:\s+of\s+physic)?", normalized, re.I):
+        return ["DOCTOR"]
+    if re.fullmatch(r"(?:a\s+)?waiting[- ]gentlewoman", normalized, re.I):
+        return ["GENTLEWOMAN"]
+    if re.fullmatch(r"(?:an?\s+)?old\s+man", normalized, re.I):
+        return ["OLD MAN"]
+    if re.fullmatch(r"(?:a\s+)?porter", normalized, re.I):
+        return ["PORTER"]
+    if re.fullmatch(r"lady\s+macduff\s+her\s+son", normalized, re.I):
+        return ["LADY MACDUFF", "SON"]
+    if not strip_descriptors:
+        return []
+    base = re.sub(r"^(?:an?|the|another)\s+", "", normalized, flags=re.I)
+    base = re.split(
+        r"\s+(?:with|attending|to|of)\s+", base, maxsplit=1, flags=re.I
+    )[0].strip()
+    if base != normalized and re.fullmatch(
+        r"[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ .,'’\-]*", base
+    ):
+        return [base.upper()]
+    return []
+
+
+def _speaker_displays(display: str) -> list[str]:
+    normalized = _normalize_speaker_display(display).strip()
+    expanded = _expanded_role_displays(normalized)
+    if expanded:
+        return expanded
+    shared_parts = _shared_speaker_parts(normalized)
+    if shared_parts:
+        return shared_parts
+    if normalized.upper() == normalized and "," in normalized:
+        parts = [part.strip(" .") for part in normalized.split(",")]
+        if len(parts) > 1 and all(parts):
+            return parts
+    return [normalized]
+
+
+def _character_display(display: str) -> str:
+    normalized = display.strip(" .,:;")
+    return normalized.upper()
 
 
 def _looks_like_speaker(
@@ -750,7 +840,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                     if key and key not in by_key:
                         character = CharacterOrSpeaker(
                             id=f"character-{len(characters) + 1:02d}",
-                            display_name=entrance_display,
+                            display_name=_character_display(entrance_display),
                             kind=CharacterKind.SILENT,
                             first_appearance_scene_id=scene.id,
                         )
@@ -815,8 +905,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 )
             ):
                 display = _normalize_speaker_display(speaker.group(1))
-                shared_parts = _shared_speaker_parts(display)
-                speaker_displays = shared_parts or [display]
+                speaker_displays = _speaker_displays(display)
                 current = []
                 for speaker_display in speaker_displays:
                     qualified_base = _qualified_base(speaker_display)
@@ -834,7 +923,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                         character = CharacterOrSpeaker(
                             id=f"character-{len(characters) + 1:02d}",
                             display_name=(
-                                canonical_display
+                                _character_display(canonical_display)
                                 if kind != CharacterKind.UNNAMED
                                 else "Unnamed speaker"
                             ),
@@ -904,7 +993,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             if len(cast_names) == 1:
                 character = CharacterOrSpeaker(
                     id="character-01",
-                    display_name=cast_names[0],
+                    display_name=_character_display(cast_names[0]),
                     kind=_classify(cast_names[0]),
                     first_appearance_scene_id=scenes[0].id,
                 )
