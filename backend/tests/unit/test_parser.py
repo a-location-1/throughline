@@ -459,6 +459,26 @@ Second play.
     assert [notice.code for notice in result.notices] == ["MULTIPLE_PLAYS"]
 
 
+def test_parser_does_not_treat_gutenberg_license_prose_as_second_play(submission):
+    text = """MACBETH
+by William Shakespeare
+
+ACT I
+SCENE I
+MACBETH
+The play begins.
+
+*** END OF THE PROJECT GUTENBERG EBOOK MACBETH ***
+
+Updated editions will replace the previous one.
+The Foundation may copy and distribute this work.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [notice.code for notice in result.notices] == []
+
+
 def test_parser_rejects_ordinary_non_play_text(submission):
     text = """Welcome to our website.
 This page describes a scene from a product launch.

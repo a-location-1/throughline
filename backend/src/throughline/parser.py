@@ -66,7 +66,7 @@ PLAY_END_RE = re.compile(
     re.I,
 )
 PLAY_TITLE_RE = re.compile(
-    r"(?im)^\s*[A-Z][A-Z0-9 &'’\-]{2,}\s*\n\s*by\s*(?:[A-Z].*)?$"
+    r"(?m)^\s*[A-Z][A-Z0-9 &'’\-]{2,}\s*\n\s*(?i:by)\s*(?:[A-Z].*)?$"
 )
 ENTER_RE = re.compile(
     r"^\s*\(?\s*(?:re-)?entr(?:y|ance)\s+of\s+(.+?)(?:[.,;:]|\)?$)|"

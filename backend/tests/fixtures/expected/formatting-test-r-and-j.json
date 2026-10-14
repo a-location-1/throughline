@@ -1930,12 +1930,7 @@
             "explanation": null
         }
     ],
-    "notices": [
-        {
-            "code": "MULTIPLE_PLAYS",
-            "message": "Multiple plays were found; only the first play was analyzed."
-        }
-    ],
+    "notices": [],
     "ordering": {
         "scene_ids": [
             "scene-01",
