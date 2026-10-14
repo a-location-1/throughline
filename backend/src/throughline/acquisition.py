@@ -173,6 +173,7 @@ async def fetch_url(url: str) -> RetrievedSource:
             timeout=TIMEOUT,
             follow_redirects=False,
             trust_env=False,
+            headers={"Accept-Encoding": "identity"},
             transport=_PinnedTransport(addresses),
         ) as client:
             async with client.stream("GET", current) as response:

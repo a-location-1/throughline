@@ -79,6 +79,54 @@ def test_cgnat_destination_is_rejected(monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_fetch_url_requests_uncompressed_responses(monkeypatch):
+    captured = {}
+
+    class Response:
+        is_redirect = False
+        headers = {"content-type": "text/plain"}
+        url = "https://example.org"
+
+        def raise_for_status(self):
+            pass
+
+        async def aiter_raw(self, size):
+            yield b"ALICE\nHello"
+
+    class Client:
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            pass
+
+        class Stream:
+            async def __aenter__(self):
+                return Response()
+
+            async def __aexit__(self, *args):
+                pass
+
+        def stream(self, method, url):
+            return self.Stream()
+
+    monkeypatch.setattr(
+        "throughline.acquisition.httpx.AsyncClient", Client
+    )
+    monkeypatch.setattr(
+        "throughline.acquisition._public_host", lambda host: ("93.184.216.34",)
+    )
+
+    source = await fetch_url("https://example.org/play")
+
+    assert captured["headers"] == {"Accept-Encoding": "identity"}
+    assert source.content == b"ALICE\nHello"
+
+
+@pytest.mark.asyncio
 async def test_pinned_backend_uses_validated_address_without_resolving_again():
     calls = []
 

@@ -3,7 +3,7 @@
 from .models import Failure
 
 ERRORS = {
-    "NOT_PLAYTEXT": "We couldn't identify a playtext at this source.",
+    "NOT_PLAYTEXT": "This source contains a playtext we could not identify.",
     "NO_PLAYTEXT_STRUCTURE": "We could not identify scenes or speakers in this source.",
     "PDF_NO_TEXT": "This PDF contains no selectable text. Upload a text-based PDF instead.",
     "PDF_INVALID": "This file is not a readable PDF.",
