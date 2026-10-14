@@ -1,6 +1,9 @@
-import pytest
+from io import BytesIO
 
-from throughline.extraction import extract_html, extract_plain, extract_pdf
+import pytest
+from pypdf import PdfWriter
+
+from throughline.extraction import MAX_PAGES, extract_html, extract_plain, extract_pdf
 
 
 def test_html_and_plain_text_extract():
@@ -26,3 +29,14 @@ def test_html_extraction_omits_footnotes_and_page_numbers():
 def test_pdf_signature_is_required():
     with pytest.raises(ValueError):
         extract_pdf(b"not a pdf", "bad.pdf")
+
+
+def test_pdf_page_limit_is_enforced():
+    writer = PdfWriter()
+    for _ in range(MAX_PAGES + 1):
+        writer.add_blank_page(width=612, height=792)
+    data = BytesIO()
+    writer.write(data)
+
+    with pytest.raises(ValueError, match="too many pages"):
+        extract_pdf(data.getvalue(), "large.pdf")

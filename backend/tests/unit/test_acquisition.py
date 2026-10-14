@@ -1,3 +1,4 @@
+import httpx
 import pytest
 
 from throughline.acquisition import (
@@ -124,6 +125,45 @@ async def test_fetch_url_requests_uncompressed_responses(monkeypatch):
 
     assert captured["headers"] == {"Accept-Encoding": "identity"}
     assert source.content == b"ALICE\nHello"
+
+
+@pytest.mark.asyncio
+async def test_fetch_url_rejects_too_many_redirects(monkeypatch):
+    class RedirectResponse:
+        is_redirect = True
+        headers = {"location": "/next"}
+        url = httpx.URL("https://example.org/start")
+
+        def raise_for_status(self):
+            pass
+
+    class Client:
+        def __init__(self, **kwargs):
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            pass
+
+        class Stream:
+            async def __aenter__(self):
+                return RedirectResponse()
+
+            async def __aexit__(self, *args):
+                pass
+
+        def stream(self, method, url):
+            return self.Stream()
+
+    monkeypatch.setattr("throughline.acquisition.httpx.AsyncClient", Client)
+    monkeypatch.setattr(
+        "throughline.acquisition._public_host", lambda host: ("93.184.216.34",)
+    )
+
+    with pytest.raises(ValueError, match="too many redirects"):
+        await fetch_url("https://example.org/start")
 
 
 @pytest.mark.asyncio
