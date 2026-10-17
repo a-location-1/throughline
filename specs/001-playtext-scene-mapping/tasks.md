@@ -9,6 +9,10 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 **Prerequisites**: `plan.md`, `spec.md`, `research.md`, `data-model.md`, `contracts/api.md`, `quickstart.md`
 
+## Migration update (2026-10-17)
+
+The implementation target is now one synchronous FastAPI analysis request for initial Vercel hosting. Polling, background analysis state, server-side CSV lookup, and server-reported percentages are removed. Frontend feedback is staged and indeterminate; duplicate submissions are disabled and requests are cancellable.
+
 **Testing**: Tests are included because the constitution requires unit, boundary, invalid-input, regression, contract, rendering, accessibility, and coverage validation.
 
 **Path conventions**: Backend code and tests live under `backend/`; frontend code and tests live under `frontend/`.
@@ -38,9 +42,9 @@ description: "Task list for implementing Playtext Scene Mapping"
 - [X] T010 [P] Implement deterministic canonical serialization, stable IDs, first-appearance ordering, and invariant checks in `backend/src/throughline/models.py` and `backend/tests/unit/test_models.py`
 - [X] T011 [P] Create the manifest-backed fixture harness and canonical expected-result comparison in `backend/tests/conftest.py` and `backend/tests/integration/test_fixture_corpus.py`
 - [X] T012 [P] Add fixture manifest schema and initial fixture directory structure under `backend/tests/fixtures/{sources,expected,valid,invalid}` in `backend/tests/fixtures/manifest.json`, including an `accessibility-and-resources` category entry
-- [X] T013 Implement bounded in-memory analysis state, opaque IDs, short session TTL, state transitions, cleanup, concurrent-analysis limits, and submission rate limiting or equivalent deployment protection in `backend/src/throughline/state.py`; add unit coverage in `backend/tests/unit/test_state.py`
+- [X] T013 Implement bounded process-local sliding-window rate limiting for analysis submissions and frontend logs, plus explicit upload/log payload limits and deployment documentation in `backend/src/throughline/state.py`, `backend/src/throughline/api.py`, and the hosting docs
 - [X] T014 Implement API error envelopes, generic user-facing failure codes, logging redaction, and next-action mapping in `backend/src/throughline/errors.py` and `backend/src/throughline/logging.py`; add unit coverage in `backend/tests/unit/test_errors.py` and `backend/tests/unit/test_logging.py`
-- [X] T015 [P] Add shared frontend state transitions, polling cancellation, reset cleanup, and `aria-live` status state in `frontend/src/state.ts`
+- [X] T015 [P] Add shared frontend staged indeterminate state transitions, request cancellation, duplicate-submission prevention, reset cleanup, and `aria-live` status state in `frontend/src/state.ts`
 - [X] T016 [P] Add a backend test command and frontend test/build command documented in `backend/README.md` and `frontend/README.md`
 
 **Checkpoint**: Typed contracts, bounded state, fixture loading, and test commands are ready; user stories can proceed independently.
@@ -74,8 +78,8 @@ description: "Task list for implementing Playtext Scene Mapping"
 - [X] T030 [US1] Aggregate parsed speaker blocks by scene and count identifiable spoken lines while excluding stage directions in `backend/src/throughline/parser.py`
 - [X] T031 [US1] Classify speaking versus non-speaking presence, preserve collective/unnamed line counts, attach supported/ambiguous confidence, and generate first-appearance character ordering in `backend/src/throughline/parser.py`
 - [X] T032 [US1] Implement library orchestration, combined-evidence play recognition, best-effort notices for unidentified conventional attributes, first-play scoping with multiple-play warnings, and rejection of ordinary non-play content in `backend/src/throughline/parser.py`
-- [X] T033 [US1] Implement `POST /api/analyses` for URL JSON and PDF multipart requests plus `GET /api/analyses/{analysis_id}` progress, ready, rejected, and unknown-ID responses in `backend/src/throughline/api.py`
-- [X] T034 [US1] Add FastAPI contract tests for URL/PDF submission, queued-to-ready progress, serialized `AnalysisResult`, stable error envelopes, opaque IDs, and `404` behavior in `backend/tests/contract/test_api.py`
+- [X] T033 [US1] Implement synchronous `POST /api/analyses` for URL JSON and PDF multipart requests, returning a complete `AnalysisResult` or an actionable error in `backend/src/throughline/api.py`
+- [X] T034 [US1] Add FastAPI contract tests for synchronous URL/PDF results, immediate rejection envelopes, request limits, and absence of polling/CSV lookup endpoints in `backend/tests/contract/test_api.py`
 
 **Checkpoint**: The P1 analysis result is independently usable from either source method and all parser distinctions are covered by fixtures.
 
@@ -113,18 +117,18 @@ description: "Task list for implementing Playtext Scene Mapping"
 
 ### Tests for User Story 3
 
-- [X] T043 [P] [US3] Add frontend API/state tests for progress polling, cancellation, ready/rejected states, retry/replace-source actions, reset cleanup, and `aria-live` announcements in `frontend/tests/unit/state.test.ts`
+- [X] T043 [P] [US3] Add frontend API/state tests for staged indeterminate feedback, cancellation, ready/error states, duplicate-submission prevention, reset cleanup, and `aria-live` announcements in `frontend/tests/unit/state.test.ts`
 - [X] T044 [P] [US3] Add CSV tests for deterministic row/column order, quoting, formula-leading value escaping, collective/unnamed names, and parseability in `frontend/tests/unit/csv.test.ts`
 - [X] T045 [P] [US3] Add API tests for copy/export metadata, cleanup after reset/expiry, redacted logs, rate/concurrency limits, and generic retrieval/parsing failures in `backend/tests/contract/test_api_outcomes.py`
 
 ### Implementation for User Story 3
 
-- [X] T046 [US3] Implement progress-stage polling and cancellation from queued through retrieving/extracting/parsing to ready/rejected in `frontend/src/api.ts` and `frontend/src/state.ts`
+- [X] T046 [US3] Implement staged indeterminate feedback, duplicate-submission prevention, and `AbortController` cancellation for the synchronous request in `frontend/src/api.ts`, `frontend/src/state.ts`, and `frontend/src/main.ts`
 - [X] T047 [US3] Implement accessible source submission UI for URL/PDF, validation, progress, error summary focus, retry/replace actions, and supported English/Latin-script scope messaging in `frontend/src/main.ts` and `frontend/index.html`
 - [X] T048 [US3] Implement deterministic browser CSV generation for character identity, scene IDs/labels, presence type, and line counts with CSV quoting and formula-leading value escaping in `frontend/src/csv.ts`
 - [X] T049 [US3] Implement copy of the table and visualization summary plus success/failure announcements and download action wiring in `frontend/src/main.ts`
-- [X] T050 [US3] Implement optional `GET /api/analyses/{analysis_id}/csv` convenience export with the same safe escaping and deterministic ordering in `backend/src/throughline/api.py`
-- [X] T051 [US3] Implement page-leave/reset cleanup so submitted source bytes, temporary files, polling, and in-memory results are not retained beyond the session TTL in `frontend/src/main.ts` and `backend/src/throughline/state.py`
+- [X] T050 [US3] Keep CSV generation entirely in the frontend and remove the server-side analysis lookup/export endpoints
+- [X] T051 [US3] Implement reset/request cancellation cleanup so submitted source bytes and in-memory results are not retained after the synchronous request ends or is aborted in `frontend/src/main.ts` and `backend/src/throughline/api.py`
 
 **Checkpoint**: Users can understand processing, recover from failures, and copy/download a completed result without confusing an incomplete result for success.
 

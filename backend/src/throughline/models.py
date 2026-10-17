@@ -55,11 +55,6 @@ class Failure(BaseModel):
     next_action: str
 
 
-class Progress(BaseModel):
-    stage: str
-    percent: int = Field(ge=0, le=100)
-
-
 class PlaytextSubmission(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -153,17 +148,3 @@ class AnalysisResult(BaseModel):
             sort_keys=True,
             separators=(",", ":"),
         )
-
-
-class AnalysisStatus(BaseModel):
-    analysis_id: str
-    state: SubmissionState
-    progress: Progress | None = None
-    error: Failure | None = None
-    result: AnalysisResult | None = None
-
-
-class CreateAnalysisResponse(BaseModel):
-    analysis_id: str
-    state: SubmissionState
-    progress: Progress

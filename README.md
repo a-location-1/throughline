@@ -21,4 +21,4 @@ npm run build
 npm run dev
 ```
 
-The backend accepts inputs up to 10 MB and 200 PDF pages. Submitted source bytes and results are session-only and expire from memory.
+The backend accepts inputs up to 10 MB and 200 PDF pages. One synchronous analysis request returns the complete result; source bytes and results are not retained server-side. The frontend shows staged indeterminate feedback, supports cancellation, disables duplicate submissions, and generates CSV locally.

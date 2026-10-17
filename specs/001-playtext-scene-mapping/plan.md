@@ -1,6 +1,6 @@
 Implementation Plan: Playtext Scene Mapping
 
-**Branch**: `001-playtext-scene-mapping` | **Date**: 2026-09-27 | **Spec**: [spec.md](spec.md)
+**Branch**: `001-playtext-scene-mapping` | **Date**: 2026-10-17 (synchronous serverless migration) | **Spec**: [spec.md](spec.md)
 
 ## Summary
 
@@ -12,7 +12,7 @@ Build a standalone web application that accepts a public playtext URL or selecta
 
 **Primary Dependencies**: FastAPI, Pydantic, httpx, pypdf, BeautifulSoup; Vite and vanilla TypeScript; pytest, pytest-cov, Playwright
 
-**Storage**: In-memory, request-scoped analysis state only; no persistent database or server-side result history
+**Storage**: No server-side analysis state or result history; one synchronous request returns one complete result. Process-local rate-limit counters are retained for the initial low-volume deployment.
 
 **Testing**: pytest with coverage threshold above 80%, golden parser fixtures, API contract tests, TypeScript tests, and Playwright visual/accessibility checks
 
@@ -20,11 +20,11 @@ Build a standalone web application that accepts a public playtext URL or selecta
 
 **Project Type**: Standalone web application with a library-first Python parser and HTTP API
 
-**Performance Goals**: Begin progress feedback within 2 seconds; remain responsive for inputs up to 200 pages or 10 MB; maintain smooth plot interaction on supported browsers
+**Performance Goals**: Show immediate staged indeterminate feedback; complete supported inputs within the configured serverless function duration; remain responsive for inputs up to 200 pages or 10 MB; maintain smooth plot interaction on supported browsers
 
 **Constraints**: Reject over-limit, inaccessible, unreadable, non-PDF, and non-playtext inputs with actionable errors; protect URL retrieval against SSRF, unsafe redirects, timeouts, and oversized responses; do not retain submitted source or results after reset/leave
 
-**Scale/Scope**: One focused single-page workflow, two source methods, one deterministic result schema, one table view, one visualization view, and CSV export
+**Scale/Scope**: One focused single-page workflow, two source methods, one deterministic result schema, one table view, one visualization view, client-side CSV export, and one synchronous analysis request
 
 ## Security Requirements
 
@@ -32,7 +32,7 @@ Build a standalone web application that accepts a public playtext URL or selecta
 - Stream URL responses and enforce the 10 MB limit while reading; apply connection/read/total timeouts, a bounded redirect count, response content-type checks, and cancellation for abandoned analyses. Do not follow redirects to a newly disallowed destination.
 - PDF uploads are validated by size, extension, declared type, and file signature; browser-provided MIME types and filenames are not trusted. Store temporary data under generated names, never execute or serve uploaded files, and remove temporary bytes after extraction or failure.
 - Treat PDFs as hostile input: use a patched `pypdf`, cap page count and extracted text size, and enforce CPU, memory, and wall-clock limits around extraction so malformed files or decompression-heavy content cannot exhaust the service. OCR is not enabled.
-- Bound concurrent analyses and expire in-memory analysis state after a short session TTL. Add rate limiting or equivalent deployment protection to submission endpoints and ensure failures clean up tasks, buffers, and temporary files.
+- Bound request bytes, extracted text, PDF pages, URL retrieval, function work, and frontend log payloads. Use explicit process-local sliding-window rate limits for the initial low-volume instance and ensure failures clean up buffers without retaining request state.
 - Never log full submitted URLs, query strings, filenames, source text, or extracted text. Return opaque analysis IDs and generic retrieval/parsing errors that do not disclose network details or local paths.
 - Render parsed names and source metadata as escaped text in the frontend; never inject submitted HTML or SVG into the document. CSV export must escape formula-leading cell values and quote fields according to the CSV format.
 
@@ -173,7 +173,7 @@ tests/fixtures/
 
 ## Phase 1 Design Summary
 
-The shared `AnalysisResult` contains ordered acts, scenes, characters, appearances, ambiguity metadata, parser/schema versions, and visualization inputs. The API exposes `POST /api/analyses` for URL or PDF submission and `GET /api/analyses/{id}` for progress, ready results, or actionable rejection. CSV may be generated in-browser and can also be exposed as a convenience endpoint. See [data-model.md](data-model.md), [contracts/api.md](contracts/api.md), and [quickstart.md](quickstart.md).
+The shared `AnalysisResult` contains ordered acts, scenes, characters, appearances, ambiguity metadata, parser/schema versions, and visualization inputs. The API exposes one synchronous `POST /api/analyses` for URL or PDF submission and returns a complete result or actionable rejection. CSV is generated in-browser; no analysis lookup endpoint is exposed. See [data-model.md](data-model.md), [contracts/api.md](contracts/api.md), and [quickstart.md](quickstart.md).
 
 ## Post-Design Constitution Check
 

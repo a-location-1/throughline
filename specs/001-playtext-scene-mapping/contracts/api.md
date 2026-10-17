@@ -2,49 +2,18 @@
 
 Base path: `/api`
 
-## Create URL analysis
+## Create analysis
 
-`POST /analyses`
+`POST /analyses` accepts either `{"url":"https://example.org/play.html"}` as JSON or a `multipart/form-data` request with a `file` field.
 
-Request:
+Response `200` is the complete `AnalysisResult` for either source method. Processing, retrieval, extraction, and parsing occur within the request. The server MUST NOT create a job ID, retain result state, or require a follow-up request.
 
-```json
-{"url":"https://example.org/play.html"}
-```
+The frontend MAY show staged indeterminate labels while awaiting the response, but those labels are estimates and MUST NOT be represented as server progress percentages.
 
-Response `202`:
+Failures return a structured `detail` envelope with a stable failure code, message, and next action. Common statuses are `400`, `413`, `422`, `429`, `502`, and `504`.
 
-```json
-{"analysis_id":"a_opaque_id","state":"queued","progress":{"stage":"queued","percent":0}}
-```
+## Removed polling and server CSV endpoints
 
-## Create PDF analysis
+`GET /analyses/{analysis_id}` and `GET /analyses/{analysis_id}/csv` are not part of the active contract. CSV is generated entirely in the browser from `AnalysisResult`, using deterministic ordering and formula-safe escaping.
 
-`POST /analyses` with `multipart/form-data`, field `file`.
-
-Response and failure envelope match URL analysis. The server must not retain the uploaded bytes after processing/reset.
-
-## Get analysis
-
-`GET /analyses/{analysis_id}`
-
-Processing response:
-
-```json
-{"analysis_id":"a_opaque_id","state":"parsing","progress":{"stage":"Identifying scenes and speakers","percent":70}}
-```
-
-Ready response returns `AnalysisResult` as defined in [data-model.md](../data-model.md). A ready response may include notices when the parser produced a best-effort result or found additional plays. Rejected response:
-
-```json
-{"analysis_id":"a_opaque_id","state":"rejected","error":{"code":"NOT_PLAYTEXT","message":"We couldn't identify a playtext at this source.","next_action":"Submit a playtext URL or a text-based play PDF."}}
-```
-
-The parser MUST reserve rejection for sources with insufficient combined evidence of playtext or no usable character/speaker. Missing conventional act, scene, or character labels MUST be represented as notices in a ready best-effort result when the source otherwise supports playtext analysis. When multiple plays are detected, the ready result MUST contain a notice and data for only the first play.
-```
-
-The API must use stable ordering and explicit schema/parser versions. Unknown analysis IDs return `404` without disclosing source details.
-
-## CSV export
-
-`GET /analyses/{analysis_id}/csv` may be implemented as a convenience endpoint. The browser must also be able to generate the CSV from `AnalysisResult`. CSV columns are character identity, scene IDs/labels, presence type, and line counts, with safe escaping and deterministic row/column order.
+The API must use stable ordering and explicit schema/parser versions. Initial hosting uses process-local sliding-window limits: 12 analysis submissions per client per 60 seconds and 60 frontend log events per client per 60 seconds. These are suitable only for one low-volume instance; multi-instance hosting requires a shared limiter or edge/WAF enforcement.

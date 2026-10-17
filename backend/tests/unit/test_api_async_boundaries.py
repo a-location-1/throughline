@@ -4,15 +4,12 @@ import threading
 import pytest
 
 from throughline import api
-from throughline.models import SourceKind, SubmissionState
+from throughline.models import SourceKind
 from throughline.extraction import ExtractedText
-from throughline.state import AnalysisStore
 
 
 @pytest.mark.asyncio
 async def test_parse_runs_off_event_loop(monkeypatch):
-    store = AnalysisStore()
-    item = store.create("test-client")
     started = threading.Event()
     caller_thread = threading.get_ident()
     worker_threads = []
@@ -24,12 +21,11 @@ async def test_parse_runs_off_event_loop(monkeypatch):
         started.set()
         return original_parse(text, submission)
 
-    monkeypatch.setattr(api, "store", store)
     monkeypatch.setattr(api, "parse_playtext", blocking_parse)
     extracted = ExtractedText("ALICE\nHello", "play.txt")
 
     task = asyncio.create_task(
-        api._finish_parse(item.analysis_id, extracted, SourceKind.URL)
+        api._finish_parse(extracted, SourceKind.URL)
     )
     await asyncio.to_thread(started.wait)
     assert worker_threads[0] != caller_thread

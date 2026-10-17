@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 import asyncio
-import csv
-import io
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, UploadFile
+import os
+from fastapi import FastAPI, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, HttpUrl, ValidationError
 
@@ -14,25 +13,32 @@ from .errors import failure
 from .extraction import extract_html, extract_pdf, extract_plain
 from .logging import log_event, log_frontend_event
 from .models import (
-    AnalysisStatus,
-    CreateAnalysisResponse,
+    AnalysisResult,
     PlaytextSubmission,
-    Progress,
     SourceKind,
     SubmissionState,
 )
 from .parser import parse_playtext
-from .state import AnalysisStore
+from .state import RateLimiter
 
 app = FastAPI(title="Throughline API", version="0.1.0")
+configured_origins = os.getenv("FRONTEND_ORIGINS", "http://localhost:5173")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[origin.strip() for origin in configured_origins.split(",") if origin.strip()],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["content-type"],
 )
-store = AnalysisStore()
+rate_limiter = RateLimiter(
+    {
+        "analysis": (12, 60),
+        "logs": (60, 60),
+    }
+)
 CPU_TIMEOUT_SECONDS = 60
+MAX_UPLOAD_BYTES = 10 * 1024 * 1024
+MAX_LOG_MESSAGE_LENGTH = 1000
+MAX_LOG_CONTEXT_BYTES = 8 * 1024
 
 
 def _processing_error_code(error: Exception) -> str:
@@ -58,102 +64,23 @@ class UrlRequest(BaseModel):
 
 class FrontendLogRequest(BaseModel):
     level: str
-    message: str
+    message: str = Field(min_length=1, max_length=MAX_LOG_MESSAGE_LENGTH)
     context: dict[str, object] = Field(default_factory=dict)
 
+def _client_id(request: Request) -> str:
+    return request.client.host if request.client else "unknown"
 
-def _status(item) -> AnalysisStatus:
-    return AnalysisStatus(
-        analysis_id=item.analysis_id,
-        state=item.state,
-        progress=item.progress,
-        error=item.error,
-        result=item.result,
+
+def _raise_processing_error(exc: Exception) -> None:
+    code = _processing_error_code(exc) if isinstance(exc, ValueError) else (
+        "SOURCE_INACCESSIBLE" if "retrieve" in str(exc).lower() else "SOURCE_UNREADABLE"
     )
+    raise HTTPException(status_code=422, detail=failure(code).model_dump()) from exc
 
 
-async def _process_url(analysis_id: str, url: str) -> None:
-    try:
-        store.update(
-            analysis_id,
-            state=SubmissionState.RETRIEVING,
-            progress=Progress(stage="Retrieving source", percent=20),
-        )
-        source = await fetch_url(url)
-        store.update(
-            analysis_id,
-            state=SubmissionState.EXTRACTING,
-            progress=Progress(stage="Extracting text", percent=45),
-        )
-        if source.content_type == "application/pdf":
-            extracted = await asyncio.wait_for(
-                asyncio.to_thread(extract_pdf, source.content, source.source_name),
-                CPU_TIMEOUT_SECONDS,
-            )
-            kind = SourceKind.PDF
-        elif source.content_type == "text/plain":
-            extracted = await asyncio.wait_for(
-                asyncio.to_thread(extract_plain, source.content, source.source_name),
-                CPU_TIMEOUT_SECONDS,
-            )
-            kind = SourceKind.URL
-        else:
-            extracted = await asyncio.wait_for(
-                asyncio.to_thread(extract_html, source.content, source.source_name),
-                CPU_TIMEOUT_SECONDS,
-            )
-            kind = SourceKind.URL
-        await _finish_parse(analysis_id, extracted, kind)
-    except Exception as exc:  # generic response; no source details leave the process
-        log_event("analysis_rejected", analysis_id=analysis_id)
-        store.update(
-            analysis_id,
-            state=SubmissionState.REJECTED,
-            progress=Progress(stage="Unable to process source", percent=100),
-            error=failure(
-                _processing_error_code(exc)
-                if isinstance(exc, ValueError)
-                else (
-                    "SOURCE_INACCESSIBLE"
-                    if "retrieve" in str(exc).lower()
-                    else "SOURCE_UNREADABLE"
-                )
-            ),
-        )
-
-
-async def _process_pdf(analysis_id: str, data: bytes, filename: str) -> None:
-    try:
-        store.update(
-            analysis_id,
-            state=SubmissionState.EXTRACTING,
-            progress=Progress(stage="Extracting text", percent=45),
-        )
-        extracted = await asyncio.wait_for(
-            asyncio.to_thread(extract_pdf, data, filename), CPU_TIMEOUT_SECONDS
-        )
-        await _finish_parse(analysis_id, extracted, SourceKind.PDF)
-    except ValueError as exc:
-        code = _processing_error_code(exc)
-        store.update(
-            analysis_id,
-            state=SubmissionState.REJECTED,
-            progress=Progress(stage="Unable to process source", percent=100),
-            error=failure(code),
-        )
-
-
-async def _finish_parse(analysis_id: str, extracted, kind: SourceKind) -> None:
-    store.update(
-        analysis_id,
-        state=SubmissionState.PARSING,
-        progress=Progress(stage="Identifying scenes and speakers", percent=70),
-    )
-    item = store.get(analysis_id)
-    if item is None:
-        return
+async def _finish_parse(extracted, kind: SourceKind) -> AnalysisResult:
     submission = PlaytextSubmission(
-        submission_id=analysis_id,
+        submission_id="request",
         source_kind=kind,
         source_name=extracted.source_name,
         page_count=extracted.page_count,
@@ -166,20 +93,11 @@ async def _finish_parse(analysis_id: str, extracted, kind: SourceKind) -> None:
             CPU_TIMEOUT_SECONDS,
         )
     except ValueError:
-        store.update(
-            analysis_id,
-            state=SubmissionState.REJECTED,
-            progress=Progress(stage="No usable playtext found", percent=100),
-            error=failure("NOT_PLAYTEXT"),
-        )
-        return
+        raise HTTPException(
+            status_code=422, detail=failure("NOT_PLAYTEXT").model_dump()
+        ) from None
     result.submission.state = SubmissionState.READY
-    store.update(
-        analysis_id,
-        state=SubmissionState.READY,
-        progress=Progress(stage="Analysis ready", percent=100),
-        result=result,
-    )
+    return result
 
 
 @app.get("/health")
@@ -188,18 +106,42 @@ async def health() -> dict[str, str]:
 
 
 @app.post("/api/logs", status_code=204)
-async def create_frontend_log(entry: FrontendLogRequest) -> None:
+async def create_frontend_log(entry: FrontendLogRequest, request: Request) -> None:
+    if not rate_limiter.allow(_client_id(request), "logs"):
+        raise HTTPException(
+            status_code=429,
+            detail=failure("RATE_LIMITED").model_dump(),
+            headers={"Retry-After": "60"},
+        )
+    if len(str(entry.context).encode("utf-8")) > MAX_LOG_CONTEXT_BYTES:
+        raise HTTPException(status_code=413, detail="Log context is too large")
     level = entry.level.lower()
     if level not in {"info", "warn", "error"}:
         raise HTTPException(status_code=400, detail="Unsupported log level")
     log_frontend_event(level, entry.message, entry.context)
 
 
-@app.post("/api/analyses", status_code=202, response_model=CreateAnalysisResponse)
+@app.post("/api/analyses", response_model=AnalysisResult)
 async def create_analysis(
-    background_tasks: BackgroundTasks, request: Request
-) -> CreateAnalysisResponse:
+    request: Request,
+) -> AnalysisResult:
+    if not rate_limiter.allow(_client_id(request), "analysis"):
+        raise HTTPException(
+            status_code=429,
+            detail=failure("RATE_LIMITED").model_dump(),
+            headers={"Retry-After": "60"},
+        )
     content_type = request.headers.get("content-type", "")
+    content_length = request.headers.get("content-length")
+    if content_length:
+        try:
+            request_bytes = int(content_length)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail="Invalid request size") from exc
+        if request_bytes > MAX_UPLOAD_BYTES + 1024 * 1024:
+            raise HTTPException(
+                status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
+            )
     url_request: UrlRequest | None = None
     file: UploadFile | None = None
     if content_type.startswith("application/json"):
@@ -219,73 +161,40 @@ async def create_analysis(
             status_code=400, detail="Provide exactly one URL or PDF file."
         )
     try:
-        client_id = request.client.host if request.client else "unknown"
-        item = store.create(client_id)
-    except RuntimeError as exc:
-        code = "RATE_LIMITED" if "rate" in str(exc) else "CAPACITY_REACHED"
-        raise HTTPException(
-            status_code=429 if code == "RATE_LIMITED" else 503,
-            detail=failure(code).model_dump(),
-        ) from exc
-    if url_request is not None:
-        background_tasks.add_task(_process_url, item.analysis_id, str(url_request.url))
-    else:
-        data = await file.read()
-        if len(data) > 10 * 1024 * 1024:
-            store.reset(item.analysis_id)
-            raise HTTPException(
-                status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
-            )
-        background_tasks.add_task(
-            _process_pdf, item.analysis_id, data, file.filename or "upload.pdf"
-        )
-    return CreateAnalysisResponse(
-        analysis_id=item.analysis_id, state=item.state, progress=item.progress
-    )
-
-
-@app.get("/api/analyses/{analysis_id}", response_model=AnalysisStatus)
-async def get_analysis(analysis_id: str) -> AnalysisStatus:
-    item = store.get(analysis_id)
-    if item is None:
-        raise HTTPException(status_code=404, detail="Analysis not found")
-    return _status(item)
-
-
-@app.get("/api/analyses/{analysis_id}/csv")
-async def get_csv(analysis_id: str):
-    item = store.get(analysis_id)
-    if item is None or item.result is None:
-        raise HTTPException(status_code=404, detail="Analysis not found")
-    output = io.StringIO(newline="")
-    writer = csv.writer(output)
-    writer.writerow(["character", "scene_id", "presence", "line_count"])
-    names = {
-        character.id: character.display_name for character in item.result.characters
-    }
-    for appearance in item.result.appearances:
-        values = [
-            names[appearance.character_id],
-            appearance.scene_id,
-            appearance.presence.value,
-            appearance.line_count,
-        ]
-        writer.writerow(
-            [
-                (
-                    f"'={value}"
-                    if isinstance(value, str) and value[:1] in "=+-@"
-                    else value
+        if url_request is not None:
+            source = await fetch_url(str(url_request.url))
+            if source.content_type == "application/pdf":
+                extracted = await asyncio.wait_for(
+                    asyncio.to_thread(extract_pdf, source.content, source.source_name),
+                    CPU_TIMEOUT_SECONDS,
                 )
-                for value in values
-            ]
-        )
-    from fastapi.responses import Response
-
-    return Response(
-        output.getvalue(),
-        media_type="text/csv",
-        headers={
-            "Content-Disposition": "attachment; filename=throughline-analysis.csv"
-        },
-    )
+                kind = SourceKind.PDF
+            elif source.content_type == "text/plain":
+                extracted = await asyncio.wait_for(
+                    asyncio.to_thread(extract_plain, source.content, source.source_name),
+                    CPU_TIMEOUT_SECONDS,
+                )
+                kind = SourceKind.URL
+            else:
+                extracted = await asyncio.wait_for(
+                    asyncio.to_thread(extract_html, source.content, source.source_name),
+                    CPU_TIMEOUT_SECONDS,
+                )
+                kind = SourceKind.URL
+        else:
+            data = await file.read(MAX_UPLOAD_BYTES + 1)
+            if len(data) > MAX_UPLOAD_BYTES:
+                raise HTTPException(
+                    status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
+                )
+            extracted = await asyncio.wait_for(
+                asyncio.to_thread(extract_pdf, data, file.filename or "upload.pdf"),
+                CPU_TIMEOUT_SECONDS,
+            )
+            kind = SourceKind.PDF
+        return await _finish_parse(extracted, kind)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        log_event("analysis_rejected")
+        _raise_processing_error(exc)

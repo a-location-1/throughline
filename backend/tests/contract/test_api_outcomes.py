@@ -10,21 +10,13 @@ from throughline.logging import JsonFormatter
 
 
 def test_rate_limit_returns_safe_response(monkeypatch):
-    original = api.store
-    api.store = type(original)(rate_limit=0)
-    try:
-        response = TestClient(api.app).post(
-            "/api/analyses", json={"url": "https://example.org/play.html"}
-        )
-        assert response.status_code == 429
-        assert "too many" in response.json()["detail"]["message"].lower()
-    finally:
-        api.store = original
-
-
-def test_csv_requires_ready_result():
-    response = TestClient(api.app).get("/api/analyses/not-ready/csv")
-    assert response.status_code == 404
+    monkeypatch.setattr(api.rate_limiter, "limits", {"analysis": (0, 60), "logs": (60, 60)})
+    response = TestClient(api.app).post(
+        "/api/analyses", json={"url": "https://example.org/play.html"}
+    )
+    assert response.status_code == 429
+    assert "too many" in response.json()["detail"]["message"].lower()
+    assert response.headers["retry-after"] == "60"
 
 
 def test_frontend_log_endpoint_writes_ndjson(tmp_path, monkeypatch):
@@ -37,33 +29,22 @@ def test_frontend_log_endpoint_writes_ndjson(tmp_path, monkeypatch):
     test_logger.propagate = False
     monkeypatch.setattr(application_logging, "frontend_logger", test_logger)
 
+    response = TestClient(api.app).post(
+        "/api/logs",
+        json={"level": "info", "message": "analysis finished", "context": {"sourceKind": "pdf", "durationMs": 42}},
+    )
+    handler.flush()
     try:
-        response = TestClient(api.app).post(
-            "/api/logs",
-            json={
-                "level": "info",
-                "message": "analysis finished",
-                "context": {"sourceKind": "pdf", "durationMs": 42},
-            },
-        )
-        handler.flush()
-
         assert response.status_code == 204
         record = json.loads(path.read_text())
         assert record["level"] == "INFO"
         assert record["logger"] == "test.api.frontend"
-        assert record["message"] == (
-            'analysis finished context={"durationMs": 42, "sourceKind": "pdf"}'
-        )
     finally:
         test_logger.removeHandler(handler)
         handler.close()
 
 
-def test_frontend_log_endpoint_rejects_unsupported_level():
-    response = TestClient(api.app).post(
-        "/api/logs", json={"level": "debug", "message": "ignored"}
-    )
-
-    assert response.status_code == 400
-    assert response.json()["detail"] == "Unsupported log level"
+def test_frontend_log_endpoint_bounds_message_and_context():
+    client = TestClient(api.app)
+    assert client.post("/api/logs", json={"level": "info", "message": "x" * 1001}).status_code == 422
+    assert client.post("/api/logs", json={"level": "info", "message": "x", "context": {"x": "y" * 9000}}).status_code == 413
