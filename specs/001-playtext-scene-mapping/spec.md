@@ -15,6 +15,15 @@
 - Q: What maximum playtext size should the first release support for both PDF uploads and URL-based sources? → A: 200 pages or 10 MB.
 - Q: What format should the download action produce for the completed table and visualization? → A: CSV for the completed table.
 
+### Migration clarification 2026-10-17
+
+- The API uses one synchronous `POST /api/analyses` request that returns the complete `AnalysisResult`; it does not create a server-side job or require polling.
+- The frontend MUST show staged, indeterminate feedback such as uploading, retrieving, and analyzing. These are user-facing estimates, not server-reported percentages.
+- While an analysis request is active, duplicate submission controls MUST be disabled. The active request MUST be cancellable with `AbortController`.
+- CSV export is a client-only action derived from the returned `AnalysisResult`; the backend does not retain analysis results or expose a CSV lookup endpoint.
+- The FastAPI application remains the backend entry point and MUST support configurable production CORS for a separately deployed frontend.
+- Initial hosting assumes one low-volume synchronous function instance. Process-local sliding-window rate limits remain explicit and documented; shared rate limiting is deferred until multi-instance hosting is needed.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Generate a character-by-scene overview (Priority: P1)
@@ -61,7 +70,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 
 **Acceptance Scenarios**:
 
-1. **Given** a valid playtext is being processed, **When** analysis is underway, **Then** the application reports progress through meaningful stages and indicates when the result is ready.
+1. **Given** a valid playtext is being processed, **When** analysis is underway, **Then** the application shows staged indeterminate feedback and indicates when the single analysis request completes; it does not present estimated percentages as measured server progress.
 2. **Given** a submission from which no characters or scenes can be identified, **When** processing completes, **Then** the application rejects it with a clear explanation and a useful next action.
 3. **Given** a source contains recognizable playtext but does not use conventional act, scene, or speaker labels, **When** processing completes, **Then** the application produces the best-supported analysis it can, marks conventional play attributes as unidentified or uncertain, and communicates that limitation instead of rejecting the source solely for missing those labels.
 4. **Given** a completed result, **When** the user selects copy, **Then** a usable representation of the table and visualization summary is placed on the clipboard and the action outcome is communicated.
@@ -97,7 +106,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 
 - **FR-001**: The application MUST allow a user to submit a playtext by pasting a URL.
 - **FR-002**: The application MUST allow a user to submit a playtext by uploading a PDF.
-- **FR-003**: The application MUST report meaningful processing progress from submission through completed results or rejection.
+- **FR-003**: The application MUST provide immediate staged, indeterminate user feedback while the synchronous request is active and clearly announce completion or rejection; it MUST NOT present estimated stages as server-reported percentages.
 - **FR-004**: The application MUST reject an input only when it cannot establish sufficient evidence that the source contains playtext or cannot identify any usable character or speaker after applying its supported best-effort rules, and MUST explain the reason for rejection.
 - **FR-005**: The application MUST identify and report the number and order of acts and scenes supported by the source text.
 - **FR-006**: The application MUST represent a play with no explicit act breaks as a single act when the source supports that interpretation.
@@ -149,7 +158,7 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - **SC-003**: At least 90% of first-time users can submit a supported playtext and locate the completed table and visualization without assistance.
 - **SC-004**: At least 95% of invalid or unreadable submissions receive a user-visible explanation and a next action instead of an apparently successful but empty result.
 - **SC-005**: Users can copy or download a completed result within 30 seconds of the result becoming available.
-- **SC-006**: For supported playtexts up to 200 pages or 10 MB, progress feedback begins within 2 seconds of submission and the interface remains responsive while analysis is in progress.
+- **SC-006**: For supported playtexts up to 200 pages or 10 MB, staged feedback begins immediately on submission, duplicate controls are disabled, cancellation remains available, and the interface remains responsive while the synchronous request is in progress.
 - **SC-007**: In reviewer evaluation, the visualization clearly distinguishes speaking participation, non-speaking presence, and absence for representative scenes and remains usable on current desktop and mobile browsers.
 - **SC-008**: For each fixed fixture category, the application reports scene-detection and character-identification results separately; no category may be omitted from evaluation because the aggregate SC-001 percentage passes.
 - **SC-009**: In a fixture set containing at least 20 ordinary non-play sources and 20 unconventional but recognizable play sources, at least 95% of non-plays are rejected and at least 90% of recognizable plays receive a best-effort analysis or an explicit uncertainty result rather than being rejected solely for missing conventional labels.
@@ -162,7 +171,8 @@ As any tool user, I want clear progress, error, and export controls so that I kn
 - URL submissions point to publicly retrievable content that can be read as a playtext; authentication-protected or inaccessible sources may be rejected.
 - PDF uploads contain selectable or extractable text in the first release; image-only PDFs may be rejected as unreadable.
 - The first release supports playtexts up to 200 pages or 10 MB for both PDF uploads and URL-based sources; larger inputs may be rejected with a size-specific explanation.
-- The first release's download action exports the completed character-by-scene table as CSV; the visualization remains available in the web page.
+- The first release's download action exports the completed character-by-scene table as CSV entirely in the browser; the visualization remains available in the web page.
+- A deployment may process one request synchronously within its configured function duration. No server-side result history or durable job queue is required for the initial low-volume deployment.
 - The source text is authoritative. When formatting is ambiguous, the application reports uncertainty or rejection rather than inventing characters, scenes, or relationships.
 - Structural detection is contextual rather than keyword-only: an isolated word such as "scene" is not a boundary, while a repeated, positionally plausible, consistently formatted marker may be a boundary even when its spelling, capitalization, punctuation, or separator is unconventional.
 - A source is considered recognizable as playtext from combined evidence such as dramatic speech, speaker turns, stage directions, structural repetition, and play-like organization; no single conventional act, scene, or character label is required.

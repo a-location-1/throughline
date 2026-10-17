@@ -1,25 +1,21 @@
 import pytest
 
-from throughline.state import AnalysisStore
+from throughline.state import RateLimiter
 
 
-def test_store_enforces_rate_limit():
-    store = AnalysisStore(rate_limit=1)
-    store.create()
-    with pytest.raises(RuntimeError, match="rate limit"):
-        store.create()
+def test_rate_limiter_enforces_bucket_limit():
+    limiter = RateLimiter({"analysis": (1, 60)})
+    assert limiter.allow("client", "analysis")
+    assert not limiter.allow("client", "analysis")
 
 
-def test_reset_removes_analysis():
-    store = AnalysisStore()
-    item = store.create()
-    store.reset(item.analysis_id)
-    assert store.get(item.analysis_id) is None
+def test_rate_limiter_is_partitioned_by_client_and_bucket():
+    limiter = RateLimiter({"analysis": (1, 60), "logs": (1, 60)})
+    assert limiter.allow("client-a", "analysis")
+    assert limiter.allow("client-b", "analysis")
+    assert limiter.allow("client-a", "logs")
 
 
-def test_rate_limit_is_partitioned_by_client():
-    store = AnalysisStore(rate_limit=1)
-    store.create("client-a")
-    store.create("client-b")
-    with pytest.raises(RuntimeError, match="rate limit"):
-        store.create("client-a")
+def test_rate_limiter_rejects_unknown_bucket():
+    with pytest.raises(KeyError):
+        RateLimiter({"analysis": (1, 60)}).allow("client", "logs")

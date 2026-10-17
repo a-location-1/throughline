@@ -2,12 +2,12 @@
 
 ## PlaytextSubmission
 
-- `submission_id`: opaque request identifier; session-scoped.
+- `submission_id`: deterministic request metadata identifier; it is not used for server-side lookup.
 - `source_kind`: `url` or `pdf`.
 - `source_name`: URL hostname or uploaded filename; no source body is retained.
 - `page_count`: PDF page count when available.
 - `byte_count`: source size.
-- `state`: `queued`, `retrieving`, `extracting`, `parsing`, `ready`, or `rejected`.
+- `state`: `ready` in a successful response; intermediate states are internal implementation details and are not returned as polling records.
 - `failure`: structured code and user-facing message when rejected.
 - `notices`: ordered user-visible warnings or uncertainty statements that do not prevent a best-effort result.
 
@@ -65,4 +65,4 @@ Collective and unnamed speakers retain line counts and remain distinct from name
 - `ordering`: scene order, first-appearance character order, and supported scene line-count sort.
 - `visualization`: ordered IDs, deterministic color assignments, and layout inputs derived from the same appearances.
 
-State transition: `queued -> retrieving/extracting -> parsing -> ready`, or any processing state -> `rejected` with a useful next action.
+The synchronous request internally retrieves, extracts, and parses before returning `ready`, or returns a structured rejection without retaining an intermediate state.

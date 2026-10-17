@@ -45,3 +45,17 @@ Rationale: this directly enforces FR-014 and the deterministic visualization con
 Create golden fixtures for ordinary plays, one-act/no-scene inputs, scene-only inputs, single speakers, unnamed and collective speakers, silent presence, formatting variation, ambiguity, malformed input, and oversized/unreadable sources. Add API contract tests, frontend state/render tests, coverage enforcement above 80%, and Playwright snapshots for plot/table/loading/error/mobile/reduced-motion states.
 
 Rationale: parser variability is the dominant risk; fixed fixtures make supported behavior and regressions visible.
+
+## Decision: Synchronous FastAPI request for initial serverless hosting (2026-10-17)
+
+Replace the initial `POST` plus background task plus polling workflow with one synchronous `POST /api/analyses` that returns the complete `AnalysisResult`. Keep FastAPI as the backend entry point so the parser, acquisition safeguards, typed models, and existing contract-test approach remain reusable for Vercel's Python runtime.
+
+Rationale: the current parser is fast enough that server-reported progress no longer provides enough value to justify process-local job state. The old design relies on `BackgroundTasks` and an in-memory `AnalysisStore`, neither of which is durable across serverless invocations, cold starts, multiple workers, or separate Vercel instances. A direct request also eliminates repeated polling traffic and the need to expose result lookup by opaque ID. The frontend instead shows staged indeterminate feedback, disables duplicate submission, supports `AbortController` cancellation, and renders the response when the request completes.
+
+The initial deployment assumes low volume and one synchronous function instance. A process-local sliding-window limiter is explicit for analysis submissions and frontend logs, with bounded upload and log payloads. If the service scales to multiple instances, rate limiting must move to a shared store or an edge/WAF control. This is a deployment constraint, not a claim that in-memory limits are globally enforceable.
+
+Alternatives considered: Server-Sent Events would preserve authoritative progress but add streaming and proxy complexity without meaningful benefit for fast parsing. A durable queue, object storage, and worker would be more resilient for workloads exceeding function duration, but is deferred until deployed benchmarks show the synchronous limits are insufficient. Client-side parsing would improve privacy and eliminate backend CPU use but requires a substantial parser/PDF port.
+
+## Hosting validation still required
+
+Before production Vercel hosting, test the Python build and runtime with representative 10 MB/200-page PDFs, the `pypdf` version, and the `httpx`/`httpcore`/TLS trust stack in the actual Vercel build environment. Verify function duration, memory, request-body limits, cold starts, outbound URL behavior, and configured CORS. The synchronous design must retain smaller internal timeouts and all SSRF, redirect, content, page, text, and byte limits.
