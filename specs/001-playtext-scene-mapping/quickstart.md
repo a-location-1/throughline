@@ -27,7 +27,9 @@ The frontend makes one synchronous `POST /api/analyses` request and receives the
 
 For separate frontend/backend deployments, set `VITE_API_ROOT` in the frontend to the backend API prefix (for example `https://api.example.com/api`) and set `FRONTEND_ORIGINS` in the backend to a comma-separated list of allowed frontend origins. The default backend origin is `http://localhost:5173`.
 
-The initial process-local limits are 10 MB uploads, 10 MB URL responses, 200 PDF pages, 12 analysis submissions per client per 60 seconds, 60 frontend log events per client per 60 seconds, 1,000 characters per log message, and 8 KB serialized log context. These limits are enforced server-side; the browser checks are only a user experience aid.
+The initial process-local limits are 10 MB uploads, 10 MB URL responses, 200 PDF pages, 11 MiB analysis request bodies, 16 KiB log request bodies, 12 analysis submissions per client per 60 seconds, 60 frontend log events per client per 60 seconds, 1,000 characters per log message, and 8 KB serialized log context. These limits are enforced server-side; the browser checks are only a user experience aid.
+
+For Vercel hosting, configure Firewall custom rate-limit rules for `POST /api/analyses` and `POST /api/logs`, enable managed WAF rulesets/Bot Protection where available, and set the platform request-body limit to no more than 11 MiB for analysis requests. The application limits remain necessary because Vercel/WAF rules are deployment controls and may not apply to local or alternate origins.
 
 ## Validation scenarios
 

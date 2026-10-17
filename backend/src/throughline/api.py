@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import os
 from fastapi import FastAPI, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,8 +38,89 @@ rate_limiter = RateLimiter(
 )
 CPU_TIMEOUT_SECONDS = 60
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
+MAX_ANALYSIS_REQUEST_BYTES = MAX_UPLOAD_BYTES + 1024 * 1024
+MAX_LOG_REQUEST_BYTES = 16 * 1024
 MAX_LOG_MESSAGE_LENGTH = 1000
 MAX_LOG_CONTEXT_BYTES = 8 * 1024
+
+
+class RequestBodyLimitMiddleware:
+    """Reject bounded API bodies before Starlette parses multipart requests."""
+
+    limits = {
+        ("/api/analyses", "POST"): MAX_ANALYSIS_REQUEST_BYTES,
+        ("/api/logs", "POST"): MAX_LOG_REQUEST_BYTES,
+    }
+
+    def __init__(self, app) -> None:
+        self.app = app
+
+    async def __call__(self, scope, receive, send) -> None:
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        limit = self.limits.get((scope["path"], scope["method"]))
+        if limit is None:
+            await self.app(scope, receive, send)
+            return
+
+        content_length = next(
+            (
+                value
+                for key, value in scope.get("headers", [])
+                if key.lower() == b"content-length"
+            ),
+            None,
+        )
+        if content_length is not None:
+            try:
+                if int(content_length) > limit:
+                    await self._reject(send)
+                    return
+            except ValueError:
+                await self._reject(send, "Invalid request size")
+                return
+
+        body = bytearray()
+        more_body = True
+        while more_body and len(body) <= limit:
+            message = await receive()
+            if message["type"] == "http.disconnect":
+                return
+            body.extend(message.get("body", b""))
+            more_body = message.get("more_body", False)
+
+        if len(body) > limit:
+            await self._reject(send)
+            return
+
+        messages = [{"type": "http.request", "body": bytes(body), "more_body": False}]
+
+        async def replay_receive():
+            if messages:
+                return messages.pop(0)
+            return {"type": "http.disconnect"}
+
+        await self.app(scope, replay_receive, send)
+
+    @staticmethod
+    async def _reject(send, message: str = "Request body is too large") -> None:
+        payload = json.dumps({"detail": message}).encode("utf-8")
+        await send(
+            {
+                "type": "http.response.start",
+                "status": 413,
+                "headers": [
+                    (b"content-type", b"application/json"),
+                    (b"content-length", str(len(payload)).encode("ascii")),
+                ],
+            }
+        )
+        await send({"type": "http.response.body", "body": payload})
+
+
+app.add_middleware(RequestBodyLimitMiddleware)
 
 
 def _processing_error_code(error: Exception) -> str:
@@ -138,7 +220,7 @@ async def create_analysis(
             request_bytes = int(content_length)
         except ValueError as exc:
             raise HTTPException(status_code=400, detail="Invalid request size") from exc
-        if request_bytes > MAX_UPLOAD_BYTES + 1024 * 1024:
+        if request_bytes > MAX_ANALYSIS_REQUEST_BYTES:
             raise HTTPException(
                 status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
             )

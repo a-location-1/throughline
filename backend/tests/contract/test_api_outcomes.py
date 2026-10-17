@@ -48,3 +48,21 @@ def test_frontend_log_endpoint_bounds_message_and_context():
     client = TestClient(api.app)
     assert client.post("/api/logs", json={"level": "info", "message": "x" * 1001}).status_code == 422
     assert client.post("/api/logs", json={"level": "info", "message": "x", "context": {"x": "y" * 9000}}).status_code == 413
+
+
+def test_request_body_limit_rejects_oversized_analysis_before_parsing():
+    response = TestClient(api.app).post(
+        "/api/analyses",
+        content=b"x" * (api.MAX_ANALYSIS_REQUEST_BYTES + 1),
+        headers={"content-type": "application/octet-stream"},
+    )
+    assert response.status_code == 413
+
+
+def test_request_body_limit_rejects_oversized_logs():
+    response = TestClient(api.app).post(
+        "/api/logs",
+        content=b"x" * (api.MAX_LOG_REQUEST_BYTES + 1),
+        headers={"content-type": "application/json"},
+    )
+    assert response.status_code == 413

@@ -59,3 +59,11 @@ Alternatives considered: Server-Sent Events would preserve authoritative progres
 ## Hosting validation still required
 
 Before production Vercel hosting, test the Python build and runtime with representative 10 MB/200-page PDFs, the `pypdf` version, and the `httpx`/`httpcore`/TLS trust stack in the actual Vercel build environment. Verify function duration, memory, request-body limits, cold starts, outbound URL behavior, and configured CORS. The synchronous design must retain smaller internal timeouts and all SSRF, redirect, content, page, text, and byte limits.
+
+## Decision: Layered Vercel request and abuse protection (2026-10-17)
+
+The FastAPI application now buffers only up to a bounded request-body limit before handing the request to Starlette. `POST /api/analyses` is capped at 11 MiB, allowing a 10 MiB PDF plus multipart overhead; `POST /api/logs` is capped at 16 KiB. The source and log field limits remain enforced separately after parsing.
+
+Vercel Firewall/WAF protection is complementary and must be configured in the Vercel project Firewall dashboard or API rather than committed as application code. Configure custom rate-limit rules for `POST /api/analyses` and `POST /api/logs`, enable managed rulesets and Bot Protection where available, and use the application limits as defense in depth. The initial suggested thresholds are 12 analysis requests per IP per 60 seconds and 60 log requests per IP per 60 seconds. Vercel platform DDoS mitigation is automatic, but it does not replace endpoint-specific limits.
+
+The WAF configuration is intentionally not represented in `vercel.json`: the repository can define function behavior and headers, but Vercel Firewall rules are project/account configuration and may vary by plan and deployment. After enabling them, verify the rules against preview and production domains, confirm that legitimate frontend requests remain allowed, and monitor Firewall events before tightening actions from challenge to deny.
