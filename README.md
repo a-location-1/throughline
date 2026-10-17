@@ -22,3 +22,9 @@ npm run dev
 ```
 
 The backend accepts inputs up to 10 MB and 200 PDF pages. One synchronous analysis request returns the complete result; source bytes and results are not retained server-side. The frontend shows staged indeterminate feedback, supports cancellation, disables duplicate submissions, and generates CSV locally.
+
+## Deploy with Vercel
+
+The root [`vercel.json`](./vercel.json) configures `backend` and `frontend` as services in one Vercel project. The frontend is public at `/`, while backend requests are public at `/api/*`; the backend remains internal for all other paths. No service binding is required because the frontend uses same-origin `/api` requests and no service calls another service directly.
+
+Use `vercel dev` from the repository root to run both services together locally.
