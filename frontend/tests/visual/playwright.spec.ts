@@ -36,6 +36,7 @@ test('landing workflow exposes keyboard-accessible source controls', async ({ pa
   await page.goto('/');
   await expect(page.getByRole('heading', { name: /see the shape/i })).toBeVisible();
   await expect(page.getByLabel('Play URL')).toBeVisible();
+  await expect(page.getByLabel('Play URL')).toHaveAttribute('placeholder', 'https://www.gutenberg.org/cache/epub/1513/pg1513-images.html');
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: /skip to analysis/i })).toBeFocused();
   await expect(page.getByText(/primarily English-language/i)).toBeVisible();
@@ -48,11 +49,8 @@ test('mobile layout keeps the source action visible without horizontal overflow'
   expect(overflowed).toBeFalsy();
 });
 
-test('submitting a real Gutenberg URL creates a working analysis', async ({ page }) => {
-  const url = 'https://www.gutenberg.org/cache/epub/1513/pg1513.txt';
-
+test('submitting without a URL uses the default Gutenberg play', async ({ page }) => {
   await page.goto('/');
-  await page.getByLabel('Play URL').fill(url);
   await page.getByRole('button', { name: /analyze play/i }).click();
 
   await expect(page.locator('#analysis')).toBeVisible({ timeout: 60000 });
