@@ -27,7 +27,8 @@ export function renderVisualization(
   const control = document.createElement('label'); control.className = 'option-toggle'; const input = document.createElement('input'); input.type = 'checkbox'; input.checked = options.showNonSpeaking; input.setAttribute('aria-label', 'Non-Speaking Characters'); input.addEventListener('change', () => onOptionChange?.({ showNonSpeaking: input.checked })); control.append(input, document.createTextNode('Non-Speaking Characters')); controls.append(control); header.append(controls); container.append(header);
   const body = document.createElement('div'); body.className = 'plot-canvas';
   const scroll = document.createElement('div'); scroll.className = 'plot-scroll';
-  const sceneWidth = 130;
+  const maxLabelWidth = Math.max(64, ...characters.map((character) => character.display_name.length * 7 + 20));
+  const sceneWidth = Math.max(130, maxLabelWidth + 16);
   const margin = sceneWidth / 2;
   const plotWidth = result.scenes.length * sceneWidth + margin * 2;
   const rowHeight = 56;
@@ -79,7 +80,7 @@ export function renderVisualization(
     const lastScene = points[points.length - 1][0];
     const y = row * rowHeight + rowHeight / 2;
     const color = result.visualization.colors[character.id] ?? '#177254';
-    const labelWidth = Math.min(sceneWidth - 16, Math.max(64, character.display_name.length * 7 + 20));
+    const labelWidth = Math.max(64, character.display_name.length * 7 + 20);
     const sceneIndexes = Array.from({ length: lastScene - firstScene + 1 }, (_, index) => firstScene + index);
     const presenceAt = (sceneIndex: number) => appearanceByKey.get(`${character.id}:${result.scenes[sceneIndex].id}`)?.presence;
     const characterGroup = document.createElementNS(NS, 'g');
@@ -110,6 +111,7 @@ export function renderVisualization(
       line.setAttribute('y1', String(y)); line.setAttribute('y2', String(y));
       line.setAttribute('stroke', presence === 'speaking' ? color : blendColor(color, presence === 'non_speaking' ? 0.5 : 0.85));
       line.setAttribute('class', 'flow');
+      line.style.setProperty('--flow-length', `${sceneWidth}px`);
       line.style.setProperty('--flow-delay', `${sceneIndex * 60}ms`);
       characterGroup.append(line);
     };

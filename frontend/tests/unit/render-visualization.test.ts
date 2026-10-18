@@ -91,6 +91,29 @@ it('supports pointer and keyboard selection with an SVG underlay', () => {
 	expect(changes).toEqual([['c1', true], ['c1', false]]);
 });
 
+it('widens every scene column for the longest character label', () => {
+	const container = document.createElement('div');
+	const result = {
+		scenes: [
+			{ id: 's1', ordinal: 1, act_id: 'act-1', label: 'Scene I' },
+			{ id: 's2', ordinal: 2, act_id: 'act-1', label: 'Scene II' },
+		],
+		characters: [{ id: 'c1', display_name: 'CONSTANTINE TREPLIEFF' }],
+		appearances: [
+			{ scene_id: 's1', character_id: 'c1', presence: 'speaking', line_count: 1 },
+		],
+		visualization: { paths: { c1: [[0, 0]] }, colors: { c1: '#177254' } },
+	} as unknown as AnalysisResult;
+
+	renderVisualization(container, result);
+
+	expect(container.querySelector('.plot-mark')?.getAttribute('width')).toBe('167');
+	expect(container.querySelector('.plot-header-grid')?.getAttribute('style')).toContain('width: 549px');
+	expect(container.querySelector('.act-header')?.getAttribute('style')).toContain('repeat(2, 183px)');
+	expect(container.querySelector('svg')?.getAttribute('width')).toBe('549');
+	expect(container.querySelector<SVGLineElement>('.flow')?.style.getPropertyValue('--flow-length')).toBe('183px');
+});
+
 it('restores selected characters and starts flow animation when rerendered', () => {
 	const container = document.createElement('div');
 	const result = {
