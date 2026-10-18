@@ -402,8 +402,19 @@ def _identity_key(display: str) -> str:
 
 
 def _cast_aliases(text: str) -> dict[str, str]:
+    dramatis_header = re.search(
+        r"(?im)^\s*DRAMATIS PERSON[ÆA]E?\s*$", text
+    )
     scene_start = re.search(r"(?im)^\s*(?:SCENE|SCÈNE|SZENE)\s*(?::|\s)", text)
-    preamble = text[: scene_start.start()] if scene_start else ""
+    scene_start_offset = scene_start.start() if scene_start else len(text)
+    if dramatis_header:
+        scene_after_cast = re.search(
+            r"(?im)^\s*(?:SCENE|SCÈNE|SZENE)\s*(?::|\s)",
+            text[dramatis_header.end() :],
+        )
+        if scene_after_cast:
+            scene_start_offset = dramatis_header.end() + scene_after_cast.start()
+    preamble = text[:scene_start_offset]
     cast_start = re.search(r"(?im)^\s*CAST OF CHARACTERS\s*$", preamble)
     if cast_start:
         preamble = preamble[cast_start.end() :]
@@ -438,13 +449,32 @@ def _cast_aliases(text: str) -> dict[str, str]:
                 )
             if match.group(2):
                 aliases[_identity_key(match.group(2))] = canonical
-    dramatis_start = re.search(r"(?im)^\s*DRAMATIS PERSONAE\s*$", preamble)
+    dramatis_start = re.search(r"(?im)^\s*DRAMATIS PERSON[ÆA]E?\s*$", preamble)
     if dramatis_start:
-        for raw_line in preamble[dramatis_start.end() :].splitlines():
-            match = re.match(r"\s*([A-ZÀ-ÿ][A-Za-zÀ-ÿ'’\-]+)\s{2,}", raw_line)
-            if not match:
+        dramatis_section = preamble[dramatis_start.end() :]
+        act_start = re.search(r"(?im)^\s*(?:ACT|ACTO|AKT)\s+", dramatis_section)
+        if act_start:
+            dramatis_section = dramatis_section[: act_start.start()]
+        for raw_line in dramatis_section.splitlines():
+            line = raw_line.strip()
+            if not line:
                 continue
-            canonical = match.group(1).strip()
+            if re.match(r"(?i)players(?:\s|$)", line):
+                canonical = "PLAYERS"
+            elif re.match(r"(?i)two\s+clowns(?:\s|,|$)", line):
+                canonical = "TWO CLOWNS"
+            else:
+                match = re.match(
+                    r"(?i)(?:the\s+)?([A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ'’\-]*)\s*(?:,|$)",
+                    line,
+                )
+                if not match:
+                    match = re.match(
+                        r"\s*([A-ZÀ-ÿ][A-Za-zÀ-ÿ'’\-]+)\s{2,}", raw_line
+                    )
+                if not match:
+                    continue
+                canonical = match.group(1).strip()
             aliases[_identity_key(canonical)] = canonical
             if len(canonical) > 3:
                 aliases.setdefault(_identity_key(canonical[:3]), canonical)
@@ -452,7 +482,10 @@ def _cast_aliases(text: str) -> dict[str, str]:
         r"^([A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ0-9 .,'’\-]{1,48}?)(?:\s*\(([^()]*)\)|,\s*.+)?$"
     )
     for raw_line in preamble.splitlines():
-        match = cast_line.match(raw_line.strip())
+        stripped_line = raw_line.strip()
+        if ACT_RE.match(stripped_line) or SCENE_RE.match(stripped_line):
+            continue
+        match = cast_line.match(stripped_line)
         if not match:
             continue
         canonical = match.group(1).strip()
@@ -476,15 +509,32 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
     normalized = display.strip(" _.,;:")
     normalized_key = _identity_key(normalized)
     for alias_key, canonical in sorted(aliases.items(), key=lambda item: -len(item[0])):
-        if normalized_key.startswith(alias_key):
+        if normalized_key == alias_key or (
+            re.search(r"\bking\s+of\s+denmark$", normalized, re.I)
+            and normalized_key.startswith(alias_key)
+        ):
             return canonical
     return normalized
 
 
 def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     normalized = display.strip(" _.,;:")
+    if re.fullmatch(r"forces\s+marching", normalized, re.I):
+        return []
     if _identity_key(normalized) in {"withdrum", "colours", "colors"}:
         return []
+    if _identity_key(normalized) not in {"twoclowns", "players"}:
+        normalized_key = _identity_key(normalized)
+        for alias_key, canonical in sorted(
+            aliases.items(), key=lambda item: -len(item[0])
+        ):
+            if _identity_key(canonical) == "twoclowns":
+                continue
+            if normalized_key == alias_key or (
+                re.search(r"\bking\s+of\s+denmark$", normalized, re.I)
+                and normalized_key.startswith(alias_key)
+            ):
+                return [canonical]
     parts = re.split(r"\s+and\s+", normalized, maxsplit=1, flags=re.I)
     if len(parts) == 2:
         result: list[str] = []
@@ -495,16 +545,13 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
                 continue
             if _identity_key(part) in {"withdrum", "colours", "colors"}:
                 continue
+            if re.fullmatch(r"forces\s+marching", part, re.I):
+                continue
             exact_alias = aliases.get(_identity_key(part.strip(" .")))
             if exact_alias:
                 result.append(exact_alias)
                 continue
-            part_matches = [
-                canonical
-                for canonical in aliases.values()
-                if re.search(rf"\b{re.escape(canonical)}\b", part, re.I)
-            ]
-            result.extend(part_matches or [_canonical_entrance_display(part, aliases)])
+            result.append(_canonical_entrance_display(part, aliases))
         if result:
             return list(dict.fromkeys(result))
     expanded = _expanded_role_displays(normalized, strip_descriptors=True)
@@ -513,8 +560,8 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     matches = list(
         dict.fromkeys(
             canonical
-            for canonical in aliases.values()
-            if re.search(rf"\b{re.escape(canonical)}\b", normalized, re.I)
+            for alias_key, canonical in aliases.items()
+            if _identity_key(normalized) == alias_key
         )
     )
     if matches:
@@ -538,6 +585,14 @@ def _expanded_role_displays(
         "with drum"
     ):
         return []
+    if re.fullmatch(r"(?:forces\s+)?marching", normalized, re.I):
+        return []
+    if re.fullmatch(r"(?:two|2)\s+clowns?(?:\s+with\b.*)?", normalized, re.I):
+        return ["FIRST CLOWN", "SECOND CLOWN"]
+    if re.fullmatch(
+        r"(?:four\s+or\s+five|certain|some|the)\s+players?", normalized, re.I
+    ):
+        return ["PLAYERS"]
     if key in {"bothmurderers", "murderers"}:
         return ["FIRST MURDERER", "SECOND MURDERER", "THIRD MURDERER"]
     if key == "murderer":
@@ -571,17 +626,24 @@ def _expanded_role_displays(
     return []
 
 
-def _speaker_displays(display: str) -> list[str]:
-    normalized = _normalize_speaker_display(display).strip()
+def _speaker_displays(
+    display: str, aliases: dict[str, str] | None = None
+) -> list[str]:
+    normalized = _normalize_speaker_display(display).strip(" .,")
     expanded = _expanded_role_displays(normalized)
     if expanded:
         return expanded
     shared_parts = _shared_speaker_parts(normalized)
     if shared_parts:
         return shared_parts
-    if normalized.upper() == normalized and "," in normalized:
-        parts = [part.strip(" .") for part in normalized.split(",")]
-        if len(parts) > 1 and all(parts):
+    if "," in normalized:
+        parts = [part.strip(" .,") for part in normalized.split(",")]
+        known_parts = aliases and all(
+            _identity_key(part) in aliases for part in parts if part
+        )
+        if len(parts) > 1 and all(parts) and (
+            normalized == normalized.upper() or known_parts
+        ):
             return parts
     return [normalized]
 
@@ -728,6 +790,10 @@ def _is_unrecognized_midline_label(
 ) -> bool:
     if not current or ":" in line or display == display.upper():
         return False
+    if "," in display:
+        parts = [part.strip(" .,") for part in display.split(",")]
+        if all(_identity_key(part) in aliases for part in parts if part):
+            return False
     key = _identity_key(_normalize_speaker_display(display))
     if key in aliases:
         return False
@@ -761,9 +827,15 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         raise ValueError("not playtext")
     chunks = _chunks(playtext)
     inferred_speaker_aliases = _inferred_speaker_aliases(playtext)
-    cast_aliases = _cast_aliases(text) if re.search(
-        r"(?im)^\s*CHARACTERS\s*$", text
-    ) else _cast_aliases(playtext)
+    cast_source = (
+        text
+        if re.search(
+            r"(?im)^\s*(?:CHARACTERS|DRAMATIS PERSON[ÆA]E?)\s*$", text
+        )
+        and re.match(r"(?im)^\s*ACT\s+(?:I|1)\b", playtext)
+        else playtext
+    )
+    cast_aliases = _cast_aliases(cast_source)
     if re.search(
         r"(?im)^\s*[A-Z][A-Za-zÀ-ÿ'’\-]+\s{2,}",
         text[:play_start],
@@ -832,6 +904,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
     scene_confidence: dict[tuple[str, str], Confidence] = {}
     for scene, chunk in zip(scenes, chunks):
         current: list[CharacterOrSpeaker] = []
+        last_multi_speaker_displays: list[str] = []
         saw_speaker = False
         for raw_line in chunk.text.splitlines():
             line = raw_line.strip()
@@ -911,8 +984,15 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 )
             ):
                 display = _normalize_speaker_display(speaker.group(1))
-                speaker_displays = _speaker_displays(display)
+                if (
+                    _identity_key(display) == "both"
+                    and last_multi_speaker_displays
+                ):
+                    speaker_displays = last_multi_speaker_displays
+                else:
+                    speaker_displays = _speaker_displays(display, speaker_aliases)
                 current = []
+                resolved_speaker_displays: list[str] = []
                 for speaker_display in speaker_displays:
                     qualified_base = _qualified_base(speaker_display)
                     source_key = _identity_key(qualified_base or speaker_display)
@@ -955,6 +1035,9 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                         if speaker_display not in character.ambiguity.alternatives:
                             character.ambiguity.alternatives.append(speaker_display)
                     current.append(character)
+                    resolved_speaker_displays.append(canonical_display)
+                if len(resolved_speaker_displays) > 1:
+                    last_multi_speaker_displays = resolved_speaker_displays
                 saw_speaker = True
                 for character in current:
                     scene_presence.add((scene.id, character.id))

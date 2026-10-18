@@ -381,6 +381,56 @@ This is not play text.
     ]
 
 
+def test_parser_handles_hamlet_cast_and_grouping_conventions(submission):
+    text = """Dramatis Personæ
+HAMLET, Prince of Denmark
+CLAUDIUS, King of Denmark
+LAERTES, Son to Polonius
+VOLTEMAND, Courtier
+MARCELLUS, Officer
+BARNARDO, Officer
+Players
+Two Clowns, Grave-diggers
+
+ACT I
+SCENE I
+Enter Claudius King of Denmark.
+CLAUDIUS.
+Welcome.
+Laertes, Voltemand,
+We have news.
+MARCELLUS and BARNARDO.
+We keep watch.
+HAMLET.
+Are you armed?
+Both.
+We are.
+Enter four or five Players.
+Enter two Clowns with spades.
+Enter Forces marching.
+"""
+
+    result = parse_playtext(text, submission)
+    names = [character.display_name for character in result.characters]
+
+    assert "CLAUDIUS" in names
+    assert "CLAUDIUS KING" not in names
+    assert "HAMLET" in names
+    assert "THE TRAGEDY OF HAMLET" not in names
+    assert "LAERTES" in names
+    assert "VOLTEMAND" in names
+    assert "LAERTES, VOLTEMAND" not in names
+    assert "BOTH" not in names
+    assert "MARCELLUS" in names
+    assert "BARNARDO" in names
+    assert "TWO CLOWNS" not in names
+    assert "FIRST CLOWN" in names
+    assert "SECOND CLOWN" in names
+    assert names.count("PLAYERS") == 1
+    assert "FOUR OR FIVE PLAYERS" not in names
+    assert "FORCES MARCHING" not in names
+
+
 def test_parser_uses_parenthetical_character_aliases(submission):
     text = """THE LIVE CORPSE
     CHARACTERS
