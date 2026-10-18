@@ -22,11 +22,21 @@ from .models import (
 )
 from .visualization import build_visualization
 
-ACT_RE = re.compile(r"^\s*(ACT|ACTO|AKT)\s*[:.]?\s+(.+?)\s*:?[ \t]*$", re.I)
+ACT_RE = re.compile(
+    r"^\s*(ACT|ACTO|AKT)\s*[:.]?\s+([IVXLCDM]+|\d+|"
+    r"ONE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|EIGHT|NINE|TEN)"
+    r"\s*:?[ \t]*$",
+    re.I,
+)
+ORDINAL_ACT_RE = re.compile(
+    r"^\s*(FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|NINTH|TENTH)\s+ACT\s*:?[ \t]*$",
+    re.I,
+)
 SCENE_RE = re.compile(
     r"^\s*(SCENE|SCÈNE|SZENE|CHAPTER)\s*(?::\s+|\s+)(.+?)\s*:?[ \t]*$",
     re.I,
 )
+BARE_SCENE_RE = re.compile(r"^\s*(SCENE|SCÈNE|SZENE)\s*:?[ \t]*$", re.I)
 SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
 PRODUCTION_NOTES_RE = re.compile(r"^\s*PRODUCTION NOTES\s*:?[ \t]*$", re.I)
 FIRST_SCENE_RE = re.compile(
@@ -149,6 +159,35 @@ def _heading(line: str, pattern: re.Pattern[str]) -> tuple[str, str] | None:
     return (match.group(1), match.group(2).strip()) if match else None
 
 
+def _act_heading(line: str) -> tuple[str, str] | None:
+    heading = _heading(line, ACT_RE)
+    if heading:
+        return heading
+    ordinal = ORDINAL_ACT_RE.match(line)
+    if not ordinal:
+        return None
+    values = {
+        "FIRST": "I",
+        "SECOND": "II",
+        "THIRD": "III",
+        "FOURTH": "IV",
+        "FIFTH": "V",
+        "SIXTH": "VI",
+        "SEVENTH": "VII",
+        "EIGHTH": "VIII",
+        "NINTH": "IX",
+        "TENTH": "X",
+    }
+    return "ACT", values[ordinal.group(1).upper()]
+
+
+def _scene_heading(line: str) -> tuple[str, str] | None:
+    heading = _heading(line, SCENE_RE)
+    if heading:
+        return heading
+    return ("SCENE", "I") if BARE_SCENE_RE.match(line) else None
+
+
 def _scene_label(prefix: str, value: str) -> str:
     identifier = re.match(r"(?:[IVXLCDM]+|\d+|[A-Z]+)", value, re.I)
     return f"{prefix.title()} {identifier.group(0) if identifier else value}".strip()
@@ -198,7 +237,7 @@ def _chunks(text: str) -> list[SceneChunk]:
     has_scene_marker = False
     for line_index, line in enumerate(lines):
         clean = line.strip()
-        act_heading = _heading(clean, ACT_RE)
+        act_heading = _act_heading(clean)
         if act_heading and act_heading[1][:1].islower():
             act_heading = None
         previous_clean = lines[line_index - 1].strip() if line_index else ""
@@ -210,10 +249,10 @@ def _chunks(text: str) -> list[SceneChunk]:
             and markers
             and previous_clean
             and not re.match(r"^(?:CURTAIN|THE END)\.?\s*$", previous_clean, re.I)
-            and not SCENE_RE.match(next_clean)
+            and not _scene_heading(next_clean)
         ):
             act_heading = None
-        scene_heading = _heading(clean, SCENE_RE)
+        scene_heading = _scene_heading(clean)
         numbered_scene = NUMBERED_SCENE_RE.match(clean)
         section_heading = SECTION_RE.match(clean)
         roman_scene = ROMAN_SCENE_RE.match(clean)
@@ -354,8 +393,8 @@ def _has_play_evidence(text: str) -> bool:
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if (
-            ACT_RE.match(line)
-            or SCENE_RE.match(line)
+            _act_heading(line)
+            or _scene_heading(line)
             or SPECIAL_ACT_RE.match(line)
             or NUMBERED_SCENE_RE.match(line)
             or ROMAN_SCENE_RE.match(line)
@@ -379,8 +418,8 @@ def _has_play_evidence(text: str) -> bool:
 
 def _tail_contains_play(text: str) -> bool:
     return any(
-        ACT_RE.match(line.strip())
-        or SCENE_RE.match(line.strip())
+        _act_heading(line.strip())
+        or _scene_heading(line.strip())
         or SPECIAL_ACT_RE.match(line.strip())
         or NUMBERED_SCENE_RE.match(line.strip())
         or ROMAN_SCENE_RE.match(line.strip())
@@ -483,7 +522,7 @@ def _cast_aliases(text: str) -> dict[str, str]:
     )
     for raw_line in preamble.splitlines():
         stripped_line = raw_line.strip()
-        if ACT_RE.match(stripped_line) or SCENE_RE.match(stripped_line):
+        if _act_heading(stripped_line) or _scene_heading(stripped_line):
             continue
         match = cast_line.match(stripped_line)
         if not match:
@@ -512,6 +551,20 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
         if normalized_key == alias_key or (
             re.search(r"\bking\s+of\s+denmark$", normalized, re.I)
             and normalized_key.startswith(alias_key)
+        ):
+            return canonical
+        if re.match(
+            rf"^{re.escape(canonical)}\s+from\b",
+            normalized,
+            re.I,
+        ) or re.match(
+            rf"^{re.escape(canonical)}\s+(?:at|in|on|off)\b",
+            normalized,
+            re.I,
+        ) or re.match(
+            rf"^{re.escape(alias_key)}\s+(?:from|at|in|on|off)\b",
+            normalized,
+            re.I,
         ):
             return canonical
     for alias_key, canonical in sorted(aliases.items(), key=lambda item: -len(item[0])):
@@ -914,8 +967,8 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         cast_aliases.update(_cast_aliases(text))
     speaker_aliases = {**inferred_speaker_aliases, **cast_aliases}
     unheaded_play = not any(
-        ACT_RE.match(line.strip())
-        or SCENE_RE.match(line.strip())
+        _act_heading(line.strip())
+        or _scene_heading(line.strip())
         or SPECIAL_ACT_RE.match(line.strip())
         or NUMBERED_SCENE_RE.match(line.strip())
         or ROMAN_SCENE_RE.match(line.strip())
@@ -1047,8 +1100,8 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             if (
                 speaker
                 and not (
-                    ACT_RE.match(line)
-                    or SCENE_RE.match(line)
+                    _act_heading(line)
+                    or _scene_heading(line)
                     or SPECIAL_ACT_RE.match(line)
                 )
                 and (
@@ -1154,7 +1207,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 dict.fromkeys(
                     name
                     for name in cast_aliases.values()
-                    if not ACT_RE.match(name) and not SCENE_RE.match(name)
+                    if not _act_heading(name) and not _scene_heading(name)
                 )
             )
             if len(cast_names) == 1:

@@ -121,6 +121,50 @@ Re-enter others of the Watch with Friar Lawrence.
     assert not names & {"MONUMENT", "A", "SOME", "OTHERS", "THE"}
 
 
+def test_parser_normalizes_location_qualified_entrances(submission):
+    text = """CHARACTERS
+CONSTANTINE TREPLIEFF, her son
+
+ACT I
+SCENE I
+Enter TREPLIEFF from behind the stage.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == [
+        "CONSTANTINE TREPLIEFF"
+    ]
+
+
+def test_parser_recognizes_ordinal_act_headings(submission):
+    text = """FIRST ACT
+SCENE
+ALICE.
+Opening.
+ACT DROP
+SECOND ACT
+SCENE
+BOB.
+Reply.
+ACT DROP
+THIRD ACT
+SCENE
+ALICE.
+Closing.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [(act.label, act.kind) for act in result.acts] == [
+        ("Act I", ActKind.ACT),
+        ("Act II", ActKind.ACT),
+        ("Act III", ActKind.ACT),
+    ]
+    assert "SECOND ACT" not in {character.display_name for character in result.characters}
+    assert "THIRD ACT" not in {character.display_name for character in result.characters}
+
+
 def test_parser_keeps_qualified_speaker_ambiguous_and_distinct(submission):
     text = """SCENE I
     CAPULET
