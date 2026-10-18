@@ -30,6 +30,12 @@ def test_url_analysis_returns_complete_result(monkeypatch):
         (b"", "text/plain", "SOURCE_EMPTY", "no readable text"),
         (b"<html><body></body></html>", "text/html", "SOURCE_EMPTY", "no readable text"),
         (b"This is an ordinary webpage mentioning a scene.", "text/plain", "NOT_PLAYTEXT", "contains a playtext"),
+        (
+            b"<html><body>Google<br>Gmail<br>Images<br>Sign in<br>Business Solutions<br>About Google<br>Privacy<br>Terms</body></html>",
+            "text/html",
+            "NOT_PLAYTEXT",
+            "contains a playtext",
+        ),
     ],
 )
 def test_url_failures_return_immediate_error(

@@ -493,6 +493,28 @@ Read more about our company below.
         raise AssertionError("ordinary prose must not be accepted as a playtext")
 
 
+def test_parser_rejects_title_case_webpage_navigation_as_playtext(submission):
+    text = """Google
+Gmail
+Images
+Sign in
+Advanced search
+Advertising
+Business Solutions
+About Google
+Privacy
+Terms
+Google apps
+"""
+
+    try:
+        parse_playtext(text, submission)
+    except ValueError as exc:
+        assert str(exc) == "not playtext"
+    else:
+        raise AssertionError("webpage navigation must not be accepted as a playtext")
+
+
 def test_parser_handles_unheaded_gutenberg_play_and_notes_boundary(submission):
     text = """Preface and publication history.
 

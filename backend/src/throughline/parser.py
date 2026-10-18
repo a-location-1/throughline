@@ -364,8 +364,14 @@ def _has_play_evidence(text: str) -> bool:
         ):
             return True
         speaker = SPEAKER_PREFIX_RE.match(line) or SPEAKER_RE.match(line)
-        if speaker and _looks_like_speaker(
-            line, speaker.group(1), True, known_speakers
+        if (
+            speaker
+            and (
+                ":" in line
+                or line.rstrip().endswith((".", "!", "?"))
+                or speaker.group(1).strip() == speaker.group(1).strip().upper()
+            )
+            and _looks_like_speaker(line, speaker.group(1), True, known_speakers)
         ):
             return True
     return False
