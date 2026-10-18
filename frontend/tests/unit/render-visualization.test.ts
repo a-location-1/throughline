@@ -61,6 +61,49 @@ it('renders act and scene headers with presence-aware fixed-height rows', () => 
 	expect(container.querySelector('.plot-mark')?.getAttribute('width')).toBe('64');
 	expect(container.querySelector('.plot-mark')?.getAttribute('height')).toBe('22');
 	expect(container.querySelector('svg')?.getAttribute('width')).toBe('520');
-	const svg = container.querySelector('svg')!;
-	expect([...svg.children].indexOf(container.querySelectorAll('.plot-mark')[1])).toBeGreaterThan([...svg.children].indexOf(container.querySelector('.flow')!));
+	const characterLine = container.querySelector('.character-line')!;
+	expect(characterLine.contains(container.querySelector('.plot-mark'))).toBe(true);
+});
+
+it('supports pointer and keyboard selection with an SVG underlay', () => {
+	const container = document.createElement('div');
+	const result = {
+		scenes: [{ id: 's1', ordinal: 1, label: 'Scene I' }],
+		characters: [{ id: 'c1', display_name: 'Alice' }],
+		appearances: [{ scene_id: 's1', character_id: 'c1', presence: 'speaking', line_count: 1 }],
+		visualization: { paths: { c1: [[0, 0]] }, colors: { c1: '#177254' } },
+	} as unknown as AnalysisResult;
+	const changes: Array<[string, boolean]> = [];
+
+	renderVisualization(container, result, { showNonSpeaking: false }, undefined, (characterId, selected) => changes.push([characterId, selected]));
+
+	const characterLine = container.querySelector<SVGGElement>('.character-line')!;
+	expect(characterLine.getAttribute('aria-pressed')).toBe('false');
+	characterLine.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+	expect(characterLine.getAttribute('aria-pressed')).toBe('true');
+	expect(characterLine.classList.contains('is-selected')).toBe(true);
+	expect(changes).toEqual([['c1', true]]);
+	expect(container.querySelector('.selection-ring')).toBeTruthy();
+	expect(container.querySelector('.plot-character-label')?.getAttribute('class')).toContain('plot-character-label');
+
+	characterLine.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+	expect(characterLine.getAttribute('aria-pressed')).toBe('false');
+	expect(changes).toEqual([['c1', true], ['c1', false]]);
+});
+
+it('restores selected characters and starts flow animation when rerendered', () => {
+	const container = document.createElement('div');
+	const result = {
+		scenes: [{ id: 's1', ordinal: 1, label: 'Scene I' }],
+		characters: [{ id: 'c1', display_name: 'Alice' }],
+		appearances: [{ scene_id: 's1', character_id: 'c1', presence: 'speaking', line_count: 1 }],
+		visualization: { paths: { c1: [[0, 0]] }, colors: { c1: '#177254' } },
+	} as unknown as AnalysisResult;
+
+	renderVisualization(container, result, { showNonSpeaking: false, selectedCharacterIds: new Set(['c1']) });
+
+	expect(container.querySelector('.plot-animation')).toBeTruthy();
+	expect(container.querySelector('.character-line')?.getAttribute('aria-pressed')).toBe('true');
+	expect(container.querySelector('.character-line')?.classList.contains('is-selected')).toBe(true);
+	expect(container.querySelector('.flow')?.getAttribute('class')).toContain('flow');
 });

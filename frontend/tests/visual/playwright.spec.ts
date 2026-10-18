@@ -89,6 +89,41 @@ test('uploading a generated PDF completes a real end-to-end analysis', async ({ 
   await expect(page.locator('#result-meta')).toContainText(/acts|scenes|characters/i, { timeout: 120000 });
 });
 
+test('plot character selection persists across view changes and respects reduced motion', async ({ page }) => {
+  const pdfText = [
+    'ACT I',
+    'SCENE I',
+    'ALICE',
+    'Welcome.',
+    'SCENE II',
+    'BOB',
+    'I have arrived.',
+  ].join('\n');
+
+  await page.goto('/');
+  await page.locator('#pdf-upload').setInputFiles({
+    name: 'selection.pdf',
+    mimeType: 'application/pdf',
+    buffer: buildPdfFromText(pdfText),
+  });
+  await expect(page.locator('#plot-view svg')).toBeVisible({ timeout: 120000 });
+  const alice = page.getByRole('button', { name: "Highlight Alice's journey" });
+  await alice.dispatchEvent('click');
+  await expect(alice).toHaveAttribute('aria-pressed', 'true');
+  await expect(alice).toHaveClass(/is-selected/);
+
+  await page.getByRole('button', { name: 'Table', exact: true }).click();
+  await page.getByRole('button', { name: 'Plot', exact: true }).click();
+  const restoredAlice = page.getByRole('button', { name: "Highlight Alice's journey" });
+  await expect(restoredAlice).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#plot-view svg')).toHaveClass(/plot-animation/);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.getByRole('button', { name: 'Table', exact: true }).click();
+  await page.getByRole('button', { name: 'Plot', exact: true }).click();
+  await expect(page.locator('#plot-view .flow').first()).toHaveCSS('stroke-dashoffset', '0px');
+});
+
 test('submitting a public URL completes a real end-to-end analysis', async ({ page }) => {
   await page.goto('/');
   await page.getByLabel('Play URL').fill('https://www.gutenberg.org/cache/epub/1513/pg1513.txt');
