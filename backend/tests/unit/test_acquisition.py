@@ -123,7 +123,11 @@ async def test_fetch_url_requests_uncompressed_responses(monkeypatch):
 
     source = await fetch_url("https://example.org/play")
 
-    assert captured["headers"] == {"Accept-Encoding": "identity"}
+    assert captured["headers"] == {
+        "Accept": "text/html, text/plain, application/pdf;q=0.9, */*;q=0.8",
+        "Accept-Encoding": "identity",
+        "User-Agent": "Throughline/0.1 (+https://github.com/a-location-1/throughline)",
+    }
     assert source.content == b"ALICE\nHello"
 
 

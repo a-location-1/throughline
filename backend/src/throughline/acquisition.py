@@ -17,6 +17,11 @@ from httpcore._backends.auto import AutoBackend
 MAX_BYTES = 10 * 1024 * 1024
 MAX_REDIRECTS = 4
 TIMEOUT = httpx.Timeout(connect=5, read=20, write=10, pool=5)
+REQUEST_HEADERS = {
+    "Accept": "text/html, text/plain, application/pdf;q=0.9, */*;q=0.8",
+    "Accept-Encoding": "identity",
+    "User-Agent": "Throughline/0.1 (+https://github.com/a-location-1/throughline)",
+}
 REJECT_HOST_SUFFIXES = (
     ".localhost",
     ".local",
@@ -205,7 +210,7 @@ async def _fetch_url(url: str) -> RetrievedSource:
             timeout=TIMEOUT,
             follow_redirects=False,
             trust_env=False,
-            headers={"Accept-Encoding": "identity"},
+            headers=REQUEST_HEADERS,
             transport=_PinnedTransport(addresses),
         ) as client:
             async with client.stream("GET", current) as response:
