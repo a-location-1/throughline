@@ -1,11 +1,34 @@
 import type { AnalysisResult } from './api';
 
-export function renderTable(container: HTMLElement, result: AnalysisResult): void {
+export interface TableRenderOptions {
+  showNonSpeaking: boolean;
+  showPresenceLabels: boolean;
+  showLineCounts: boolean;
+}
+
+export function renderTable(
+  container: HTMLElement,
+  result: AnalysisResult,
+  options: TableRenderOptions = {
+    showNonSpeaking: false,
+    showPresenceLabels: false,
+    showLineCounts: false,
+  },
+  onOptionChange?: (options: TableRenderOptions) => void,
+): void {
   container.replaceChildren();
   const title = document.createElement('div'); title.className = 'table-toolbar';
-  const heading = document.createElement('span'); heading.className = 'plot-title'; heading.textContent = 'Scene presence';
-  const subtitle = document.createElement('span'); subtitle.className = 'plot-subtitle'; subtitle.textContent = 'Text labels distinguish speaking, non-speaking, and absence.';
-  title.append(heading, subtitle); container.append(title);
+  const controls = document.createElement('div'); controls.className = 'analysis-options';
+  const addToggle = (label: string, checked: boolean, key: keyof TableRenderOptions) => {
+    const control = document.createElement('label'); control.className = 'option-toggle';
+    const input = document.createElement('input'); input.type = 'checkbox'; input.checked = checked; input.setAttribute('aria-label', label);
+    input.addEventListener('change', () => onOptionChange?.({ ...options, [key]: input.checked }));
+    control.append(input, document.createTextNode(label)); controls.append(control);
+  };
+  addToggle('Non-Speaking Characters', options.showNonSpeaking, 'showNonSpeaking');
+  addToggle('Scene Presence Labels', options.showPresenceLabels, 'showPresenceLabels');
+  addToggle('Line Counts', options.showLineCounts, 'showLineCounts');
+  title.append(controls); container.append(title);
   const scroll = document.createElement('div'); scroll.className = 'table-scroll';
   const table = document.createElement('table'); table.setAttribute('aria-label', 'Character by scene presence');
   const caption = document.createElement('caption'); caption.className = 'sr-only'; caption.textContent = 'Character presence by ordered scene'; table.append(caption);
@@ -17,15 +40,27 @@ export function renderTable(container: HTMLElement, result: AnalysisResult): voi
     const actId = result.scenes[index].act_id;
     let end = index + 1;
     while (end < result.scenes.length && result.scenes[end].act_id === actId) end += 1;
-    const cell = document.createElement('th'); cell.scope = 'colgroup'; cell.colSpan = end - index; cell.textContent = acts.get(actId)?.label ?? actId; cell.className = acts.get(actId)?.kind ?? 'act'; actHeader.append(cell);
+    const cell = document.createElement('th'); cell.scope = 'colgroup'; cell.colSpan = end - index; cell.textContent = acts.get(actId)?.label ?? actId; cell.className = `${acts.get(actId)?.kind ?? 'act'} act-end`; actHeader.append(cell);
     index = end;
   }
   const sceneHeader = document.createElement('tr'); sceneHeader.className = 'scene-header';
-  for (const scene of result.scenes) { const cell = document.createElement('th'); cell.scope = 'col'; cell.textContent = scene.label; cell.title = `Scene ${scene.ordinal}`; sceneHeader.append(cell); }
+  for (const [index, scene] of result.scenes.entries()) { const cell = document.createElement('th'); cell.scope = 'col'; cell.textContent = scene.label; cell.title = `Scene ${scene.ordinal}`; if (index === result.scenes.length - 1 || result.scenes[index + 1].act_id !== scene.act_id) cell.className = 'act-end'; sceneHeader.append(cell); }
   const thead = document.createElement('thead'); thead.append(actHeader, sceneHeader); table.append(thead);
   const body = document.createElement('tbody');
   const byKey = new Map(result.appearances.map((appearance) => [`${appearance.character_id}:${appearance.scene_id}`, appearance]));
-  for (const character of result.characters) { const row = document.createElement('tr'); const name = document.createElement('th'); name.scope = 'row'; name.textContent = character.display_name; row.append(name); for (const scene of result.scenes) { const cell = document.createElement('td'); const appearance = byKey.get(`${character.id}:${scene.id}`); cell.textContent = appearance ? appearance.presence === 'speaking' ? `Speaking (${appearance.line_count})` : 'Present, silent' : 'Absent'; cell.className = appearance?.presence ?? 'absent'; row.append(cell); } body.append(row); }
+  const speakingCharacterIds = new Set(result.appearances.filter((appearance) => appearance.presence === 'speaking').map((appearance) => appearance.character_id));
+  const characters = options.showNonSpeaking ? result.characters : result.characters.filter((character) => speakingCharacterIds.has(character.id));
+  for (const character of characters) {
+    const row = document.createElement('tr'); const name = document.createElement('th'); name.scope = 'row'; name.textContent = character.display_name; row.append(name);
+    for (const [index, scene] of result.scenes.entries()) {
+      const cell = document.createElement('td'); const appearance = byKey.get(`${character.id}:${scene.id}`);
+      const label = appearance?.presence === 'speaking' ? 'Speaking' : appearance?.presence === 'non_speaking' ? 'Present, silent' : 'Absent';
+      const count = appearance?.presence === 'speaking' && options.showLineCounts ? String(appearance.line_count) : '';
+      cell.textContent = options.showPresenceLabels ? `${label}${count ? ` (${count})` : ''}` : count;
+      cell.className = `${appearance?.presence ?? 'absent'}${index === result.scenes.length - 1 || result.scenes[index + 1].act_id !== scene.act_id ? ' act-end' : ''}`; row.append(cell);
+    }
+    body.append(row);
+  }
   table.append(body); scroll.append(table); container.append(scroll);
   const ambiguityNotes = result.characters.filter((character) => character.ambiguity?.alternatives.length);
   if (ambiguityNotes.length) {
