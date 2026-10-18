@@ -87,6 +87,28 @@ test('uploading a generated PDF completes a real end-to-end analysis', async ({ 
   await expect(page.locator('#result-meta')).toContainText(/acts|scenes|characters/i, { timeout: 120000 });
 });
 
+test('dropping a PDF completes a real end-to-end analysis', async ({ page }) => {
+  test.setTimeout(120000);
+  const pdfText = [
+    'ACT I',
+    'SCENE I',
+    'ALICE',
+    'Welcome.',
+  ].join('\n');
+  const pdfBytes = Array.from(buildPdfFromText(pdfText));
+
+  await page.goto('/');
+  await page.locator('.upload-zone').evaluate((zone, bytes) => {
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(new File([new Uint8Array(bytes)], 'dropped-play.pdf', { type: 'application/pdf' }));
+    zone.dispatchEvent(new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer }));
+  }, pdfBytes);
+
+  await expect(page.locator('#analysis')).toBeVisible({ timeout: 120000 });
+  await expect(page.locator('#result-status')).toContainText('Analysis ready', { timeout: 120000 });
+  await expect(page.locator('#results-heading')).not.toHaveText('', { timeout: 120000 });
+});
+
 test('plot character selection persists across view changes and respects reduced motion', async ({ page }) => {
   const pdfText = [
     'ACT I',
