@@ -28,7 +28,9 @@ def extract_html(data: bytes, source_name: str) -> ExtractedText:
     for selector in (".footnotes", ".fnanchor", ".pagenum"):
         for element in soup.select(selector):
             element.decompose()
-    text = soup.get_text("\n", strip=True)
+    for element in soup.select(".scenedesc"):
+        element.replace_with(f"\n{element.get_text(' ', strip=True)}\n")
+    text = re.sub(r"\s+([.,;:!?])", r"\1", soup.get_text("\n", strip=True))
     if not text.strip():
         raise ValueError("empty source")
     return ExtractedText(text, source_name, byte_count=len(data))

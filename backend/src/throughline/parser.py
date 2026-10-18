@@ -69,8 +69,8 @@ PLAY_TITLE_RE = re.compile(
     r"(?m)^\s*[A-Z][A-Z0-9 &'’\-]{2,}\s*\n\s*(?i:by)\s*(?:[A-Z].*)?$"
 )
 ENTER_RE = re.compile(
-    r"^\s*\(?\s*(?:re-)?entr(?:y|ance)\s+of\s+(.+?)(?:[.,;:]|\)?$)|"
-    r"^\s*\(?\s*(?:re-)?enter(?:s)?\s+(.+?)(?:[.,;:]|\)?$)",
+    r"^\s*\(?\s*(?:re-)?entr(?:y|ance)\s+of\s+(.+?)(?:[.;:]|\)?$)|"
+    r"^\s*\(?\s*(?:re-)?enter(?:s)?\s+(.+?)(?:[.;:]|\)?$)",
     re.I,
 )
 STAGE_LABEL_RE = re.compile(r"^\s*MUSIC\s*:", re.I)
@@ -532,8 +532,32 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     normalized = display.strip(" _.,;:")
     if re.fullmatch(r"forces\s+marching", normalized, re.I):
         return []
+    if re.fullmatch(
+        r"(?:a|an|the|some|others|another|three\s+or\s+four)(?:\s+of\s+the)?",
+        normalized,
+        re.I,
+    ):
+        return []
     if _identity_key(normalized) in {"withdrum", "colours", "colors"}:
         return []
+
+    def resolve_part(part: str) -> list[str]:
+        part = part.strip(" _.,;:")
+        if not part or re.fullmatch(r"&c", part, re.I):
+            return []
+        if re.fullmatch(r"(?:a|an|the|some|others|another)", part, re.I):
+            return []
+        if re.fullmatch(r"prince\s+escalus", part, re.I):
+            return [aliases.get("prince", "PRINCE")]
+        exact_alias = aliases.get(_identity_key(part))
+        if exact_alias:
+            return [exact_alias]
+        expanded = _expanded_role_displays(part, strip_descriptors=True)
+        if expanded and not part.casefold().endswith("monument"):
+            return expanded
+        canonical = _canonical_entrance_display(part, aliases)
+        return [] if canonical.casefold().endswith("monument") else [canonical]
+
     if _identity_key(normalized) not in {"twoclowns", "players"}:
         normalized_key = _identity_key(normalized)
         for alias_key, canonical in sorted(
@@ -546,6 +570,26 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
                 and normalized_key.startswith(alias_key)
             ):
                 return [canonical]
+    if "," in normalized:
+        parts = [
+            re.sub(r"^(?:with|and)\s+", "", part.strip(" _.,;:"), flags=re.I)
+            for part in re.split(r"\s*(?:,|and)\s*", normalized, flags=re.I)
+            if part.strip(" _.,;:") and not re.fullmatch(r"&c", part.strip(), re.I)
+            and not re.fullmatch(
+                r"(?:a|an|the|some|others|another)", part.strip(), re.I
+            )
+        ]
+        resolved_parts = [
+            resolved
+            for part in parts
+            for resolved in resolve_part(part)
+        ]
+        if parts and all(
+            resolve_part(part)
+            or re.match(r"^[A-ZÀ-Ý]", part)
+            for part in parts
+        ):
+            return list(dict.fromkeys(resolved_parts))
     parts = re.split(r"\s+and\s+", normalized, maxsplit=1, flags=re.I)
     if len(parts) == 2:
         result: list[str] = []
@@ -567,7 +611,7 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
                 result.append(canonical)
             elif (
                 part[:1].isupper()
-                or part.casefold() in {"others", "attendants"}
+                or part.casefold() in {"attendants"}
                 or re.match(r"(?:his|her)\s+", part, re.I)
             ):
                 result.append(part)
@@ -575,6 +619,8 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
             return list(dict.fromkeys(result))
     expanded = _expanded_role_displays(normalized, strip_descriptors=True)
     if expanded:
+        if normalized.casefold().endswith("monument"):
+            return []
         return expanded
     matches = list(
         dict.fromkeys(
@@ -634,7 +680,13 @@ def _expanded_role_displays(
         return ["LADY MACDUFF", "SON"]
     if not strip_descriptors:
         return []
-    base = re.sub(r"^(?:an?|the|another)\s+", "", normalized, flags=re.I)
+    base = re.sub(
+        r"^(?:(?:an?|the|some|others?|another|certain|several|many)\s+)+"
+        r"(?:of\s+the\s+)?",
+        "",
+        normalized,
+        flags=re.I,
+    )
     base = re.split(
         r"\s+(?:with|attending|to|of)\s+", base, maxsplit=1, flags=re.I
     )[0].strip()
@@ -925,9 +977,16 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
         current: list[CharacterOrSpeaker] = []
         last_multi_speaker_displays: list[str] = []
         saw_speaker = False
+        in_stage_direction = False
         for raw_line in chunk.text.splitlines():
             line = raw_line.strip()
             if not line or PAGE_NUMBER_RE.fullmatch(line):
+                continue
+            if line.startswith("["):
+                in_stage_direction = True
+            if in_stage_direction:
+                if line.endswith("]"):
+                    in_stage_direction = False
                 continue
             entrance = ENTER_RE.search(line)
             if entrance:

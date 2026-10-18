@@ -26,6 +26,17 @@ def test_html_extraction_omits_footnotes_and_page_numbers():
     assert "[1]" not in text
 
 
+def test_html_extraction_keeps_inline_scene_characters_together():
+    html = b"""
+    <p class="scenedesc">Enter a <span class="charname">Servant</span>
+    and <span class="charname">Page</span>.</p>
+    """
+
+    text = extract_html(html, "play.html").text
+
+    assert "Enter a Servant and Page." in text
+
+
 def test_pdf_signature_is_required():
     with pytest.raises(ValueError):
         extract_pdf(b"not a pdf", "bad.pdf")

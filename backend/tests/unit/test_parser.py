@@ -80,6 +80,47 @@ def test_parser_strips_parenthetical_delivery_notes_from_speaker_names(submissio
     assert result.appearances[0].line_count == 1
 
 
+def test_parser_normalizes_html_style_entrances(submission):
+    text = """Dramatis Personae
+Prince
+Attendants
+Capulet
+Paris
+Servant
+Romeo
+Mercutio
+Benvolio
+Watch
+Balthasar
+Friar Lawrence
+
+ACT I
+SCENE I
+Enter Prince Escalus, with Attendants.
+Enter Capulet, Paris and Servant.
+Enter Romeo, Mercutio, Benvolio, with Maskers.
+Enters the monument.
+Re-enter some of the Watch with Balthasar.
+Re-enter others of the Watch with Friar Lawrence.
+"""
+
+    result = parse_playtext(text, submission)
+
+    names = {character.display_name for character in result.characters}
+    assert {
+        "PRINCE",
+        "ATTENDANTS",
+        "CAPULET",
+        "PARIS",
+        "SERVANT",
+        "ROMEO",
+        "MERCUTIO",
+        "BENVOLIO",
+        "WATCH",
+    } <= names
+    assert not names & {"MONUMENT", "A", "SOME", "OTHERS", "THE"}
+
+
 def test_parser_keeps_qualified_speaker_ambiguous_and_distinct(submission):
     text = """SCENE I
     CAPULET
