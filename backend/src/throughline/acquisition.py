@@ -43,6 +43,21 @@ class RetrievedSource:
     source_name: str
 
 
+class AcquisitionError(ValueError):
+    def __init__(
+        self, category: str, *, status_code: int | None = None, content_type: str | None = None
+    ) -> None:
+        self.category = category
+        self.status_code = status_code
+        self.content_type = content_type
+        message = {
+            "unsupported_content_type": "unsupported content type",
+            "http_status": "HTTP request failed",
+            "network_error": "network request failed",
+        }.get(category, category)
+        super().__init__(message)
+
+
 def _public_host(host: str) -> tuple[str, ...]:
     try:
         addresses = {
@@ -70,7 +85,7 @@ def _public_host(host: str) -> tuple[str, ...]:
             raise ValueError("disallowed destination")
         if parsed.version == 4 and address.startswith("169.254."):
             raise ValueError("disallowed destination")
-    return tuple(addresses)
+    return tuple(sorted(addresses, key=lambda address: ipaddress.ip_address(address).version != 4))
 
 
 def validate_url(value: str) -> str:
@@ -116,9 +131,17 @@ class _PinnedNetworkBackend(httpcore.AsyncNetworkBackend):
         local_address: str | None = None,
         socket_options=None,
     ):
-        return await self._backend.connect_tcp(
-            self._addresses[0], port, timeout, local_address, socket_options
-        )
+        last_error: OSError | None = None
+        for address in self._addresses:
+            try:
+                return await self._backend.connect_tcp(
+                    address, port, timeout, local_address, socket_options
+                )
+            except OSError as exc:
+                last_error = exc
+        if last_error is not None:
+            raise last_error
+        raise OSError("no validated destination addresses")
 
 
 class _PinnedResponseStream(httpx.AsyncByteStream):
@@ -167,6 +190,15 @@ class _PinnedTransport(httpx.AsyncBaseTransport):
 
 
 async def fetch_url(url: str) -> RetrievedSource:
+    try:
+        return await _fetch_url(url)
+    except AcquisitionError:
+        raise
+    except httpx.RequestError as exc:
+        raise AcquisitionError("network_error") from exc
+
+
+async def _fetch_url(url: str) -> RetrievedSource:
     current, addresses = _validate_and_resolve(url)
     for _ in range(MAX_REDIRECTS + 1):
         async with httpx.AsyncClient(
@@ -190,7 +222,12 @@ async def fetch_url(url: str) -> RetrievedSource:
                         raise ValueError("unsafe redirect")
                     current, addresses = _validate_and_resolve(str(redirect_url))
                     continue
-                response.raise_for_status()
+                try:
+                    response.raise_for_status()
+                except httpx.HTTPStatusError as exc:
+                    raise AcquisitionError(
+                        "http_status", status_code=response.status_code
+                    ) from exc
                 content_type = (
                     response.headers.get("content-type", "").split(";", 1)[0].lower()
                 )
@@ -199,7 +236,9 @@ async def fetch_url(url: str) -> RetrievedSource:
                     "text/plain",
                     "application/pdf",
                 } and not content_type.endswith("+html"):
-                    raise ValueError("unsupported content type")
+                    raise AcquisitionError(
+                        "unsupported_content_type", content_type=content_type or None
+                    )
                 if response.headers.get("content-encoding", "identity").lower() not in {
                     "",
                     "identity",

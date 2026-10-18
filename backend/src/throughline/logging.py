@@ -71,13 +71,20 @@ frontend_logger = _configure_logger(
 
 
 def log_event(
-    event: str, *, analysis_id: str | None = None, code: str | None = None
+    event: str,
+    *,
+    analysis_id: str | None = None,
+    code: str | None = None,
+    status: int | None = None,
+    content_type: str | None = None,
 ) -> None:
     logger.info(
-        "event=%s analysis_id=%s code=%s",
+        "event=%s analysis_id=%s code=%s status=%s content_type=%s",
         event,
         analysis_id or "redacted",
         code or "redacted",
+        status or "redacted",
+        content_type or "redacted",
     )
 
 

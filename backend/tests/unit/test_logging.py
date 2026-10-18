@@ -7,8 +7,17 @@ from throughline.logging import JsonFormatter, _configure_logger, log_event
 
 def test_logging_does_not_include_source_details(caplog):
     with caplog.at_level(logging.INFO, logger="throughline"):
-        log_event("rejected", analysis_id="opaque-id", code="SOURCE_UNREADABLE")
+        log_event(
+            "rejected",
+            analysis_id="opaque-id",
+            code="url_http_status_403",
+            status=403,
+            content_type="text/html",
+        )
     assert "opaque-id" in caplog.text
+    assert "url_http_status_403" in caplog.text
+    assert "status=403" in caplog.text
+    assert "content_type=text/html" in caplog.text
     assert "https://" not in caplog.text
 
 

@@ -181,6 +181,24 @@ async def test_pinned_backend_uses_validated_address_without_resolving_again():
     assert calls == ["93.184.216.34"]
 
 
+@pytest.mark.asyncio
+async def test_pinned_backend_falls_back_to_next_validated_address():
+    calls = []
+
+    class Backend:
+        async def connect_tcp(self, host, port, timeout, local_address, socket_options):
+            calls.append(host)
+            if host == "2001:db8::1":
+                raise OSError("unreachable")
+            return "stream"
+
+    backend = _PinnedNetworkBackend(("2001:db8::1", "93.184.216.34"))
+    backend._backend = Backend()
+
+    assert await backend.connect_tcp("example.org", 443) == "stream"
+    assert calls == ["2001:db8::1", "93.184.216.34"]
+
+
 def test_pinned_transport_uses_platform_trust_store():
     transport = _PinnedTransport(("93.184.216.34",))
     try:

@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, HttpUrl, ValidationError
 
-from .acquisition import fetch_url
+from .acquisition import AcquisitionError, fetch_url
 from .errors import failure
 from .extraction import extract_html, extract_pdf, extract_plain
 from .logging import log_event, log_frontend_event
@@ -154,10 +154,24 @@ def _client_id(request: Request) -> str:
 
 
 def _raise_processing_error(exc: Exception) -> None:
-    code = _processing_error_code(exc) if isinstance(exc, ValueError) else (
-        "SOURCE_INACCESSIBLE" if "retrieve" in str(exc).lower() else "SOURCE_UNREADABLE"
-    )
+    if isinstance(exc, AcquisitionError) and exc.category in {
+        "network_error",
+        "http_status",
+    }:
+        code = "SOURCE_INACCESSIBLE"
+    elif isinstance(exc, ValueError):
+        code = _processing_error_code(exc)
+    else:
+        code = "SOURCE_INACCESSIBLE" if "retrieve" in str(exc).lower() else "SOURCE_UNREADABLE"
     raise HTTPException(status_code=422, detail=failure(code).model_dump()) from exc
+
+
+def _acquisition_log_code(exc: Exception) -> str:
+    if isinstance(exc, AcquisitionError):
+        if exc.status_code is not None:
+            return f"url_{exc.category}_{exc.status_code}"
+        return f"url_{exc.category}"
+    return "url_validation_or_processing"
 
 
 async def _finish_parse(extracted, kind: SourceKind) -> AnalysisResult:
@@ -278,5 +292,12 @@ async def create_analysis(
     except HTTPException:
         raise
     except Exception as exc:
-        log_event("analysis_rejected")
+        log_event(
+            "analysis_rejected",
+            code=_acquisition_log_code(exc),
+            status=exc.status_code if isinstance(exc, AcquisitionError) else None,
+            content_type=exc.content_type
+            if isinstance(exc, AcquisitionError)
+            else None,
+        )
         _raise_processing_error(exc)
