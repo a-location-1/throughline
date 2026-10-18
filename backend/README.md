@@ -13,6 +13,8 @@ URL retrieval uses the host platform's certificate trust store so publicly hoste
 
 `POST /api/analyses` processes one source synchronously and returns the complete result. The frontend shows staged indeterminate feedback and uses an `AbortController`; there is no polling or server-side result history. CSV is generated in the browser.
 
+Application logs are emitted as structured JSON to stdout/stderr by default. On Vercel, the canonical production log is the Vercel function log; the application does not write to the deployed filesystem. For local development, set `LOG_TO_FILE=true` before starting the backend to also write rotating logs to `logs/backend.log` and `logs/frontend.log`. These local files are optional diagnostics and are not a production log store.
+
 For hosting, set `FRONTEND_ORIGINS` to comma-separated allowed frontend origins. The initial low-volume process-local limits are 12 analyses per client per minute and 60 frontend log events per client per minute. Log messages are limited to 1,000 characters and context to 8 KB. These counters are not a global control across multiple workers or instances; use a shared limiter or edge/WAF limits before scaling out.
 
 The API rejects request bodies before Starlette parses them: analysis requests are capped at 11 MiB (10 MiB source plus multipart overhead) and log requests at 16 KiB. The uploaded source is still capped at 10 MiB after multipart parsing. Configure the same or a smaller body limit at the Vercel project/edge layer so oversized requests are rejected before reaching the function.

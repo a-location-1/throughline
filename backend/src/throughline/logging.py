@@ -10,9 +10,9 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from typing import Any
 
-LOG_DIR = Path("logs")
-LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+LOG_TO_FILE = os.getenv("LOG_TO_FILE", "").lower() in {"1", "true", "yes"}
+LOG_DIR = Path("logs")
 
 
 class JsonFormatter(logging.Formatter):
@@ -39,15 +39,19 @@ def _configure_logger(name: str, filename: str, *, propagate: bool) -> logging.L
     configured_logger.setLevel(LOG_LEVEL)
     configured_logger.propagate = propagate
 
-    log_path = (LOG_DIR / filename).resolve()
-    if not any(
-        isinstance(handler, RotatingFileHandler)
-        and Path(handler.baseFilename) == log_path
-        for handler in configured_logger.handlers
-    ):
-        file_handler = RotatingFileHandler(log_path, maxBytes=1_000_000, backupCount=3)
-        file_handler.setFormatter(JsonFormatter())
-        configured_logger.addHandler(file_handler)
+    if LOG_TO_FILE:
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        log_path = (LOG_DIR / filename).resolve()
+        if not any(
+            isinstance(handler, RotatingFileHandler)
+            and Path(handler.baseFilename) == log_path
+            for handler in configured_logger.handlers
+        ):
+            file_handler = RotatingFileHandler(
+                log_path, maxBytes=1_000_000, backupCount=3
+            )
+            file_handler.setFormatter(JsonFormatter())
+            configured_logger.addHandler(file_handler)
 
     if (not logging.getLogger().handlers or not propagate) and not any(
         isinstance(handler, logging.StreamHandler)

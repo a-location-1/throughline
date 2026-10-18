@@ -2,7 +2,7 @@ import json
 import logging
 from logging.handlers import RotatingFileHandler
 
-from throughline.logging import JsonFormatter, log_event
+from throughline.logging import JsonFormatter, _configure_logger, log_event
 
 
 def test_logging_does_not_include_source_details(caplog):
@@ -10,6 +10,22 @@ def test_logging_does_not_include_source_details(caplog):
         log_event("rejected", analysis_id="opaque-id", code="SOURCE_UNREADABLE")
     assert "opaque-id" in caplog.text
     assert "https://" not in caplog.text
+
+
+def test_logger_uses_stream_without_file_by_default(monkeypatch):
+    monkeypatch.setattr("throughline.logging.LOG_TO_FILE", False)
+    test_logger = _configure_logger("test.stream-only", "unused.log", propagate=False)
+    try:
+        assert any(
+            isinstance(handler, logging.StreamHandler)
+            and not isinstance(handler, RotatingFileHandler)
+            for handler in test_logger.handlers
+        )
+        assert not any(isinstance(handler, RotatingFileHandler) for handler in test_logger.handlers)
+    finally:
+        for handler in test_logger.handlers[:]:
+            test_logger.removeHandler(handler)
+            handler.close()
 
 
 def test_json_formatter_writes_one_json_object_per_line(tmp_path):
