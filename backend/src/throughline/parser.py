@@ -514,6 +514,17 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
             and normalized_key.startswith(alias_key)
         ):
             return canonical
+    for alias_key, canonical in sorted(aliases.items(), key=lambda item: -len(item[0])):
+        if (
+            len(alias_key) >= 4
+            and not re.match(r"(?:his|her)\s+", normalized, re.I)
+            and re.search(
+            rf"(?<![A-Za-zÀ-ÿ]){re.escape(canonical)}(?![A-Za-zÀ-ÿ])",
+            normalized,
+            re.I,
+            )
+        ):
+            return canonical
     return normalized
 
 
@@ -551,7 +562,15 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
             if exact_alias:
                 result.append(exact_alias)
                 continue
-            result.append(_canonical_entrance_display(part, aliases))
+            canonical = _canonical_entrance_display(part, aliases)
+            if canonical != part:
+                result.append(canonical)
+            elif (
+                part[:1].isupper()
+                or part.casefold() in {"others", "attendants"}
+                or re.match(r"(?:his|her)\s+", part, re.I)
+            ):
+                result.append(part)
         if result:
             return list(dict.fromkeys(result))
     expanded = _expanded_role_displays(normalized, strip_descriptors=True)

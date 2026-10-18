@@ -431,6 +431,61 @@ Enter Forces marching.
     assert "FORCES MARCHING" not in names
 
 
+def test_parser_normalizes_descriptive_entrances(submission):
+    text = """Dramatis Personae
+Basilio
+Segismund
+Astolfo
+Estrella
+Clotaldo
+Rosaura
+Fife
+Soldiers
+
+ACT I
+SCENE I
+(Enter first from the topmost rock Rosaura, as from horseback, in man's attire; and, after her, Fife.)
+ROSAURA.
+I am here.
+(Enter Soldiers with black vizors and torches.)
+CLOTALDO.
+Stand aside.
+SCENE II
+Enter on one side Astolfo, Duke of Muscovy, with his train.
+ASTOLFO.
+Welcome.
+SCENE III
+Enter suddenly Clotaldo.
+CLOTALDO.
+Again.
+(Enter Rosaura suddenly.)
+ROSAURA.
+Again.
+SCENE IV
+(Enter Soldiers cautiously up the rocks.)
+CAPTAIN.
+Advance.
+"""
+
+    result = parse_playtext(text, submission)
+    names = [character.display_name for character in result.characters]
+
+    assert "ROSAURA" in names
+    assert "SOLDIERS" in names
+    assert "ASTOLFO" in names
+    assert "CLOTALDO" in names
+    assert "CAPTAIN" in names
+    for invalid in (
+        "FIRST FROM THE TOPMOST ROCK ROSAURA",
+        "TORCHES",
+        "ON ONE SIDE ASTOLFO",
+        "SUDDENLY CLOTALDO",
+        "ROSAURA SUDDENLY",
+        "SOLDIERS CAUTIOUSLY UP THE ROCKS",
+    ):
+        assert invalid not in names
+
+
 def test_parser_uses_parenthetical_character_aliases(submission):
     text = """THE LIVE CORPSE
     CHARACTERS
