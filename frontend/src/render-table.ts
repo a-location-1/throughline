@@ -29,11 +29,13 @@ export function renderTable(
   addToggle('Scene Presence Labels', options.showPresenceLabels, 'showPresenceLabels');
   addToggle('Line Counts', options.showLineCounts, 'showLineCounts');
   title.append(controls); container.append(title);
+  const viewport = document.createElement('div'); viewport.className = 'table-viewport';
   const scroll = document.createElement('div'); scroll.className = 'table-scroll';
+  const scrollIndicator = document.createElement('div'); scrollIndicator.className = 'table-scroll-indicator'; scrollIndicator.setAttribute('aria-hidden', 'true');
   const table = document.createElement('table'); table.setAttribute('aria-label', 'Character by scene presence');
   const caption = document.createElement('caption'); caption.className = 'sr-only'; caption.textContent = 'Character presence by ordered scene'; table.append(caption);
   const actHeader = document.createElement('tr'); actHeader.className = 'act-header';
-  const characterHeader = document.createElement('th'); characterHeader.scope = 'col'; characterHeader.rowSpan = 2; characterHeader.textContent = 'Character'; actHeader.append(characterHeader);
+  const characterHeader = document.createElement('th'); characterHeader.className = 'character-column'; characterHeader.scope = 'col'; characterHeader.rowSpan = 2; characterHeader.textContent = 'Character'; actHeader.append(characterHeader);
   const acts = new Map((result.acts ?? []).map((act) => [act.id, act]));
   let index = 0;
   while (index < result.scenes.length) {
@@ -51,7 +53,7 @@ export function renderTable(
   const speakingCharacterIds = new Set(result.appearances.filter((appearance) => appearance.presence === 'speaking').map((appearance) => appearance.character_id));
   const characters = options.showNonSpeaking ? result.characters : result.characters.filter((character) => speakingCharacterIds.has(character.id));
   for (const character of characters) {
-    const row = document.createElement('tr'); const name = document.createElement('th'); name.scope = 'row'; name.textContent = character.display_name; row.append(name);
+    const row = document.createElement('tr'); const name = document.createElement('th'); name.className = 'character-column'; name.scope = 'row'; name.textContent = character.display_name; row.append(name);
     for (const [index, scene] of result.scenes.entries()) {
       const cell = document.createElement('td'); const appearance = byKey.get(`${character.id}:${scene.id}`);
       const label = appearance?.presence === 'speaking' ? 'Speaking' : appearance?.presence === 'non_speaking' ? 'Present, silent' : 'Absent';
@@ -61,7 +63,20 @@ export function renderTable(
     }
     body.append(row);
   }
-  table.append(body); scroll.append(table); container.append(scroll);
+  table.append(body); scroll.append(table);
+  const updateScrollIndicator = () => {
+    const firstColumn = table.querySelector<HTMLElement>('.character-column');
+    if (!firstColumn) {
+      scrollIndicator.hidden = true;
+      return;
+    }
+    scrollIndicator.hidden = scroll.scrollLeft === 0;
+    scrollIndicator.style.left = `${firstColumn.offsetWidth - 3}px`;
+    scrollIndicator.style.height = `${scroll.clientHeight}px`;
+  };
+  scroll.addEventListener('scroll', updateScrollIndicator, { passive: true });
+  requestAnimationFrame(updateScrollIndicator);
+  viewport.append(scroll, scrollIndicator); container.append(viewport);
   const ambiguityNotes = result.characters.filter((character) => character.ambiguity?.alternatives.length);
   if (ambiguityNotes.length) {
     const notes = document.createElement('ol'); notes.className = 'table-footnotes'; notes.setAttribute('aria-label', 'Character normalization notes');
