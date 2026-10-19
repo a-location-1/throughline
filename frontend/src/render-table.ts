@@ -36,7 +36,7 @@ export function renderTable(
   orderInput.addEventListener('change', () => onOptionChange?.({ ...options, orderBy: orderInput.value as CharacterOrder }));
   orderSelect.append(orderInput); controls.append(orderSelect);
   addToggle('Non-Speaking Characters', options.showNonSpeaking, 'showNonSpeaking');
-  addToggle('Scene Presence Labels', options.showPresenceLabels, 'showPresenceLabels');
+  addToggle('Presence Labels (Speaking; Non-Speaking; Absent)', options.showPresenceLabels, 'showPresenceLabels');
   addToggle('Line Counts', options.showLineCounts, 'showLineCounts');
   title.append(controls); container.append(title);
   const viewport = document.createElement('div'); viewport.className = 'table-viewport';
@@ -65,7 +65,7 @@ export function renderTable(
     const row = document.createElement('tr'); const name = document.createElement('th'); name.className = 'character-column'; name.scope = 'row'; name.textContent = character.display_name; row.append(name);
     for (const [index, scene] of result.scenes.entries()) {
       const cell = document.createElement('td'); const appearance = byKey.get(`${character.id}:${scene.id}`);
-      const label = appearance?.presence === 'speaking' ? 'Speaking' : appearance?.presence === 'non_speaking' ? 'Present, silent' : 'Absent';
+      const label = appearance?.presence === 'speaking' ? 'Speaking' : appearance?.presence === 'non_speaking' ? 'Non-Speaking' : 'Absent';
       const count = appearance?.presence === 'speaking' && options.showLineCounts ? String(appearance.line_count) : '';
       cell.textContent = options.showPresenceLabels ? `${label}${count ? ` (${count})` : ''}` : count;
       cell.className = `${appearance?.presence ?? 'absent'}${index === result.scenes.length - 1 || result.scenes[index + 1].act_id !== scene.act_id ? ' act-end' : ''}`; row.append(cell);
@@ -86,6 +86,10 @@ export function renderTable(
   scroll.addEventListener('scroll', updateScrollIndicator, { passive: true });
   requestAnimationFrame(updateScrollIndicator);
   viewport.append(scroll, scrollIndicator); container.append(viewport);
+  const definitions = document.createElement('p');
+  definitions.className = 'analysis-description table-description';
+  definitions.innerHTML = '<strong>Definitions:</strong><br />Speaking: the character is in the scene and has at least one line.<br />Non-Speaking: the character is in the scene and has zero lines.<br />Absent: the character is not in the scene.<br /><br />A non-speaking character has zero lines in the full play.';
+  container.append(definitions);
   const ambiguityNotes = result.characters.filter((character) => character.ambiguity?.alternatives.length);
   if (ambiguityNotes.length) {
     const notes = document.createElement('ol'); notes.className = 'table-footnotes'; notes.setAttribute('aria-label', 'Character normalization notes');
