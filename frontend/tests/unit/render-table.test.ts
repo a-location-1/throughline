@@ -34,6 +34,29 @@ describe('renderTable', () => {
 
 		expect(container.querySelector('td')?.textContent).toBe('Speaking (52)');
 	});
+
+	it('orders characters by line count and breaks ties by first appearance', () => {
+		const container = document.createElement('div');
+		const result = {
+			scenes: [{ id: 's1', ordinal: 1, label: 'Scene I' }, { id: 's2', ordinal: 2, label: 'Scene II' }],
+			characters: [
+				{ id: 'c1', display_name: 'First tie', first_appearance_scene_id: 's1' },
+				{ id: 'c2', display_name: 'Most lines', first_appearance_scene_id: 's2' },
+				{ id: 'c3', display_name: 'Second tie', first_appearance_scene_id: 's2' },
+			],
+			appearances: [
+				{ scene_id: 's1', character_id: 'c1', presence: 'speaking', line_count: 8 },
+				{ scene_id: 's2', character_id: 'c1', presence: 'speaking', line_count: 8 },
+				{ scene_id: 's1', character_id: 'c2', presence: 'speaking', line_count: 20 },
+				{ scene_id: 's2', character_id: 'c3', presence: 'speaking', line_count: 16 },
+			],
+		} as AnalysisResult;
+
+		renderTable(container, result, { showNonSpeaking: false, showPresenceLabels: false, showLineCounts: false, orderBy: 'lineCount' });
+
+		expect([...container.querySelectorAll('tbody th')].map((cell) => cell.textContent)).toEqual(['Most lines', 'First tie', 'Second tie']);
+		expect(container.querySelector('select')?.value).toBe('lineCount');
+	});
 });
 
 it('groups scenes under act and special-section headers', () => {

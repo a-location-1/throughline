@@ -1,9 +1,11 @@
 import type { AnalysisResult } from './api';
+import { orderedCharacters, type CharacterOrder } from './character-order';
 
 export interface TableRenderOptions {
   showNonSpeaking: boolean;
   showPresenceLabels: boolean;
   showLineCounts: boolean;
+  orderBy?: CharacterOrder;
 }
 
 export function renderTable(
@@ -25,6 +27,14 @@ export function renderTable(
     input.addEventListener('change', () => onOptionChange?.({ ...options, [key]: input.checked }));
     control.append(input, document.createTextNode(label)); controls.append(control);
   };
+  const orderSelect = document.createElement('label'); orderSelect.className = 'option-select';
+  orderSelect.append(document.createTextNode('Order By'));
+  const orderInput = document.createElement('select'); orderInput.setAttribute('aria-label', 'Order By');
+  for (const [value, label] of [['firstAppearance', 'First Appearance'], ['lineCount', 'Line Count']] as const) {
+    const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = (options.orderBy ?? 'firstAppearance') === value; orderInput.append(option);
+  }
+  orderInput.addEventListener('change', () => onOptionChange?.({ ...options, orderBy: orderInput.value as CharacterOrder }));
+  orderSelect.append(orderInput); controls.append(orderSelect);
   addToggle('Non-Speaking Characters', options.showNonSpeaking, 'showNonSpeaking');
   addToggle('Scene Presence Labels', options.showPresenceLabels, 'showPresenceLabels');
   addToggle('Line Counts', options.showLineCounts, 'showLineCounts');
@@ -50,8 +60,7 @@ export function renderTable(
   const thead = document.createElement('thead'); thead.append(actHeader, sceneHeader); table.append(thead);
   const body = document.createElement('tbody');
   const byKey = new Map(result.appearances.map((appearance) => [`${appearance.character_id}:${appearance.scene_id}`, appearance]));
-  const speakingCharacterIds = new Set(result.appearances.filter((appearance) => appearance.presence === 'speaking').map((appearance) => appearance.character_id));
-  const characters = options.showNonSpeaking ? result.characters : result.characters.filter((character) => speakingCharacterIds.has(character.id));
+  const characters = orderedCharacters(result, options.showNonSpeaking, options.orderBy);
   for (const character of characters) {
     const row = document.createElement('tr'); const name = document.createElement('th'); name.className = 'character-column'; name.scope = 'row'; name.textContent = character.display_name; row.append(name);
     for (const [index, scene] of result.scenes.entries()) {

@@ -23,6 +23,33 @@ it('omits characters who never speak unless enabled', () => {
 	expect(container.textContent).toContain('Silent group');
 });
 
+it('orders plot rows by line count with first appearance tie-breaking', () => {
+	const container = document.createElement('div');
+	const result = {
+		scenes: [{ id: 's1', ordinal: 1, label: 'Scene I' }, { id: 's2', ordinal: 2, label: 'Scene II' }],
+		characters: [
+			{ id: 'c1', display_name: 'First tie', first_appearance_scene_id: 's1' },
+			{ id: 'c2', display_name: 'Most lines', first_appearance_scene_id: 's2' },
+			{ id: 'c3', display_name: 'Second tie', first_appearance_scene_id: 's2' },
+		],
+		appearances: [
+			{ scene_id: 's1', character_id: 'c1', presence: 'speaking', line_count: 8 },
+			{ scene_id: 's2', character_id: 'c1', presence: 'speaking', line_count: 8 },
+			{ scene_id: 's1', character_id: 'c2', presence: 'speaking', line_count: 20 },
+			{ scene_id: 's2', character_id: 'c3', presence: 'speaking', line_count: 16 },
+		],
+		visualization: {
+			paths: { c1: [[0, 0]], c2: [[0, 1]], c3: [[0, 2]] },
+			colors: { c1: '#177254', c2: '#b44336', c3: '#555555' },
+		},
+	} as unknown as AnalysisResult;
+
+	renderVisualization(container, result, { showNonSpeaking: false, orderBy: 'lineCount' });
+
+	expect([...container.querySelectorAll<SVGGElement>('.character-line')].map((line) => line.dataset.characterId)).toEqual(['c2', 'c1', 'c3']);
+	expect(container.querySelector('select')?.value).toBe('lineCount');
+});
+
 it('renders act and scene headers with presence-aware fixed-height rows', () => {
 	const container = document.createElement('div');
 	const result = {

@@ -1,4 +1,5 @@
 import type { AnalysisResult } from './api';
+import { orderedCharacters, type CharacterOrder } from './character-order';
 
 const NS = 'http://www.w3.org/2000/svg';
 function blendColor(color: string, amount: number): string {
@@ -10,6 +11,7 @@ function blendColor(color: string, amount: number): string {
 
 export interface VisualizationRenderOptions {
   showNonSpeaking: boolean;
+  orderBy?: CharacterOrder;
   selectedCharacterIds?: ReadonlySet<string>;
 }
 
@@ -21,10 +23,16 @@ export function renderVisualization(
   onSelectionChange?: (characterId: string, selected: boolean) => void,
 ): void {
   container.replaceChildren();
-  const speakingCharacterIds = new Set(result.appearances.filter((appearance) => appearance.presence === 'speaking').map((appearance) => appearance.character_id));
-  const characters = options.showNonSpeaking ? result.characters : result.characters.filter((character) => speakingCharacterIds.has(character.id));
+  const characters = orderedCharacters(result, options.showNonSpeaking, options.orderBy);
   const header = document.createElement('div'); header.className = 'plot-header'; const controls = document.createElement('div'); controls.className = 'analysis-options';
   const control = document.createElement('label'); control.className = 'option-toggle'; const input = document.createElement('input'); input.type = 'checkbox'; input.checked = options.showNonSpeaking; input.setAttribute('aria-label', 'Non-Speaking Characters'); input.addEventListener('change', () => onOptionChange?.({ showNonSpeaking: input.checked })); control.append(input, document.createTextNode('Non-Speaking Characters')); controls.append(control); header.append(controls); container.append(header);
+  const orderSelect = document.createElement('label'); orderSelect.className = 'option-select'; orderSelect.append(document.createTextNode('Order By'));
+  const orderInput = document.createElement('select'); orderInput.setAttribute('aria-label', 'Order By');
+  for (const [value, label] of [['firstAppearance', 'First Appearance'], ['lineCount', 'Line Count']] as const) {
+    const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = (options.orderBy ?? 'firstAppearance') === value; orderInput.append(option);
+  }
+  orderInput.addEventListener('change', () => onOptionChange?.({ ...options, orderBy: orderInput.value as CharacterOrder }));
+  orderSelect.append(orderInput); controls.insertBefore(orderSelect, control);
   const body = document.createElement('div'); body.className = 'plot-canvas';
   const scroll = document.createElement('div'); scroll.className = 'plot-scroll';
   const maxLabelWidth = Math.max(64, ...characters.map((character) => character.display_name.length * 7 + 20));
