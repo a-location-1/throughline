@@ -165,6 +165,90 @@ Closing.
     assert "THIRD ACT" not in {character.display_name for character in result.characters}
 
 
+def test_parser_treats_act_drop_as_an_act_boundary_not_a_character(submission):
+    text = """FIRST ACT
+SCENE
+ALICE.
+Opening.
+ACT DROP
+SECOND ACT
+SCENE
+BOB.
+Reply.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [act.label for act in result.acts] == ["Act I", "Act II"]
+    assert "ACT DROP" not in {character.display_name for character in result.characters}
+
+
+def test_parser_handles_scene_dash_and_em_dash_speakers(submission):
+    text = """SCENE I
+SCENE—
+The setting is a ship.
+PADDY—[Starts singing.] Hello.
+YANK—Reply.
+SCENE II
+SCENE—
+The ship is at sea.
+PADDY—Again.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert [scene.label for scene in result.scenes] == ["Scene I", "Scene II"]
+    assert [character.display_name for character in result.characters] == [
+        "PADDY",
+        "YANK",
+    ]
+
+
+def test_parser_ignores_leading_contents_scene_headings(submission):
+    text = """CONTENTS
+SCENE I
+SCENE II
+SCENE III
+SCENE IV
+SCENE V
+SCENE VI
+SCENE VII
+SCENE VIII
+ACT I
+SCENE I
+PADDY—Hello.
+SCENE II
+PADDY—Hello.
+SCENE III
+PADDY—Hello.
+SCENE IV
+PADDY—Hello.
+SCENE V
+PADDY—Hello.
+SCENE VI
+PADDY—Hello.
+SCENE VII
+PADDY—Hello.
+SCENE VIII
+PADDY—Hello.
+"""
+
+    result = parse_playtext(text, submission)
+
+    assert len(result.acts) == 1
+    assert [scene.label for scene in result.scenes] == [
+        "Scene I",
+        "Scene II",
+        "Scene III",
+        "Scene IV",
+        "Scene V",
+        "Scene VI",
+        "Scene VII",
+        "Scene VIII",
+    ]
+    assert not result.notices
+
+
 def test_parser_keeps_qualified_speaker_ambiguous_and_distinct(submission):
     text = """SCENE I
     CAPULET

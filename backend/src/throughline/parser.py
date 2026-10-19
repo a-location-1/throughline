@@ -37,6 +37,8 @@ SCENE_RE = re.compile(
     re.I,
 )
 BARE_SCENE_RE = re.compile(r"^\s*(SCENE|SCÈNE|SZENE)\s*:?[ \t]*$", re.I)
+ACT_DROP_RE = re.compile(r"^\s*ACT\s+DROP\s*:?[ \t]*$", re.I)
+SCENE_DASH_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*[—–-]\s*", re.I)
 SCENE_STAGE_RE = re.compile(r"^\s*(?:SCENE|SCÈNE|SZENE)\s*:\s*", re.I)
 PRODUCTION_NOTES_RE = re.compile(r"^\s*PRODUCTION NOTES\s*:?[ \t]*$", re.I)
 FIRST_SCENE_RE = re.compile(
@@ -63,6 +65,9 @@ PERIOD_SPEAKER_PREFIX_RE = re.compile(
 )
 BRACKET_SPEAKER_PREFIX_RE = re.compile(
     r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48})" r"\s*\[[^\[\]]*\]\s*\.\s*(.*)$"
+)
+DASH_SPEAKER_PREFIX_RE = re.compile(
+    r"^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 .,'’\-]{1,48})\s*[—–]\s*(.*)$"
 )
 PLAY_END_RE = re.compile(
     r"^\s*\[?(?:END|THE END|END OF PLAY|THE END OF PLAY|END OF THE PLAY|END OF THE PROJECT GUTENBERG EBOOK.*|THE CURTAIN|BLACK\s+OUT.*END|BLACKOUT.*END)\.?\]?\.?\s*$|"
@@ -206,8 +211,19 @@ def _special_act(line: str) -> tuple[str, ActKind] | None:
 
 def _play_end(text: str, minimum: int) -> int:
     offset = 0
-    for line in text.splitlines(keepends=True):
+    lines = text.splitlines(keepends=True)
+    for index, line in enumerate(lines):
         if offset > minimum and PLAY_END_RE.match(line.strip()):
+            if (
+                line.strip().casefold() == "curtain"
+                and any(
+                    _scene_heading(candidate.strip())
+                    or _act_heading(candidate.strip())
+                    for candidate in lines[index + 1 :]
+                )
+            ):
+                offset += len(line)
+                continue
             return offset
         offset += len(line)
     return len(text)
@@ -342,6 +358,11 @@ def _chunks(text: str) -> list[SceneChunk]:
             markers.append((offset, current_act, current_act_kind, "Scene I"))
         offset += len(line)
     play_end = _play_end(text, 0)
+    if first_act_start is not None and any(
+        marker[0] < first_act_start and marker[3].startswith("Scene ")
+        for marker in markers
+    ):
+        markers = [marker for marker in markers if marker[0] >= first_act_start]
     if not has_scene_marker and act_markers:
         markers = [
             (start, label, kind, "Scene I")
@@ -376,6 +397,8 @@ def _chunks(text: str) -> list[SceneChunk]:
                 end,
             )
         )
+    while len(chunks) > 1 and not chunks[0].text.strip():
+        chunks.pop(0)
     return chunks
 
 
@@ -1035,6 +1058,8 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             line = raw_line.strip()
             if not line or PAGE_NUMBER_RE.fullmatch(line):
                 continue
+            if ACT_DROP_RE.match(line):
+                continue
             if line.startswith("["):
                 in_stage_direction = True
             if in_stage_direction:
@@ -1064,6 +1089,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
                 if monologue_mode
                 else SPEAKER_PREFIX_RE.match(line)
                 or BRACKET_SPEAKER_PREFIX_RE.match(line)
+                or DASH_SPEAKER_PREFIX_RE.match(line)
             )
             if speaker_prefix is None and not monologue_mode:
                 period_prefix = PERIOD_SPEAKER_PREFIX_RE.match(line)
@@ -1078,7 +1104,7 @@ def parse_playtext(text: str, submission: PlaytextSubmission) -> AnalysisResult:
             speaker = (
                 None if monologue_mode else speaker_prefix or SPEAKER_RE.match(line)
             )
-            if STAGE_LABEL_RE.match(line):
+            if STAGE_LABEL_RE.match(line) or SCENE_DASH_RE.match(line):
                 speaker = None
                 speaker_prefix = None
             if _is_inline_colon_label(
