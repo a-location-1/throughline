@@ -36,6 +36,7 @@ rate_limiter = RateLimiter(
         "logs": (60, 60),
     }
 )
+ANALYSIS_TIMEOUT_SECONDS = 55
 CPU_TIMEOUT_SECONDS = 60
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 MAX_ANALYSIS_REQUEST_BYTES = MAX_UPLOAD_BYTES + 1024 * 1024
@@ -257,38 +258,39 @@ async def create_analysis(
             status_code=400, detail="Provide exactly one URL or PDF file."
         )
     try:
-        if url_request is not None:
-            source = await fetch_url(str(url_request.url))
-            if source.content_type == "application/pdf":
+        async with asyncio.timeout(ANALYSIS_TIMEOUT_SECONDS):
+            if url_request is not None:
+                source = await fetch_url(str(url_request.url))
+                if source.content_type == "application/pdf":
+                    extracted = await asyncio.wait_for(
+                        asyncio.to_thread(extract_pdf, source.content, source.source_name),
+                        CPU_TIMEOUT_SECONDS,
+                    )
+                    kind = SourceKind.PDF
+                elif source.content_type == "text/plain":
+                    extracted = await asyncio.wait_for(
+                        asyncio.to_thread(extract_plain, source.content, source.source_name),
+                        CPU_TIMEOUT_SECONDS,
+                    )
+                    kind = SourceKind.URL
+                else:
+                    extracted = await asyncio.wait_for(
+                        asyncio.to_thread(extract_html, source.content, source.source_name),
+                        CPU_TIMEOUT_SECONDS,
+                    )
+                    kind = SourceKind.URL
+            else:
+                data = await file.read(MAX_UPLOAD_BYTES + 1)
+                if len(data) > MAX_UPLOAD_BYTES:
+                    raise HTTPException(
+                        status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
+                    )
                 extracted = await asyncio.wait_for(
-                    asyncio.to_thread(extract_pdf, source.content, source.source_name),
+                    asyncio.to_thread(extract_pdf, data, file.filename or "upload.pdf"),
                     CPU_TIMEOUT_SECONDS,
                 )
                 kind = SourceKind.PDF
-            elif source.content_type == "text/plain":
-                extracted = await asyncio.wait_for(
-                    asyncio.to_thread(extract_plain, source.content, source.source_name),
-                    CPU_TIMEOUT_SECONDS,
-                )
-                kind = SourceKind.URL
-            else:
-                extracted = await asyncio.wait_for(
-                    asyncio.to_thread(extract_html, source.content, source.source_name),
-                    CPU_TIMEOUT_SECONDS,
-                )
-                kind = SourceKind.URL
-        else:
-            data = await file.read(MAX_UPLOAD_BYTES + 1)
-            if len(data) > MAX_UPLOAD_BYTES:
-                raise HTTPException(
-                    status_code=413, detail=failure("PDF_TOO_LARGE").model_dump()
-                )
-            extracted = await asyncio.wait_for(
-                asyncio.to_thread(extract_pdf, data, file.filename or "upload.pdf"),
-                CPU_TIMEOUT_SECONDS,
-            )
-            kind = SourceKind.PDF
-        return await _finish_parse(extracted, kind)
+            return await _finish_parse(extracted, kind)
     except HTTPException:
         raise
     except Exception as exc:

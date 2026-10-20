@@ -18,6 +18,7 @@ rejects private and special-use destinations.
 | # | Severity | File | Lines | Vulnerability | Confidence |
 |---|----------|------|-------|---------------|------------|
 | 1 | 🟡 MEDIUM | [`backend/src/throughline/api.py`](backend/src/throughline/api.py#L220-L261) | 220-261 | Unauthenticated `POST /api/analyses` accepts an attacker-selected public URL and makes an outbound request from Vercel infrastructure. The process-local limiter is not a reliable production abuse-control boundary across Vercel instances. | 10/10 |
+| 2 | 🟡 MEDIUM | [`backend/src/throughline/api.py`](backend/src/throughline/api.py#L261-L293) | 261-293 | URL fetching, extraction, and parsing did not previously share a request-wide deadline. Stacked HTTP timeouts and redirect hops could extend work up to the deployment limit, creating denial-of-wallet risk. | 9/10 |
 
 ### Impact
 
@@ -66,7 +67,24 @@ control boundary:
    addresses, DNS rebinding, and redirect chains.
 
 Authentication and deployment-level rate limiting require a product and
-deployment decision, so no code change was made as part of this review.
+deployment decision. The timeout portion of this finding has been remediated
+in code.
+
+## Implemented timeout remediation
+
+`backend/src/throughline/api.py` now applies a single 55-second
+`asyncio.timeout()` around URL fetching, extraction, and parsing. This is
+shorter than the 60-second Vercel `maxDuration`, so the application deadline
+fires before the platform limit. Existing error handling and response
+semantics are preserved.
+
+The focused regression test in
+`backend/tests/contract/test_api.py` uses a hanging URL fetch and verifies the
+existing `422 SOURCE_UNREADABLE` error response. The implementation retains
+`asyncio.to_thread()` for synchronous extraction and parsing. Worker threads
+remain non-cancellable when the await is cancelled; a larger follow-up using
+process-based execution or cooperative cancellation is required to ensure
+timed-out CPU work itself is terminated.
 
 ## Validation
 
@@ -79,4 +97,16 @@ cd backend && .venv/bin/pytest -q \
   tests/contract/test_api.py
 
 21 passed, 1 deprecation warning
+```
+
+The focused timeout and acquisition tests also passed:
+
+```text
+cd backend && .venv/bin/pytest -q \
+  tests/contract/test_api.py \
+  tests/unit/test_api_async_boundaries.py \
+  tests/unit/test_acquisition.py \
+  tests/unit/test_acquisition_limits.py
+
+24 passed, 1 warning
 ```

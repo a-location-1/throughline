@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi.testclient import TestClient
 import pytest
 
@@ -22,6 +24,20 @@ def test_url_analysis_returns_complete_result(monkeypatch):
     assert response.status_code == 200
     assert response.json()["submission"]["state"] == "ready"
     assert response.json()["scenes"][0]["id"] == "scene-01"
+
+
+def test_url_analysis_timeout_preserves_processing_error(monkeypatch):
+    async def hanging_fetch(url: str):
+        await asyncio.sleep(10)
+
+    monkeypatch.setattr(api, "ANALYSIS_TIMEOUT_SECONDS", 0.01)
+    monkeypatch.setattr(api, "fetch_url", hanging_fetch)
+    response = TestClient(api.app).post(
+        "/api/analyses", json={"url": "https://example.org/play.html"}
+    )
+
+    assert response.status_code == 422
+    assert response.json()["detail"]["code"] == "SOURCE_UNREADABLE"
 
 
 @pytest.mark.parametrize(
