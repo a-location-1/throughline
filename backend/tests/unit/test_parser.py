@@ -1,4 +1,5 @@
 from throughline.models import ActKind, CharacterKind, Presence
+from throughline.extraction import extract_html
 from throughline.parser import parse_playtext
 
 
@@ -116,9 +117,47 @@ Re-enter others of the Watch with Friar Lawrence.
         "ROMEO",
         "MERCUTIO",
         "BENVOLIO",
-        "WATCH",
+        "FIRST WATCH",
     } <= names
     assert not names & {"MONUMENT", "A", "SOME", "OTHERS", "THE"}
+
+
+def test_parser_normalizes_gutenberg_html_entrances(submission):
+    html = b"""
+    <p>ACT I</p>
+    <p>SCENE I. A public place.</p>
+    <p>Enter Sampson and Gregory armed with swords and bucklers.</p>
+    <p>SAMPSON.<br>Friends, part.</p>
+    <p>Enter Capulet in his gown, and Lady Capulet.</p>
+    <p>CAPULET.<br>What noise is this?</p>
+    <p>Enter Montague and his Lady Montague.</p>
+    <p>MONTAGUE.<br>Thou villain Capulet!</p>
+    <p>ACT V</p>
+    <p>SCENE III. A churchyard.</p>
+    <p>Enter Juliet above.</p>
+    <p>Enter Paris, and his Page bearing flowers and a torch.</p>
+    <p>Enter Watch with the Page of Paris.</p>
+    <p>FIRST WATCH.<br>Here is the place.</p>
+    <p>Watch.<br>What man art thou?</p>
+    """
+
+    result = parse_playtext(
+        extract_html(html, "romeo-and-juliet.html").text,
+        submission,
+    )
+    names = {character.display_name for character in result.characters}
+
+    assert {
+        "GREGORY",
+        "CAPULET",
+        "LADY MONTAGUE",
+        "JULIET",
+        "FIRST WATCH",
+        "HIS PAGE BEARING FLOWERS",
+    } <= names
+    assert not names & {"GREGORY ARMED", "CAPULET IN HIS GOWN", "HIS LADY MONTAGUE"}
+    assert not names & {"ABOVE", "ATTENDED", "CORDS", "SPITS", "TORCH", "MATTOCK"}
+    assert "WATCH" not in names
 
 
 def test_parser_normalizes_location_qualified_entrances(submission):

@@ -100,10 +100,23 @@ COLLECTIVE_WORDS = {
     "ENSEMBLE",
 }
 UNNAMED_WORDS = {"UNKNOWN", "UNNAMED", "A VOICE", "VOICE", "SOMEONE"}
+NON_CHARACTER_ENTRANCE_WORDS = {
+    "ABOVE",
+    "ATTENDED",
+    "CORDS",
+    "MATTOCK",
+    "SPITS",
+    "TORCH",
+}
 PAGE_NUMBER_RE = re.compile(r"^\d+$")
 DELIVERY_NOTE_RE = re.compile(r"\s+\([^()]*\)\s*$")
 QUALIFIED_SPEAKER_RE = re.compile(r"^(?P<base>.+?)\s+WITH\s+(?:A|AN|THE)\s+.+$", re.I)
 VOICE_OF_RE = re.compile(r"^\s*VOICE\s+OF\s+(.+?)\s*$", re.I)
+ENTRANCE_DESCRIPTOR_RE = re.compile(
+    r"\s+(?:armed\s+with|in\s+(?:his|her|their)\s+gown|above)\b.*$|"
+    r"\s+and\s+(?:a|an|the)\s+(?:torch|mattock)\b.*$",
+    re.I,
+)
 
 
 @dataclass
@@ -569,6 +582,12 @@ def _known_speakers(text: str) -> set[str]:
 
 def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
     normalized = display.strip(" _.,;:")
+    normalized = re.sub(
+        r"^\s*(?:his|her|their)\s+(?=lady\b)", "", normalized, flags=re.I
+    )
+    normalized = ENTRANCE_DESCRIPTOR_RE.sub("", normalized).strip(" _.,;:")
+    if _identity_key(normalized) in {"watch", "firstwatch"}:
+        return "FIRST WATCH"
     normalized_key = _identity_key(normalized)
     for alias_key, canonical in sorted(aliases.items(), key=lambda item: -len(item[0])):
         if normalized_key == alias_key or (
@@ -581,15 +600,19 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
             normalized,
             re.I,
         ) or re.match(
-            rf"^{re.escape(canonical)}\s+(?:at|in|on|off)\b",
+            rf"^{re.escape(canonical)}\s+(?:at|in|on|off|with)\b",
             normalized,
             re.I,
         ) or re.match(
-            rf"^{re.escape(alias_key)}\s+(?:from|at|in|on|off)\b",
+            rf"^{re.escape(alias_key)}\s+(?:from|at|in|on|off|with)\b",
             normalized,
             re.I,
         ):
-            return canonical
+            return (
+                "FIRST WATCH"
+                if _identity_key(canonical) in {"watch", "firstwatch"}
+                else canonical
+            )
     for alias_key, canonical in sorted(aliases.items(), key=lambda item: -len(item[0])):
         if (
             len(alias_key) >= 4
@@ -606,6 +629,12 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
 
 def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     normalized = display.strip(" _.,;:")
+    if _identity_key(normalized) in {"watch", "firstwatch"}:
+        return ["FIRST WATCH"]
+    if _identity_key(normalized) in {
+        _identity_key(word) for word in NON_CHARACTER_ENTRANCE_WORDS
+    }:
+        return []
     if re.fullmatch(r"forces\s+marching", normalized, re.I):
         return []
     if re.fullmatch(
@@ -621,15 +650,28 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
         part = part.strip(" _.,;:")
         if not part or re.fullmatch(r"&c", part, re.I):
             return []
+        part = re.sub(
+            r"^\s*(?:his|her|their)\s+(?=lady\b)", "", part, flags=re.I
+        )
+        part = ENTRANCE_DESCRIPTOR_RE.sub("", part).strip(" _.,;:")
+        part = re.sub(r"^(?:a|an|the)\s+", "", part, flags=re.I).strip(" _.,;:")
+        if _identity_key(part) in {
+            _identity_key(word) for word in NON_CHARACTER_ENTRANCE_WORDS
+        } or _identity_key(part) in {"torchbearers", "torchbearer"}:
+            return []
         if re.fullmatch(r"(?:a|an|the|some|others|another)", part, re.I):
             return []
         if re.fullmatch(r"prince\s+escalus", part, re.I):
             return [aliases.get("prince", "PRINCE")]
         exact_alias = aliases.get(_identity_key(part))
         if exact_alias:
+            if _identity_key(exact_alias) in {"watch", "firstwatch"}:
+                return ["FIRST WATCH"]
             return [exact_alias]
         expanded = _expanded_role_displays(part, strip_descriptors=True)
         if expanded and not part.casefold().endswith("monument"):
+            if any(_identity_key(item) in {"watch", "firstwatch"} for item in expanded):
+                return ["FIRST WATCH"]
             return expanded
         canonical = _canonical_entrance_display(part, aliases)
         return [] if canonical.casefold().endswith("monument") else [canonical]
@@ -670,6 +712,10 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     if len(parts) == 2:
         result: list[str] = []
         for part in parts:
+            part = re.sub(
+                r"^\s*(?:his|her|their)\s+(?=lady\b)", "", part, flags=re.I
+            )
+            part = ENTRANCE_DESCRIPTOR_RE.sub("", part).strip(" _.,;:")
             part_expanded = _expanded_role_displays(part, strip_descriptors=True)
             if part_expanded:
                 result.extend(part_expanded)
@@ -697,6 +743,8 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     if expanded:
         if normalized.casefold().endswith("monument"):
             return []
+        if any(_identity_key(item) in {"watch", "firstwatch"} for item in expanded):
+            return ["FIRST WATCH"]
         return expanded
     matches = list(
         dict.fromkeys(
@@ -714,7 +762,10 @@ def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
 def _normalize_speaker_display(display: str) -> str:
     normalized = DELIVERY_NOTE_RE.sub("", display).strip()
     voice_of = VOICE_OF_RE.match(normalized)
-    return voice_of.group(1).strip() if voice_of else normalized
+    normalized = voice_of.group(1).strip() if voice_of else normalized
+    if _identity_key(normalized) in {"watch", "firstwatch"}:
+        return "FIRST WATCH"
+    return normalized
 
 
 def _expanded_role_displays(
