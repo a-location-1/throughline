@@ -19,6 +19,7 @@ rejects private and special-use destinations.
 |---|----------|------|-------|---------------|------------|
 | 1 | 🟡 MEDIUM | [`backend/src/throughline/api.py`](backend/src/throughline/api.py#L220-L261) | 220-261 | Unauthenticated `POST /api/analyses` accepts an attacker-selected public URL and makes an outbound request from Vercel infrastructure. The process-local limiter is not a reliable production abuse-control boundary across Vercel instances. | 10/10 |
 | 2 | 🟡 MEDIUM | [`backend/src/throughline/api.py`](backend/src/throughline/api.py#L261-L293) | 261-293 | URL fetching, extraction, and parsing did not previously share a request-wide deadline. Stacked HTTP timeouts and redirect hops could extend work up to the deployment limit, creating denial-of-wallet risk. | 9/10 |
+| 3 | 🟠 HIGH | [`backend/src/throughline/extraction.py`](backend/src/throughline/extraction.py#L46-L86) | 46-86 | PDF extraction invoked `page.extract_text()` before checking cumulative output and used `strict=False`; malformed object traversal, decompression-heavy streams, or very large content streams could consume CPU/memory before the existing limit fired. | 9/10 |
 
 ### Impact
 
@@ -69,6 +70,24 @@ control boundary:
 Authentication and deployment-level rate limiting require a product and
 deployment decision. The timeout portion of this finding has been remediated
 in code.
+
+## Implemented PDF extraction remediation
+
+The PDF boundary now uses strict pypdf parsing, preserving the existing
+unreadable-source error mapping while avoiding pypdf's malformed-file recovery
+paths. It still rejects files over the 10 MiB acquisition limit and pages over
+200, and now applies the 12 MiB text limit from the pypdf visitor callback
+while extraction is running rather than only after each page returns.
+Extraction also stops after 500,000 content-stream operators, bounding
+resource-heavy content streams before they can run indefinitely. Focused
+regression tests cover oversized text and excessive operators.
+
+Residual limitation: pypdf performs stream decompression and some object/page
+tree traversal internally before visitor callbacks run. The 55-second request
+deadline and 60-second extraction timeout remain the outer wall-clock guard,
+but `asyncio.to_thread()` cannot forcibly terminate a worker already inside
+pypdf. A future process-isolated extractor would provide a hard CPU/memory
+kill boundary if hostile PDFs remain a production concern.
 
 ## Implemented timeout remediation
 

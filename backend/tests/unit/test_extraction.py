@@ -2,8 +2,16 @@ from io import BytesIO
 
 import pytest
 from pypdf import PdfWriter
+from pypdf.errors import PdfReadError
 
-from throughline.extraction import MAX_PAGES, extract_html, extract_plain, extract_pdf
+from throughline.extraction import (
+    MAX_OPERATORS,
+    MAX_PAGES,
+    MAX_TEXT,
+    extract_html,
+    extract_plain,
+    extract_pdf,
+)
 
 
 def test_html_and_plain_text_extract():
@@ -51,3 +59,52 @@ def test_pdf_page_limit_is_enforced():
 
     with pytest.raises(ValueError, match="too many pages"):
         extract_pdf(data.getvalue(), "large.pdf")
+
+
+def test_malformed_pdf_is_rejected_without_recovery():
+    writer = PdfWriter()
+    writer.add_blank_page(width=612, height=792)
+    data = BytesIO()
+    writer.write(data)
+    malformed = data.getvalue().replace(b"startxref\n", b"startxref\n999999\n", 1)
+
+    with pytest.raises(PdfReadError, match="startxref not found"):
+        extract_pdf(malformed, "malformed.pdf")
+
+
+def test_pdf_text_limit_is_enforced_during_page_extraction(monkeypatch):
+    writer = PdfWriter()
+    writer.add_blank_page(width=612, height=792)
+    data = BytesIO()
+    writer.write(data)
+
+    from pypdf._page import PageObject
+
+    def emit_oversized_text(self, *args, **kwargs):
+        kwargs["visitor_text"]("x" * (MAX_TEXT + 1), None, None, None, 0)
+        return ""
+
+    monkeypatch.setattr(PageObject, "extract_text", emit_oversized_text)
+
+    with pytest.raises(ValueError, match="extracted text too large"):
+        extract_pdf(data.getvalue(), "oversized.pdf")
+
+
+def test_pdf_operator_limit_is_enforced_during_page_extraction(monkeypatch):
+    writer = PdfWriter()
+    writer.add_blank_page(width=612, height=792)
+    data = BytesIO()
+    writer.write(data)
+
+    from pypdf._page import PageObject
+
+    def emit_too_many_operators(self, *args, **kwargs):
+        before_operator = kwargs["visitor_operand_before"]
+        for _ in range(MAX_OPERATORS + 1):
+            before_operator(b"Tj", [], None, None)
+        return ""
+
+    monkeypatch.setattr(PageObject, "extract_text", emit_too_many_operators)
+
+    with pytest.raises(ValueError, match="PDF content too complex"):
+        extract_pdf(data.getvalue(), "complex.pdf")
