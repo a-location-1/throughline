@@ -273,12 +273,22 @@ def _chunks(text: str) -> list[SceneChunk]:
         next_clean = (
             lines[line_index + 1].strip() if line_index + 1 < len(lines) else ""
         )
+        act_prelude = bool(
+            act_heading
+            and not _scene_heading(next_clean)
+            and any(
+                _scene_heading(candidate.strip())
+                for candidate in lines[line_index + 1 :]
+            )
+            and _looks_like_speaker(next_clean, next_clean.rstrip("."), True)
+        )
         if (
             act_heading
             and markers
             and previous_clean
             and not re.match(r"^(?:CURTAIN|THE END)\.?\s*$", previous_clean, re.I)
             and not _scene_heading(next_clean)
+            and not act_prelude
         ):
             act_heading = None
         scene_heading = _scene_heading(clean)
@@ -297,6 +307,9 @@ def _chunks(text: str) -> list[SceneChunk]:
             current_act = f"{prefix.title()} {value.rstrip(':').strip()}"
             current_act_kind = ActKind.ACT
             act_markers.append((offset, current_act, current_act_kind))
+            if act_prelude:
+                has_scene_marker = True
+                markers.append((offset, current_act, current_act_kind, "Prologue"))
         special_act = _special_act(clean)
         is_late_prologue = bool(
             special_act
@@ -585,6 +598,7 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
     normalized = re.sub(
         r"^\s*(?:his|her|their)\s+(?=lady\b)", "", normalized, flags=re.I
     )
+    normalized = re.sub(r",\s*attended\b", "", normalized, flags=re.I).strip()
     normalized = ENTRANCE_DESCRIPTOR_RE.sub("", normalized).strip(" _.,;:")
     if _identity_key(normalized) in {"watch", "firstwatch"}:
         return "FIRST WATCH"
@@ -629,6 +643,7 @@ def _canonical_entrance_display(display: str, aliases: dict[str, str]) -> str:
 
 def _entrance_displays(display: str, aliases: dict[str, str]) -> list[str]:
     normalized = display.strip(" _.,;:")
+    normalized = re.sub(r",\s*attended\b", "", normalized, flags=re.I).strip()
     if _identity_key(normalized) in {"watch", "firstwatch"}:
         return ["FIRST WATCH"]
     if _identity_key(normalized) in {
@@ -763,6 +778,7 @@ def _normalize_speaker_display(display: str) -> str:
     normalized = DELIVERY_NOTE_RE.sub("", display).strip()
     voice_of = VOICE_OF_RE.match(normalized)
     normalized = voice_of.group(1).strip() if voice_of else normalized
+    normalized = re.sub(r",\s*attended\b", "", normalized, flags=re.I).strip()
     if _identity_key(normalized) in {"watch", "firstwatch"}:
         return "FIRST WATCH"
     return normalized

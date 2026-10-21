@@ -333,6 +333,48 @@ def test_parser_preserves_prologue_before_act_one(submission):
     ]
 
 
+def test_parser_creates_act_prologue_before_first_scene(submission):
+    text = """ACT I
+    SCENE I
+    ALICE
+    Welcome.
+    ACT II
+    CHORUS
+    The second act begins.
+    SCENE I
+    BOB
+    Reply.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [(act.label, act.kind) for act in result.acts] == [
+        ("Act I", ActKind.ACT),
+        ("Act II", ActKind.ACT),
+    ]
+    assert [
+        (scene.label, scene.act_id)
+        for scene in result.scenes
+    ] == [
+        ("Scene I", "act-01"),
+        ("Prologue", "act-02"),
+        ("Scene I", "act-02"),
+    ]
+
+
+def test_parser_normalizes_attended_entrance(submission):
+    text = """ACT I
+    SCENE I
+    Enter Prince, attended.
+    PRINCE.
+    Behold.
+    """
+
+    result = parse_playtext(text, submission)
+
+    assert [character.display_name for character in result.characters] == ["PRINCE"]
+
+
 def test_parser_treats_entr_acte_as_special_act(submission):
     text = """ACT I
     SCENE I
